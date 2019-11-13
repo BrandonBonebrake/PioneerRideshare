@@ -11,12 +11,17 @@ import java.io.IOException;
 
 public class SplashScreenPanel
 {
+    // Global Constants
+    private final int WIDTH = 1280;
+    private final int HEIGHT = 720;
+
+    // Global Variables
     private Stage stage = null;
     private Pane rootPane = null;
     private Button exitBtn = null;
     private Button offerBtn = null;
     private Button requestBtn = null;
-    private Button viewRodesBtn = null;
+    private Button viewRidesBtn = null;
 
     public SplashScreenPanel(Stage primaryStage)
     {
@@ -31,6 +36,7 @@ public class SplashScreenPanel
     private void createComponents() {
         this.createExitButton();
         this.createOfferButton();
+        this.createRequestButton();
     }
 
     private void createOfferButton() {
@@ -43,6 +49,16 @@ public class SplashScreenPanel
         rootPane.getChildren().add(offerBtn);
     }
 
+    private void createRequestButton() {
+        requestBtn = new Button("Request Ride");
+        requestBtn.setPrefSize(200, 200);
+        requestBtn.setTranslateX(450);
+        requestBtn.setTranslateY(350);
+        requestBtn.setOnAction(e -> buttonRequestClicked());
+
+        rootPane.getChildren().add(requestBtn);
+    }
+
     private void createExitButton() {
         exitBtn = new Button("Exit");
         exitBtn.setPrefSize(150, 100);
@@ -53,12 +69,16 @@ public class SplashScreenPanel
         rootPane.getChildren().add(exitBtn);
     }
 
-    private void buttonOfferClicked()
-    {
+    private void buttonRequestClicked() {
+        OfferRequestRidePanel requestPanel = new OfferRequestRidePanel(stage);
+
+        stage.setScene(new Scene(requestPanel.getRootPane(), WIDTH, HEIGHT));
+    }
+
+    private void buttonOfferClicked() {
         OfferRequestRidePanel offerPanel = new OfferRequestRidePanel(stage);
-        System.out.println("Offer");
-        Scene scene1 = new Scene(offerPanel.getRootPane(), 1280, 720);
-        stage.setScene(scene1);
+
+        stage.setScene(new Scene(offerPanel.getRootPane(), WIDTH, HEIGHT));
     }
 
     private void buttonExitClicked() {
@@ -69,4 +89,3 @@ public class SplashScreenPanel
         return this.rootPane;
     }
 }
-
