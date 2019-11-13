@@ -1,0 +1,20 @@
+<?language javascript?>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import gui.SplashScreenPanel?>
+
+<VBox xmlns:fx="http://www.w3.org/1999/xhtml">
+    <Button fx:id="btnExit" text="Exit" onAction="buttonExitClicked()" />
+
+    <fx:script>
+        function buttonExitClicked() {
+            System.exit();
+        }
+    </fx:script>
+</VBox>
