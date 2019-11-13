@@ -65,7 +65,7 @@
 .btn-viewRide:focused {
     -fx-background-color: linear-gradient(darkBlue, blue),
                           linear-gradient(blue, blue),
-                          linear-gradient(#ffc266, orange);
+                          linear-gradient(#ffc266, #ffc266);
     -fx-background-radius: 50;
     -fx-font-weight: bold;
     -fx-font-size: 44px;

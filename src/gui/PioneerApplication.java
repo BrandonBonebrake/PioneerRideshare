@@ -1,60 +1,64 @@
 package gui;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class PioneerApplication extends Application
 {
+    // Global Constants
+    private final int WIDTH = 1280;
+    private final int HEIGHT = 720;
+
     // Global Variables
+    private Stage stage = null;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
+                Button login = new Button("Login/Signup");
+        login.setOnAction(e -> buttonLoginSignupClicked());
 
-        //Parent root = FXMLLoader.load(getClass().getResource("pioneerApplication.fxml"));
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("pioneerApplication.fxml")));
+        StackPane root = new StackPane();
+        root.getChildren().add(login);
 
-        // Change the properties of the scene here
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
 
-        // Change the properties of the stage here
         primaryStage.setTitle("Pioneer Rideshare");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    @FXML
-    public void buttonExitClicked() {
-        System.exit(0);
-    }
-
-    @FXML
-    public void buttonOfferClicked(){
-        System.out.println("Ride Offer");
-    }
-
-    @FXML
-    public void buttonRequestClicked(){
-        System.out.println("Ride Request");
-    }
-
-    @FXML
-    public void buttonViewRidesClicked() {
-        System.out.println("View Rides");
-    }
-
-    @FXML
     public void buttonLoginSignupClicked() {
         System.out.println("Login/Signup");
+
+        SplashScreenPanel splash = new SplashScreenPanel(stage);
+
+        VBox box = new VBox();
+        box.setPadding(new Insets(10));
+        box.setAlignment(Pos.CENTER);
+
+        Label log = new Label("Login");
+
+        TextField tField = new TextField();
+        tField.setPromptText("Enter username");
+
+        Button loginBtn = new Button("Login");
+        loginBtn.setOnAction(e -> System.exit(0));
+
+        box.getChildren().addAll(log, tField, loginBtn);
+
+        Scene scene1 = new Scene(splash.getRootPane(), WIDTH, HEIGHT);
+        stage.setScene(scene1);
     }
 
     public static void main(String[] args) {
