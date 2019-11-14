@@ -33,7 +33,7 @@ public class ListingPanel
     {
         SplashScreenPanel splash = new SplashScreenPanel(stage);
 
-        stage.setScene(new Scene(splash.getPane(), 1280, 720);
+        stage.setScene(new Scene(splash.getPane(), 1280, 720));
     }
 
 

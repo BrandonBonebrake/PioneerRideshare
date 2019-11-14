@@ -13,8 +13,8 @@ public class PioneerApplication extends Application
     private final int HEIGHT = 720;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-
+    public void start(Stage primaryStage)
+    {
         SplashScreenPanel splash = new SplashScreenPanel(primaryStage);
 
         primaryStage.setTitle("Pioneer Rideshare");
@@ -22,7 +22,8 @@ public class PioneerApplication extends Application
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }

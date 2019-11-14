@@ -99,33 +99,41 @@ public class SplashScreenPanel
         pane.getChildren().add(exitBtn);
     }
 
-    private void buttonViewRidesClicked() {
+    private void buttonViewRidesClicked()
+    {
+        RideListingPanel ridePanel = new RideListingPanel(stage);
 
+        stage.setScene(new Scene(ridePanel.getPane(), WIDTH, HEIGHT));
     }
 
-    private void buttonLoginSignupClicked() {
+    private void buttonLoginSignupClicked()
+    {
         LoginPanel loginPanel = new LoginPanel(stage);
 
         stage.setScene(new Scene(loginPanel.getPane(), WIDTH, HEIGHT));
     }
 
-    private void buttonRequestClicked() {
+    private void buttonRequestClicked()
+    {
         OfferRequestRidePanel requestPanel = new OfferRequestRidePanel(stage);
 
         stage.setScene(new Scene(requestPanel.getPane(), WIDTH, HEIGHT));
     }
 
-    private void buttonOfferClicked() {
+    private void buttonOfferClicked()
+    {
         OfferRequestRidePanel offerPanel = new OfferRequestRidePanel(stage);
 
         stage.setScene(new Scene(offerPanel.getPane(), WIDTH, HEIGHT));
     }
 
-    private void buttonExitClicked() {
+    private void buttonExitClicked()
+    {
         System.exit(0);
     }
 
-    public Pane getPane(){
+    public Pane getPane()
+    {
         return this.pane;
     }
 }

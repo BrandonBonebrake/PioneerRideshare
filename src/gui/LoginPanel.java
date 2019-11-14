@@ -11,18 +11,21 @@ public class LoginPanel
     Stage stage = null;
     Button backBtn = null;
 
-    public LoginPanel(Stage primaryStage) {
+    public LoginPanel(Stage primaryStage)
+    {
         pane = new Pane();
         stage = primaryStage;
 
         this.createComponents();
     }
 
-    private void createComponents() {
+    private void createComponents()
+    {
         this.createBackButton();
     }
 
-    private void createBackButton() {
+    private void createBackButton()
+    {
         backBtn = new Button("Back");
         backBtn.setPrefSize(150, 100);
         backBtn.setOnAction(event -> buttonBackClicked());
@@ -30,13 +33,15 @@ public class LoginPanel
         pane.getChildren().add(backBtn);
     }
 
-    private void buttonBackClicked() {
+    private void buttonBackClicked()
+    {
         SplashScreenPanel splash = new SplashScreenPanel(stage);
 
         stage.setScene(new Scene(splash.getPane(), 1280, 720));
     }
 
-    protected Pane getPane() {
+    protected Pane getPane()
+    {
         return this.pane;
     }
 }
