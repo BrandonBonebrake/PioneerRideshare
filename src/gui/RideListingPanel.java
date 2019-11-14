@@ -5,43 +5,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import location.Location;
 import ride.Ride;
 import student.Student;
 
-public class RideListingPanel
+final class RideListingPanel extends DefaultView
 {
-    // Global Constants
-    private int width = 1280;
-    private int height = 720;
-
     // Global Variables
-    private Scene splashScene = null;
-    private Stage stage = null;
-    private Pane pane = null;
     private TableView table = null;
     private Button backBtn = null;
 
     public RideListingPanel(Stage stage, Scene splash, int width, int height)
     {
-        super();
-
-        this.splashScene = splash;
-        this.stage = stage;
-
-        this.pane = new Pane();
-        pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
-
-        this.width = width;
-        this.height = height;
+        super(stage, splash, width, height);
 
         this.createComponents();
     }
 
-    private void createComponents()
+    @Override
+    void createComponents()
     {
         this.createTable();
         this.createBackButton();
@@ -56,17 +40,17 @@ public class RideListingPanel
         backBtn.setStyle(PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(e -> this.buttonBackClicked());
 
-        pane.getChildren().add(backBtn);
+        super.getPane().getChildren().add(backBtn);
     }
 
     private void buttonBackClicked()
     {
-        stage.setScene(splashScene);
+        super.getStage().setScene(super.getScene());
     }
 
     private void createTable()
     {
-        final double CELL_WIDTH = width / 8.0 + 5;
+        final double CELL_WIDTH = super.getWidth() / 8.0 + 5;
         table = new TableView();
         table.setEditable(false);
 
@@ -87,8 +71,8 @@ public class RideListingPanel
         destinationCityState.setPrefWidth(CELL_WIDTH);
         leaveDateTime.setPrefWidth(CELL_WIDTH);
         returnDateTime.setPrefWidth(CELL_WIDTH);
-        email.setPrefWidth(width / 5.0);
-        request.setPrefWidth(width / 5.0);
+        email.setPrefWidth(super.getWidth() / 5.0);
+        request.setPrefWidth(super.getWidth() / 5.0);
 
         // Add the sub-columns to the columns
         location.getColumns().addAll(leaveCityState, destinationCityState);
@@ -103,15 +87,11 @@ public class RideListingPanel
         //request.setCellFactory(new PropertyValueFactory<>("Request to Join/Offer to Drive"));
 
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);
-        table.setPrefSize(width, height - 75);
+        table.setPrefSize(super.getWidth(), super.getHeight() - 75);
         table.setTranslateY(75);
         //table.setStyle(PioneerApplication.BACKGROUND_STYLE);
 
-        pane.getChildren().add(table);
+        super.getPane().getChildren().add(table);
     }
 
-    protected Pane getPane()
-    {
-        return this.pane;
-    }
 }

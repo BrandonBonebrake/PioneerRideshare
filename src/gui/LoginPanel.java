@@ -2,35 +2,22 @@ package gui;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class LoginPanel
+final class LoginPanel extends DefaultView
 {
-    private int width = 1280;
-    private int height = 720;
-
-    private Pane pane = null;
-    private Stage stage = null;
-    private Scene scene = null;
+    // Global Variables
     private Button backBtn = null;
 
-    public LoginPanel(Stage primaryStage, Scene splash, int width, int height)
+    public LoginPanel(Stage stage, Scene splash, int width, int height)
     {
-        this.width = width;
-        this.height = height;
-
-        pane = new Pane();
-        pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
-
-        stage = primaryStage;
-        scene = splash;
+        super(stage, splash, width, height);
 
         this.createComponents();
     }
 
-    private void createComponents()
+    void createComponents()
     {
         this.createBackButton();
     }
@@ -43,18 +30,13 @@ public class LoginPanel
         backBtn.setStyle(PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(event -> buttonBackClicked());
 
-        pane.getChildren().add(backBtn);
+        super.getPane().getChildren().add(backBtn);
     }
 
     private void buttonBackClicked()
     {
         //SplashScreenPanel splash = new SplashScreenPanel(stage, width, height);
 
-        stage.setScene(scene);
-    }
-
-    protected Pane getPane()
-    {
-        return this.pane;
+        super.getStage().setScene(super.getScene());
     }
 }

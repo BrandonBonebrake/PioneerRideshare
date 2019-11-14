@@ -2,36 +2,22 @@ package gui;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class OfferRequestRidePanel
+final class OfferRequestRidePanel extends DefaultView
 {
-    private int width = 1280;
-    private int height = 720;
-
-    private Pane pane = null;
+    // Global Variables
     private Button backBtn = null;
-    private Stage primaryStage = null;
-    private Scene scene = null;
 
     public OfferRequestRidePanel(Stage stage, Scene splash, int width, int height)
     {
-        this.width = width;
-        this.height = height;
-
-        primaryStage = stage;
-
-        pane = new Pane();
-        pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
-
-        scene = splash;
+        super(stage, splash, width, height);
 
         createComponents();
     }
 
-    private void createComponents()
+    void createComponents()
     {
         this.createBackButton();
     }
@@ -44,19 +30,13 @@ public class OfferRequestRidePanel
         backBtn.setStyle(PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(event -> buttonBackClicked());
 
-        pane.getChildren().add(backBtn);
+        super.getPane().getChildren().add(backBtn);
     }
 
     private void buttonBackClicked()
     {
         //SplashScreenPanel splash = new SplashScreenPanel(primaryStage, width, height);
 
-        primaryStage.setScene(scene);
+        super.getStage().setScene(super.getScene());
     }
-
-    public Pane getPane()
-    {
-        return this.pane;
-    }
-
 }

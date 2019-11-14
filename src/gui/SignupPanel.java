@@ -1,5 +1,5 @@
 package gui;
 
-public class SignupPanel
+final class SignupPanel
 {
 }

@@ -2,26 +2,20 @@ package gui;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class SplashScreenPanel
+final class SplashScreenPanel extends DefaultView
 {
     // Global Constants
 
 
     // Global Variables
-    private Stage stage;
-    private Pane pane;
     private Button exitBtn = null;
     private Button offerBtn = null;
     private Button requestBtn = null;
     private Button viewRidesBtn = null;
     private Button loginSignupButton = null;
-
-    private int width;
-    private int height;
 
     private RideListingPanel ridePanel = null;
     private LoginPanel loginPanel = null;
@@ -30,19 +24,12 @@ public class SplashScreenPanel
 
     public SplashScreenPanel(Stage primaryStage, int width, int height)
     {
-       super();
-       stage = primaryStage;
-       pane = new Pane();
-       pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
-
-       this.width = width;
-       this.height = height;
+       super(primaryStage, null, width, height);
 
         this.createComponents();
     }
 
-
-    private void createComponents() {
+    void createComponents() {
         this.createExitButton();
         this.createOfferButton();
         this.createRequestButton();
@@ -56,12 +43,12 @@ public class SplashScreenPanel
 
         viewRidesBtn = new Button("View Rides");
         viewRidesBtn.setPrefSize(SIZE_X, SIZE_Y);
-        viewRidesBtn.setTranslateX(width / 2 - SIZE_X / 2);
-        viewRidesBtn.setTranslateY(height / 3 * 2);
+        viewRidesBtn.setTranslateX(super.getWidth() / 2 - SIZE_X / 2);
+        viewRidesBtn.setTranslateY(super.getHeight() / 3 * 2);
         viewRidesBtn.setStyle(PioneerApplication.VIEW_RIDES_STYLE);
         viewRidesBtn.setOnAction(e -> this.buttonViewRidesClicked());
 
-        pane.getChildren().add(viewRidesBtn);
+        super.getPane().getChildren().add(viewRidesBtn);
     }
 
     private void createLoginSignupButton() {
@@ -71,12 +58,12 @@ public class SplashScreenPanel
         loginSignupButton = new Button("Login/Signup");
         loginSignupButton.setPrefSize(SIZE_X, SIZE_Y);
         loginSignupButton.setFont(Font.font(24));
-        loginSignupButton.setTranslateX(width - SIZE_X);
+        loginSignupButton.setTranslateX(super.getWidth() - SIZE_X);
         loginSignupButton.setTranslateY(0);
         loginSignupButton.setStyle(PioneerApplication.LOGIN_SIGNUP_STYLE);
         loginSignupButton.setOnAction(e -> this.buttonLoginSignupClicked());
 
-        pane.getChildren().add(loginSignupButton);
+        super.getPane().getChildren().add(loginSignupButton);
     }
 
     private void createOfferButton() {
@@ -86,12 +73,12 @@ public class SplashScreenPanel
         offerBtn = new Button("Offer\n Ride");
         offerBtn.setPrefSize(SIZE_X, SIZE_Y);
         offerBtn.setFont(Font.font(32));
-        offerBtn.setTranslateX(width / 2 - SIZE_X - 25);
-        offerBtn.setTranslateY(height / 2 - SIZE_Y / 2 - 50);
+        offerBtn.setTranslateX(super.getWidth() / 2 - SIZE_X - 25);
+        offerBtn.setTranslateY(super.getHeight() / 2 - SIZE_Y / 2 - 50);
         offerBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
         offerBtn.setOnAction(event -> buttonOfferClicked());
 
-        pane.getChildren().add(offerBtn);
+        super.getPane().getChildren().add(offerBtn);
     }
 
     private void createRequestButton() {
@@ -101,12 +88,12 @@ public class SplashScreenPanel
         requestBtn = new Button("Request\n   Ride");
         requestBtn.setPrefSize(SIZE_X, SIZE_Y);
         requestBtn.setFont(Font.font(32));
-        requestBtn.setTranslateX(width / 2 + 25);
-        requestBtn.setTranslateY(height / 2 - SIZE_Y / 2 - 50);
+        requestBtn.setTranslateX(super.getWidth() / 2 + 25);
+        requestBtn.setTranslateY(super.getHeight() / 2 - SIZE_Y / 2 - 50);
         requestBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
         requestBtn.setOnAction(e -> buttonRequestClicked());
 
-        pane.getChildren().add(requestBtn);
+        super.getPane().getChildren().add(requestBtn);
     }
 
     private void createExitButton() {
@@ -118,44 +105,43 @@ public class SplashScreenPanel
         exitBtn.setStyle(PioneerApplication.EXIT_STYLE);
         exitBtn.setOnAction(e -> this.buttonExitClicked());
 
-        pane.getChildren().add(exitBtn);
+        super.getPane().getChildren().add(exitBtn);
     }
 
     private void buttonViewRidesClicked()
     {
-        ridePanel = new RideListingPanel(stage, stage.getScene(), width, height);
+        ridePanel = new RideListingPanel(super.getStage(), super.getStage().getScene(),
+                                         super.getWidth(), super.getHeight());
 
-        stage.setScene(new Scene(ridePanel.getPane(), width, height));
+        super.getStage().setScene(new Scene(ridePanel.getPane(), super.getWidth(), super.getHeight()));
     }
 
     private void buttonLoginSignupClicked()
     {
-        loginPanel = new LoginPanel(stage, stage.getScene(), width, height);
+        loginPanel = new LoginPanel(super.getStage(), super.getStage().getScene(),
+                                    super.getWidth(), super.getHeight());
 
-        stage.setScene(new Scene(loginPanel.getPane(), width, height));
+        super.getStage().setScene(new Scene(loginPanel.getPane(), super.getWidth(), super.getHeight()));
     }
 
     private void buttonRequestClicked()
     {
-        requestPanel = new OfferRequestRidePanel(stage, stage.getScene(), width, height);
+        requestPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
+                                                 super.getWidth(), super.getHeight());
 
-        stage.setScene(new Scene(requestPanel.getPane(), width, height));
+        super.getStage().setScene(new Scene(requestPanel.getPane(), super.getWidth(), super.getHeight()));
     }
 
     private void buttonOfferClicked()
     {
-        offerPanel = new OfferRequestRidePanel(stage, stage.getScene(), width, height);
+        offerPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
+                                               super.getWidth(), super.getHeight());
 
-        stage.setScene(new Scene(offerPanel.getPane(), width, height));
+        super.getStage().setScene(new Scene(offerPanel.getPane(), super.getWidth(), super.getHeight()));
     }
 
     private void buttonExitClicked()
     {
         System.exit(0);
-    }
-
-    public Pane getPane()
-    {
-        return this.pane;
     }
 }
