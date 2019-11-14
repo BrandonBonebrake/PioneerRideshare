@@ -5,38 +5,36 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class LoginPanel
+public class ListingPanel
 {
+
     Pane pane = null;
     Stage stage = null;
-    Button backBtn = null;
+    Button backBtn;
 
-    public LoginPanel(Stage primaryStage) {
+    public ListingPanel(Stage PrimaryStage)
+    {
+        this.stage = PrimaryStage;
         pane = new Pane();
-        stage = primaryStage;
 
         this.createComponents();
     }
 
-    private void createComponents() {
-        this.createBackButton();
-    }
-
-    private void createBackButton() {
-        backBtn = new Button("Go Back");
+    private void createComponents()
+    {
+        backBtn = new Button("Back");
         backBtn.setPrefSize(150, 100);
         backBtn.setOnAction(event -> buttonBackClicked());
 
         pane.getChildren().add(backBtn);
     }
 
-    private void buttonBackClicked() {
+    private void buttonBackClicked()
+    {
         SplashScreenPanel splash = new SplashScreenPanel(stage);
 
-        stage.setScene(new Scene(splash.getPane(), 1280, 720));
+        stage.setScene(new Scene(splash.getPane(), 1280, 720);
     }
 
-    protected Pane getPane() {
-        return this.pane;
-    }
+
 }
