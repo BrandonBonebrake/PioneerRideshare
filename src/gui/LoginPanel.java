@@ -23,7 +23,7 @@ public class LoginPanel
     }
 
     private void createBackButton() {
-        backBtn = new Button("Go Back");
+        backBtn = new Button("Back");
         backBtn.setPrefSize(150, 100);
         backBtn.setOnAction(event -> buttonBackClicked());
 
