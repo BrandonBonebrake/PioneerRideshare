@@ -22,7 +22,10 @@ public class OfferRequestRidePanel
         this.height = height;
 
         primaryStage = stage;
+
         pane = new Pane();
+        pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
+
         scene = splash;
 
         createComponents();
@@ -38,6 +41,7 @@ public class OfferRequestRidePanel
         backBtn = new Button("Back");
         backBtn.setPrefSize(200, 75);
         backBtn.setFont(Font.font(32));
+        backBtn.setStyle(PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(event -> buttonBackClicked());
 
         pane.getChildren().add(backBtn);

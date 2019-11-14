@@ -9,17 +9,19 @@ import javafx.stage.Stage;
 public class SplashScreenPanel
 {
     // Global Constants
-    private int width = 1280;
-    private int height = 720;
+
 
     // Global Variables
-    private Stage stage = null;
-    private Pane pane = null;
+    private Stage stage;
+    private Pane pane;
     private Button exitBtn = null;
     private Button offerBtn = null;
     private Button requestBtn = null;
     private Button viewRidesBtn = null;
     private Button loginSignupButton = null;
+
+    private int width;
+    private int height;
 
     private RideListingPanel ridePanel = null;
     private LoginPanel loginPanel = null;
@@ -31,6 +33,7 @@ public class SplashScreenPanel
        super();
        stage = primaryStage;
        pane = new Pane();
+       pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
 
        this.width = width;
        this.height = height;
@@ -53,23 +56,24 @@ public class SplashScreenPanel
 
         viewRidesBtn = new Button("View Rides");
         viewRidesBtn.setPrefSize(SIZE_X, SIZE_Y);
-        viewRidesBtn.setFont(Font.font(32));
         viewRidesBtn.setTranslateX(width / 2 - SIZE_X / 2);
         viewRidesBtn.setTranslateY(height / 3 * 2);
+        viewRidesBtn.setStyle(PioneerApplication.VIEW_RIDES_STYLE);
         viewRidesBtn.setOnAction(e -> this.buttonViewRidesClicked());
 
         pane.getChildren().add(viewRidesBtn);
     }
 
     private void createLoginSignupButton() {
-        final int SIZE_X = 200;
-        final int SIZE_Y = 75;
+        final int SIZE_X = 100;
+        final int SIZE_Y = 25;
 
         loginSignupButton = new Button("Login/Signup");
         loginSignupButton.setPrefSize(SIZE_X, SIZE_Y);
         loginSignupButton.setFont(Font.font(24));
         loginSignupButton.setTranslateX(width - SIZE_X);
         loginSignupButton.setTranslateY(0);
+        loginSignupButton.setStyle(PioneerApplication.LOGIN_SIGNUP_STYLE);
         loginSignupButton.setOnAction(e -> this.buttonLoginSignupClicked());
 
         pane.getChildren().add(loginSignupButton);
@@ -79,11 +83,12 @@ public class SplashScreenPanel
         final int SIZE_X = 300;
         final int SIZE_Y = 300;
 
-        offerBtn = new Button("Offer Ride");
+        offerBtn = new Button("Offer\n Ride");
         offerBtn.setPrefSize(SIZE_X, SIZE_Y);
         offerBtn.setFont(Font.font(32));
         offerBtn.setTranslateX(width / 2 - SIZE_X - 25);
         offerBtn.setTranslateY(height / 2 - SIZE_Y / 2 - 50);
+        offerBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
         offerBtn.setOnAction(event -> buttonOfferClicked());
 
         pane.getChildren().add(offerBtn);
@@ -93,11 +98,12 @@ public class SplashScreenPanel
         final int SIZE_X = 300;
         final int SIZE_Y = 300;
 
-        requestBtn = new Button("Request Ride");
+        requestBtn = new Button("Request\n   Ride");
         requestBtn.setPrefSize(SIZE_X, SIZE_Y);
         requestBtn.setFont(Font.font(32));
         requestBtn.setTranslateX(width / 2 + 25);
         requestBtn.setTranslateY(height / 2 - SIZE_Y / 2 - 50);
+        requestBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
         requestBtn.setOnAction(e -> buttonRequestClicked());
 
         pane.getChildren().add(requestBtn);
@@ -109,6 +115,7 @@ public class SplashScreenPanel
         exitBtn.setFont(Font.font(32));
         exitBtn.setTranslateX(0);
         exitBtn.setTranslateY(0);
+        exitBtn.setStyle(PioneerApplication.EXIT_STYLE);
         exitBtn.setOnAction(e -> this.buttonExitClicked());
 
         pane.getChildren().add(exitBtn);

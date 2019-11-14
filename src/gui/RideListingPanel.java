@@ -31,7 +31,10 @@ public class RideListingPanel
 
         this.splashScene = splash;
         this.stage = stage;
+
         this.pane = new Pane();
+        pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
+
         this.width = width;
         this.height = height;
 
@@ -50,6 +53,7 @@ public class RideListingPanel
         backBtn.setPrefSize(100, 50);
         backBtn.setMinSize(200, 75);
         backBtn.setFont(Font.font(32));
+        backBtn.setStyle(PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(e -> this.buttonBackClicked());
 
         pane.getChildren().add(backBtn);
@@ -101,6 +105,7 @@ public class RideListingPanel
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);
         table.setPrefSize(width, height - 75);
         table.setTranslateY(75);
+        //table.setStyle(PioneerApplication.BACKGROUND_STYLE);
 
         pane.getChildren().add(table);
     }

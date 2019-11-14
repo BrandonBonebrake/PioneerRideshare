@@ -20,7 +20,10 @@ public class LoginPanel
     {
         this.width = width;
         this.height = height;
+
         pane = new Pane();
+        pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
+
         stage = primaryStage;
         scene = splash;
 
@@ -37,6 +40,7 @@ public class LoginPanel
         backBtn = new Button("Back");
         backBtn.setPrefSize(200, 75);
         backBtn.setFont(Font.font(32));
+        backBtn.setStyle(PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(event -> buttonBackClicked());
 
         pane.getChildren().add(backBtn);
