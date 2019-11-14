@@ -7,13 +7,13 @@ import javafx.stage.Stage;
 
 public class OfferRequestRidePanel {
 
-    private Pane rootPane = null;
+    private Pane pane = null;
     private Button backBtn = null;
     private Stage primaryStage = null;
 
     public OfferRequestRidePanel(Stage stage) {
         primaryStage = stage;
-        rootPane = new Pane();
+        pane = new Pane();
         createComponents();
     }
 
@@ -26,17 +26,17 @@ public class OfferRequestRidePanel {
         backBtn.setPrefSize(150, 100);
         backBtn.setOnAction(event -> buttonBackClicked());
 
-        rootPane.getChildren().add(backBtn);
+        pane.getChildren().add(backBtn);
     }
 
     private void buttonBackClicked() {
         SplashScreenPanel splash = new SplashScreenPanel(primaryStage);
 
-        primaryStage.setScene(new Scene(splash.getRootPane(), 1280, 720));
+        primaryStage.setScene(new Scene(splash.getPane(), 1280, 720));
     }
 
-    public Pane getRootPane() {
-        return this.rootPane;
+    public Pane getPane() {
+        return this.pane;
     }
 
 }

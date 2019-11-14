@@ -18,7 +18,7 @@ public class PioneerApplication extends Application
         SplashScreenPanel splash = new SplashScreenPanel(primaryStage);
 
         primaryStage.setTitle("Pioneer Rideshare");
-        primaryStage.setScene(new Scene(splash.getRootPane(), WIDTH, HEIGHT));
+        primaryStage.setScene(new Scene(splash.getPane(), WIDTH, HEIGHT));
         primaryStage.show();
     }
 
