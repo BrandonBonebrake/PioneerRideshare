@@ -1,15 +1,12 @@
 package gui;
 
 import date.Date;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import location.Location;
 import ride.Ride;
@@ -18,26 +15,25 @@ import student.Student;
 public class RideListingPanel
 {
     // Global Constants
-    private int WIDTH = 1280;
-    private int HEIGHT = 720;
+    private int width = 1280;
+    private int height = 720;
 
     // Global Variables
+    private Scene splashScene = null;
     private Stage stage = null;
     private Pane pane = null;
     private TableView table = null;
     private Button backBtn = null;
 
-    private final ObservableList<String> data =
-            FXCollections.observableArrayList(
-               "Offer", "Platteville, WI", "Madison, WI", "11/1/10 10:00AM", "11/3/19 11:00AM", "placeholder@uwplatt.edu", "Offer to Join"
-            );
-
-    public RideListingPanel(Stage stage)
+    public RideListingPanel(Stage stage, Scene splash, int width, int height)
     {
         super();
 
+        this.splashScene = splash;
         this.stage = stage;
         this.pane = new Pane();
+        this.width = width;
+        this.height = height;
 
         this.createComponents();
     }
@@ -52,6 +48,8 @@ public class RideListingPanel
     {
         backBtn = new Button("Back");
         backBtn.setPrefSize(100, 50);
+        backBtn.setMinSize(200, 75);
+        backBtn.setFont(Font.font(32));
         backBtn.setOnAction(e -> this.buttonBackClicked());
 
         pane.getChildren().add(backBtn);
@@ -59,17 +57,14 @@ public class RideListingPanel
 
     private void buttonBackClicked()
     {
-        SplashScreenPanel splash = new SplashScreenPanel(stage);
-
-        stage.setScene(new Scene(splash.getPane(), 1280, 720));
+        stage.setScene(splashScene);
     }
 
     private void createTable()
     {
-        final double CELL_WIDTH = WIDTH / 8.0 + 5;
+        final double CELL_WIDTH = width / 8.0 + 5;
         table = new TableView();
         table.setEditable(false);
-
 
         // Create all the columns that will represent the different data points we will display to the user
         TableColumn<String, Ride> offerRequest = new TableColumn("Offer/Request");
@@ -88,8 +83,8 @@ public class RideListingPanel
         destinationCityState.setPrefWidth(CELL_WIDTH);
         leaveDateTime.setPrefWidth(CELL_WIDTH);
         returnDateTime.setPrefWidth(CELL_WIDTH);
-        email.setPrefWidth(WIDTH / 5.0);
-        request.setPrefWidth(WIDTH / 5.0);
+        email.setPrefWidth(width / 5.0);
+        request.setPrefWidth(width / 5.0);
 
         // Add the sub-columns to the columns
         location.getColumns().addAll(leaveCityState, destinationCityState);
@@ -104,8 +99,8 @@ public class RideListingPanel
         //request.setCellFactory(new PropertyValueFactory<>("Request to Join/Offer to Drive"));
 
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);
-        table.setPrefSize(WIDTH, HEIGHT - 20);
-        table.setTranslateY(50);
+        table.setPrefSize(width, height - 75);
+        table.setTranslateY(75);
 
         pane.getChildren().add(table);
     }

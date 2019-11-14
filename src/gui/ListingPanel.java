@@ -31,7 +31,7 @@ public class ListingPanel
 
     private void buttonBackClicked()
     {
-        SplashScreenPanel splash = new SplashScreenPanel(stage);
+        SplashScreenPanel splash = new SplashScreenPanel(stage, 1280, 720);
 
         stage.setScene(new Scene(splash.getPane(), 1280, 720));
     }

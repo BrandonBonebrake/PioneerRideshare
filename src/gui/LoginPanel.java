@@ -3,18 +3,26 @@ package gui;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class LoginPanel
 {
-    Pane pane = null;
-    Stage stage = null;
-    Button backBtn = null;
+    private int width = 1280;
+    private int height = 720;
 
-    public LoginPanel(Stage primaryStage)
+    private Pane pane = null;
+    private Stage stage = null;
+    private Scene scene = null;
+    private Button backBtn = null;
+
+    public LoginPanel(Stage primaryStage, Scene splash, int width, int height)
     {
+        this.width = width;
+        this.height = height;
         pane = new Pane();
         stage = primaryStage;
+        scene = splash;
 
         this.createComponents();
     }
@@ -27,7 +35,8 @@ public class LoginPanel
     private void createBackButton()
     {
         backBtn = new Button("Back");
-        backBtn.setPrefSize(150, 100);
+        backBtn.setPrefSize(200, 75);
+        backBtn.setFont(Font.font(32));
         backBtn.setOnAction(event -> buttonBackClicked());
 
         pane.getChildren().add(backBtn);
@@ -35,9 +44,9 @@ public class LoginPanel
 
     private void buttonBackClicked()
     {
-        SplashScreenPanel splash = new SplashScreenPanel(stage);
+        //SplashScreenPanel splash = new SplashScreenPanel(stage, width, height);
 
-        stage.setScene(new Scene(splash.getPane(), 1280, 720));
+        stage.setScene(scene);
     }
 
     protected Pane getPane()
