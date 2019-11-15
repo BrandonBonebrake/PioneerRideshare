@@ -13,7 +13,7 @@ import time.PioneerTime;
  @author Bryce Bierman
  **/
 
-public class RideOffer extends Ride
+public final class RideOffer extends Ride
 {
     /**
      Constructor for the RideOffer class. Holds all pertinent ride information.
