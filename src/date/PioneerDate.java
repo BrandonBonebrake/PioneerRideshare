@@ -1,5 +1,5 @@
 package date;
 
-public class PioneerDate
+public class PioneerDate extends Date
 {
 }
