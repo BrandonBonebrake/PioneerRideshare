@@ -58,7 +58,7 @@ final class RideListingPanel extends DefaultView
         TableColumn<String, Ride> offerRequest = new TableColumn("Offer/Request");
         TableColumn<String, Location> leaveCityState = new TableColumn("Leaving");
         TableColumn<String, Location> destinationCityState = new TableColumn("Destination");
-        TableColumn location = new TableColumn("City/Sate");
+        TableColumn location = new TableColumn("City/State");
         TableColumn<String, Date> leaveDateTime = new TableColumn("Leaving");
         TableColumn<String, Date> returnDateTime = new TableColumn("Returning");
         TableColumn dateTime = new TableColumn("Date/Time");
