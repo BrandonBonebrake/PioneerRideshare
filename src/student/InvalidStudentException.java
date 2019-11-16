@@ -1,6 +1,7 @@
 package student;
 
-public class InvalidStudentException extends Exception {
+public class InvalidStudentException extends Exception
+{
     public InvalidStudentException()
     {
         super();
