@@ -1,5 +1,5 @@
 package time;
 
-public class PioneerTime
+public class PioneerTime extends Time
 {
 }

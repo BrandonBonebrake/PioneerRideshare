@@ -1,10 +1,2 @@
 
-.idea/dictionaries/Funk.xml
-*.class
-/out/
-*.class
-out/production/PioneerRideshare/gui/SplashScreenPanel.class
-out/production/PioneerRideshare/gui/RideListingPanel.class
-out/production/PioneerRideshare/gui/PioneerApplication.class
-out/production/PioneerRideshare/gui/OfferRequestRidePanel.class
-out/production/PioneerRideshare/gui/LoginPanel.class
+*.kotlin_module

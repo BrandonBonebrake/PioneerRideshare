@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -58,6 +59,16 @@ abstract class DefaultView
     private void paneDefaults()
     {
         pane.setStyle(PioneerApplication.BACKGROUND_STYLE);
+    }
+
+    /**
+        Quick method to add components to the view so a
+        super.getPane().getChildren().add(####); is not
+        needed to add a component to the pane.
+     **/
+    void addComponent(Node component)
+    {
+        this.getPane().getChildren().add(component);
     }
 
     /**
