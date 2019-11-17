@@ -33,12 +33,10 @@ final class OfferRequestRidePanel extends DefaultView
     private final int DEFAULT_FONT_SIZE = 32;
 
     // Global Variables
-    private Button backBtn;
-    private Button submitBtn;
     private TextField leaveCity;
     private TextField destCity;
-    private ChoiceBox leaveState;
-    private ChoiceBox destState;
+    //private ChoiceBox leaveState;
+    //private ChoiceBox destState;
     private DatePicker leaveDate;
     private DatePicker returnDate;
 
@@ -46,7 +44,7 @@ final class OfferRequestRidePanel extends DefaultView
 
     private Ride ride; // Ride object that will store all necessary ride information
 
-    public OfferRequestRidePanel(Stage stage, Scene splash, int width, int height)
+    OfferRequestRidePanel(Stage stage, Scene splash, int width, int height)
     {
         super(stage, splash, width, height);
 
@@ -108,7 +106,7 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createLeaveStateChoiceBox()
     {
-        leaveState = new ChoiceBox();
+        ChoiceBox leaveState = new ChoiceBox<>();
 
         leaveState.setPrefSize(CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT);
         leaveState.setItems(stateList);
@@ -147,7 +145,7 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createDestinationStateChoiceBox()
     {
-        destState = new ChoiceBox();
+        ChoiceBox destState = new ChoiceBox<>();
 
         destState.setPrefSize(CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT);
         destState.setItems(stateList);
@@ -211,7 +209,8 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createBackButton()
     {
-        backBtn = new Button("Back");
+        Button backBtn = new Button("Back");
+
         backBtn.setPrefSize(200, 75);
         backBtn.setFont(Font.font(DEFAULT_FONT_SIZE));
         backBtn.setStyle(PioneerApplication.EXIT_STYLE);
@@ -225,7 +224,8 @@ final class OfferRequestRidePanel extends DefaultView
         final int WIDTH = 200;
         final int HEIGHT = 75;
 
-        submitBtn = new Button("Submit");
+        Button submitBtn = new Button("Submit");
+
         submitBtn.setPrefSize(WIDTH, HEIGHT);
         submitBtn.setFont(Font.font(DEFAULT_FONT_SIZE));
         submitBtn.setStyle(PioneerApplication.EXIT_STYLE);
@@ -248,6 +248,30 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void buttonSubmitClicked()
     {
-        System.out.println("YES!!!");
+        colorizeBasedOnInput();
+    }
+
+    private void colorizeBasedOnInput()
+    {
+        String VALID_FIELD = "-fx-control-inner-background: white; -fx-font-weight: bold;";
+        String INVALID_FIELD = "-fx-control-inner-background: red; -fx-font-weight: bold;";
+
+        // Check if fields possibly have valid values stored in them
+        if(this.leaveCity.getText().length() <= 2)
+            this.leaveCity.setStyle(INVALID_FIELD);
+        else
+            this.leaveCity.setStyle(VALID_FIELD);
+        if(this.destCity.getText().length() <= 2)
+            this.destCity.setStyle(INVALID_FIELD);
+        else
+            this.destCity.setStyle(VALID_FIELD);
+        if(leaveDate.getEditor().getText().length() < 10)
+            leaveDate.setStyle(INVALID_FIELD);
+        else
+            leaveDate.setStyle(VALID_FIELD);
+        if(returnDate.getEditor().getText().length() < 10)
+            returnDate.setStyle(INVALID_FIELD);
+        else
+            returnDate.setStyle(VALID_FIELD);
     }
 }

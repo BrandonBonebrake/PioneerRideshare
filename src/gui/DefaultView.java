@@ -80,6 +80,11 @@ abstract class DefaultView
         this.getStage().setScene(this.getScene());
     }
 
+    void changeScene(Pane newPane)
+    {
+        this.getStage().setScene(new Scene(newPane, this.getWidth(), this.getHeight()));
+    }
+
     /**
         Return the stage that is created at runtime.
 

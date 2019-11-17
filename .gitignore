@@ -1,4 +1,4 @@
-
+out
 *.kotlin_module
 *.class
 *.class
@@ -26,3 +26,6 @@ out/production/PioneerRideshare/date/PioneerDate.class
 out/production/PioneerRideshare/date/InvalidDateException.class
 out/production/PioneerRideshare/date/Date.class
 out/production/PioneerRideshare/database/PSRDatabase.class
+out/production/PioneerRideshare/gui/SplashScreenPanel.class
+out/production/PioneerRideshare/gui/OfferRequestRidePanel.class
+out/production/PioneerRideshare/gui/DefaultView.class
