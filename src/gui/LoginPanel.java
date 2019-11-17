@@ -35,8 +35,6 @@ final class LoginPanel extends DefaultView
 
     private void buttonBackClicked()
     {
-        //SplashScreenPanel splash = new SplashScreenPanel(stage, width, height);
-
-        super.getStage().setScene(super.getScene());
+        super.returnView();
     }
 }

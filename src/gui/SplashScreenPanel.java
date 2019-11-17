@@ -8,7 +8,8 @@ import javafx.stage.Stage;
 final class SplashScreenPanel extends DefaultView
 {
     // Global Constants
-
+    private final int DEFAULT_X_TRANS = 400;
+    private final int DEFAULT_Y_TRANS = 300;
 
     // Global Variables
     private Button exitBtn = null;
@@ -43,8 +44,8 @@ final class SplashScreenPanel extends DefaultView
 
         viewRidesBtn = new Button("View Rides");
         viewRidesBtn.setPrefSize(SIZE_X, SIZE_Y);
-        viewRidesBtn.setTranslateX(super.getWidth() / 2 - SIZE_X / 2);
-        viewRidesBtn.setTranslateY(super.getHeight() / 3 * 2);
+        viewRidesBtn.setTranslateX(DEFAULT_X_TRANS - SIZE_X / 2);
+        viewRidesBtn.setTranslateY(DEFAULT_Y_TRANS + 125);
         viewRidesBtn.setStyle(PioneerApplication.VIEW_RIDES_STYLE);
         viewRidesBtn.setOnAction(e -> this.buttonViewRidesClicked());
 
@@ -73,8 +74,8 @@ final class SplashScreenPanel extends DefaultView
         offerBtn = new Button("Offer\n Ride");
         offerBtn.setPrefSize(SIZE_X, SIZE_Y);
         offerBtn.setFont(Font.font(32));
-        offerBtn.setTranslateX(super.getWidth() / 2 - SIZE_X - 25);
-        offerBtn.setTranslateY(super.getHeight() / 2 - SIZE_Y / 2 - 50);
+        offerBtn.setTranslateX(DEFAULT_X_TRANS - SIZE_X - 25);
+        offerBtn.setTranslateY(DEFAULT_Y_TRANS - SIZE_Y / 2 - 50);
         offerBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
         offerBtn.setOnAction(event -> buttonOfferClicked());
 
@@ -88,8 +89,8 @@ final class SplashScreenPanel extends DefaultView
         requestBtn = new Button("Request\n   Ride");
         requestBtn.setPrefSize(SIZE_X, SIZE_Y);
         requestBtn.setFont(Font.font(32));
-        requestBtn.setTranslateX(super.getWidth() / 2 + 25);
-        requestBtn.setTranslateY(super.getHeight() / 2 - SIZE_Y / 2 - 50);
+        requestBtn.setTranslateX(DEFAULT_X_TRANS + 25);
+        requestBtn.setTranslateY(DEFAULT_Y_TRANS - SIZE_Y / 2 - 50);
         requestBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
         requestBtn.setOnAction(e -> buttonRequestClicked());
 

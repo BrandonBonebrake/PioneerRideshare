@@ -45,7 +45,7 @@ final class RideListingPanel extends DefaultView
 
     private void buttonBackClicked()
     {
-        super.getStage().setScene(super.getScene());
+        super.returnView();
     }
 
     private void createTable()
@@ -93,5 +93,4 @@ final class RideListingPanel extends DefaultView
 
         super.getPane().getChildren().add(table);
     }
-
 }

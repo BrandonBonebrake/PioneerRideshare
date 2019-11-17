@@ -30,8 +30,8 @@ public class PioneerApplication extends Application
             "-fx-font-size: 12px; -fx-text-fill: white;";
 
     // Global Constants
-    private final int WIDTH = 1280;
-    private final int HEIGHT = 720;
+    private final int WIDTH = 800;
+    private final int HEIGHT = 620;
     private final String NAME = "Pioneer Rideshare";
 
     @Override
