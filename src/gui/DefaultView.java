@@ -72,6 +72,15 @@ abstract class DefaultView
     }
 
     /**
+     Sets the scene back to the scene that originally
+     created this scene.
+     **/
+    void returnView()
+    {
+        this.getStage().setScene(this.getScene());
+    }
+
+    /**
         Return the stage that is created at runtime.
 
         @return Stage that is created at runtime

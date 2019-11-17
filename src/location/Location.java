@@ -1,10 +1,7 @@
 package location;
 
-import java.util.Set;
-
-/*** Class - Address <p>
- *
- *    Object used to hold an address
+/***
+ *    Object used to hold an address to a location.
  *
  *    @author  Brandon Bonebrake
  *
@@ -42,8 +39,7 @@ public final class Location
         this.setZip(zip);
     }
 
-    /*** Getter - getStreet <p>
-     *
+    /***
      *   Return the street
      *
      *   @return Street Address
@@ -55,8 +51,7 @@ public final class Location
         return this.street;
     }
 
-    /*** Getter - getCity <p>
-     *
+    /***
      *   Return the city
      *
      *   @return City
@@ -68,8 +63,7 @@ public final class Location
         return this.city;
     }
 
-    /*** Getter - getState <p>
-     *
+    /***
      *   Return the State
      *
      *   @return State
@@ -81,8 +75,7 @@ public final class Location
         return this.state;
     }
 
-    /*** Getter - getZip <p>
-     *
+    /***
      *   Return the zipcode
      *
      *   @return zip code
@@ -94,8 +87,7 @@ public final class Location
         return this.zip;
     }
 
-    /***  Setter - setStreet <p>
-     *
+    /***
      *    Set the street to the value that is passed in
      *
      *    @param street Set the street to the value that is passed in
@@ -107,8 +99,7 @@ public final class Location
         this.street = street;
     }
 
-    /***  Setter - setCity <p>
-     *
+    /***
      *    Set the city to the value that is passed in
      *
      *    @param city Set the city to the value that is passed in
@@ -120,9 +111,10 @@ public final class Location
         this.city = city;
     }
 
-    /***  Setter - setState <p>
-     *
-     *    Set the state to the one that is passed in
+    /***
+     *    Set the state to the one that is passed in.
+     *    Removes leading and trailing whitespace and
+     *    converts value to uppercase.
      *
      *    @param state State in the long or shorthand version
      *
@@ -133,8 +125,7 @@ public final class Location
         this.state = state.toUpperCase().trim();
     }
 
-    /***  Setter - setZip <p>
-     *
+    /***
      *    Set the zip code to passed in
      *    integer value so long as it is
      *    5 characters long.
