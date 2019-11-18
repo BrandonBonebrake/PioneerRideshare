@@ -1,5 +1,6 @@
 package time;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /*** Class - Time <p>
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  *
  ***/
 
-public class Time
+public class Time implements Serializable
 {
     // Class Constants
     private final int DEFAULT_HOUR    = LocalDateTime.now().getHour();
@@ -22,8 +23,9 @@ public class Time
     private int hour    = DEFAULT_HOUR;
     private int minutes = DEFAULT_MINUTES;
 
-    /*** Constructor Method - Time
-     *
+    private static final long serialVersionUID = 4099097738532790604L;
+
+    /***
      *    Stores the current client.time of day in
      *    hours and minutes
      *
@@ -34,8 +36,7 @@ public class Time
         super();
     }
 
-    /*** Constructor Method - Time <p>
-     *
+    /***
      *    Stores the client.time of day in
      *    hours and minutes
      *
@@ -51,8 +52,7 @@ public class Time
         this.setTime(hour, minutes);
     }
 
-    /*** Constructor Method - Time <p>
-     *
+    /***
      *    Stores the client.time of day in
      *    hours and minutes
      *
@@ -64,8 +64,7 @@ public class Time
 
     public Time(String strTime) throws InvalidTimeException { this.setTime(strTime); }
 
-    /*** Getter - getHours <p>
-     *
+    /***
      *   Return the hour
      *
      *   @return hour
@@ -74,8 +73,7 @@ public class Time
 
     public int getHours() { return this.hour; }
 
-    /*** Getter - getMinutes <p>
-     *
+    /***
      *   Return the minutes
      *
      *   @return minutes
@@ -84,8 +82,7 @@ public class Time
 
     public int getMinutes() { return this.minutes; }
 
-    /*** Getter - getTime <p>
-     *
+    /***
      *   Return the client.time in the format HH:MM
      *
      *   @return String of client.time in the format HH:MM
@@ -114,8 +111,7 @@ public class Time
         return hours + ":" + minutes;
     }
 
-    /*** Getter - getTimeCreated <p>
-     *
+    /***
      *   Return the client.time the object was created
      *   in the format HH:MM
      *
@@ -128,8 +124,7 @@ public class Time
         return this.DEFAULT_HOUR + ":" + this.DEFAULT_MINUTES;
     }
 
-    /*** Setter - setHour <p>
-     *
+    /***
      *   Sets the hour to the value passed
      *   in if <code>isValidHour</code> is true
      *
@@ -156,8 +151,7 @@ public class Time
         }
     }
 
-    /*** Setter - setHour <p>
-     *
+    /***
      *   Sets the minutes to the value passed
      *   in if <code>isValidMinutes</code> is true
      *
@@ -184,8 +178,7 @@ public class Time
         }
     }
 
-    /*** Setter - setTime <p>
-     *
+    /***
      *   Sets the client.time to the system client.time
      *
      * ***/
@@ -196,8 +189,7 @@ public class Time
         this.minutes = LocalDateTime.now().getMinute();
     }
 
-    /*** Setter - setTime <p>
-     *
+    /***
      *   Sets the client.time to passed in String
      *
      *   @param strTime String in the format HH:MM
@@ -270,8 +262,7 @@ public class Time
         }
     }
 
-    /*** Setter - setTime <p>
-     *
+    /***
      *   Sets the client.time to passed in Time object
      *
      *   @param time Time object
@@ -285,8 +276,7 @@ public class Time
         this.setTime(time.getHours(), time.getMinutes());
     }
 
-    /***  Setter - setTime <p>
-     *
+    /***
      *     This method is used to set
      *     the current client.time of day it is
      *
@@ -305,8 +295,7 @@ public class Time
         this.setMinutes(minutes);
     }
 
-    /*** Observer - isValidHours <p>
-     *
+    /***
      *    Returns true/false if the value
      *    supplied by the user is valid.
      *    Valid range is ( 0 - 23 )
@@ -332,8 +321,7 @@ public class Time
         return isValidHours;
     }
 
-    /*** Observer - isValidMinutes <p>
-     *
+    /***
      *    Returns true/false if the value
      *    supplied by the user is valid.
      *    Valid range is ( 0 - 59 )
@@ -359,8 +347,9 @@ public class Time
         return isValidMinutes;
     }
 
-    /*** Class Helper - toString <p>
+    /***
      * @return client.time in the format hh:mm
+     *
      * ***/
 
     public String toString()

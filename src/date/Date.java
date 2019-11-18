@@ -11,8 +11,8 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     private final int DEFAULT_MONTH = LocalDate.now().getMonthValue();
     private final int DEFAULT_DAY   = LocalDate.now().getDayOfMonth();
 
-    private final int MIN_YEAR = 0;
-    private final int MAX_YEAR = 2200;
+    private final int MIN_YEAR  = 0;
+    private final int MAX_YEAR  = 2200;
     private final int MIN_MONTH = 1;
     private final int MAX_MONTH = 12;
 
@@ -21,8 +21,7 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     private int month = DEFAULT_MONTH;
     private int day   = DEFAULT_DAY;
 
-    static final long serialVersionUID = 4099097738532790602L;
-
+    private static final long serialVersionUID = 4099097738532790602L;
 
     public Date()
     {
@@ -151,17 +150,17 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
         return date1.compareTo(date2);
     }
 
-    private int compareYear(Date date)
+    public int compareYear(Date date)
     {
         return this.getYear() - date.getYear();
     }
 
-    private int compareMonth(Date date)
+    public int compareMonth(Date date)
     {
         return this.getMonth() - date.getMonth();
     }
 
-    private int compareDay(Date date)
+    public int compareDay(Date date)
     {
         return this.getDay() - date.getDay();
     }

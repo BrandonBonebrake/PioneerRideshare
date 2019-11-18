@@ -3,8 +3,12 @@ package socketCommunication;
 import student.InvalidStudentException;
 import student.Student;
 
-public class Client
+import java.io.Serializable;
+
+public class Client implements Serializable
 {
+    private static final long serialVersionUID = 4099097738532790605L;
+
     private Client() throws InvalidStudentException
     {
         final int port = 63341;

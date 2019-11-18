@@ -2,21 +2,25 @@ package student;
 
 import date.Date;
 
-public final class Student
+import java.io.Serializable;
+
+public final class Student implements Serializable
 {
+    private final int MAX_RIDE_OFFERS  = 2;
+    private final int MAX_RIDE_REQUESTS = 2;
+
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private Date accountCreationDate;
-    private int numCurrentRideRequests;
-    private int numCurrentRideOffers;
+    private int numCurrentRideRequests = 0;
+    private int numCurrentRideOffers   = 0;
     private String accountNumber;
 
-    static final long serialVersionUID = 7652905671067735991L;
+    private static final long serialVersionUID = 4099097738532790605L;
 
-    /*** Constructor Method - client.student.Student <p>
-     *
+    /***
      *   Creates a client.student.Student object that holds their
      *   name and email
      *
@@ -39,8 +43,7 @@ public final class Student
         this.setAccountNumber();
     }
 
-    /*** Getter - getFirstName <p>
-     *
+    /***
      *   Return the Student's first name
      *
      *   @return Student's first name
@@ -48,8 +51,7 @@ public final class Student
      * ***/
     public String getFirstName() { return this.firstName; }
 
-    /*** Getter - getLastName <p>
-     *
+    /***
      *   Return the Student's last name
      *
      *   @return Student's last name
@@ -57,8 +59,7 @@ public final class Student
      * ***/
     public String getLastName() { return this.lastName; }
 
-    /*** Getter - getEmail <p>
-     *
+    /***
      *   Return the Student's uwplatt email
      *
      *   @return Student's uwplatt email
@@ -71,8 +72,7 @@ public final class Student
         return this.password;
     }
 
-    /***  Getter - getAccountCreationDate <p>
-     *
+    /***
      *    Return the date the students account
      *    created on
      *
@@ -84,8 +84,7 @@ public final class Student
         return accountCreationDate;
     }
 
-    /***  Getter - getAccountNumber <p>
-     *
+    /***
      *    Returns the hex account number
      *    of the user
      *
@@ -97,8 +96,7 @@ public final class Student
         return this.accountNumber;
     }
 
-    /***  Setter - setFirstName <p>
-     *
+    /***
      *    Set the Student first name to the passed
      *    in value
      *
@@ -114,8 +112,7 @@ public final class Student
         this.firstName = firstName;
     }
 
-    /***  Setter - setLastName <p>
-     *
+    /***
      *    Set the Student first name to the passed
      *    in value
      *
@@ -131,8 +128,7 @@ public final class Student
         this.lastName = lastName;
     }
 
-    /***  Setter - setEmail <p>
-     *
+    /***
      *    Set the email as long as it is a @uwplatt.edu email
      *
      *    @param email @uwplatt.edu email
@@ -180,8 +176,7 @@ public final class Student
         this.password = password;
     }
 
-    /***  Setter - setAccountCreationDate <p>
-     *
+    /***
      *    Sets the date of the account creation
      *    to the current system date
      *
@@ -191,8 +186,7 @@ public final class Student
         this.accountCreationDate = new Date();
     }
 
-    /***  Setter - setAccountNumber <p>
-     *
+    /***
      *    Set the account number of the student
      *    at the creation of the object
      *
@@ -252,7 +246,25 @@ public final class Student
         this.accountNumber = st.toString();
     }
 
-    /*** Class Helper - toString <p>
+    private void incrementRideRequests() throws InvalidStudentException
+    {
+        if(this.numCurrentRideRequests >= MAX_RIDE_REQUESTS)
+        {
+            throw new InvalidStudentException("Invalid Number Ride Requests. Max of " + MAX_RIDE_REQUESTS);
+        }
+        this.numCurrentRideRequests++;
+    }
+
+    private void incrementRideOffers() throws InvalidStudentException
+    {
+        if(this.numCurrentRideOffers >= MAX_RIDE_OFFERS)
+        {
+            throw new InvalidStudentException("Invalid Number Ride Offers. Max of " + MAX_RIDE_OFFERS);
+        }
+        this.numCurrentRideOffers++;
+    }
+
+    /***
      * @return client.student information
      * ***/
     public String toString()
