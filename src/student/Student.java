@@ -246,7 +246,7 @@ public final class Student implements Serializable
         this.accountNumber = st.toString();
     }
 
-    private void incrementRideRequests() throws InvalidStudentException
+    public void incrementRideRequests() throws InvalidStudentException
     {
         if(this.numCurrentRideRequests >= MAX_RIDE_REQUESTS)
         {
@@ -255,7 +255,7 @@ public final class Student implements Serializable
         this.numCurrentRideRequests++;
     }
 
-    private void incrementRideOffers() throws InvalidStudentException
+    public void incrementRideOffers() throws InvalidStudentException
     {
         if(this.numCurrentRideOffers >= MAX_RIDE_OFFERS)
         {
@@ -263,6 +263,7 @@ public final class Student implements Serializable
         }
         this.numCurrentRideOffers++;
     }
+
 
     /***
      * @return client.student information

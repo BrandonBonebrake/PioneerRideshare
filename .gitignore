@@ -29,3 +29,10 @@ out/production/PioneerRideshare/database/PSRDatabase.class
 out/production/PioneerRideshare/gui/SplashScreenPanel.class
 out/production/PioneerRideshare/gui/OfferRequestRidePanel.class
 out/production/PioneerRideshare/gui/DefaultView.class
+/src/date/TestDates.java
+*.class
+out/production/PioneerRideshare/date/Date.class
+out/production/PioneerRideshare/date/PioneerDate.class
+out/production/PioneerRideshare/socketCommunication/Client.class
+out/production/PioneerRideshare/student/Student.class
+out/production/PioneerRideshare/time/Time.class

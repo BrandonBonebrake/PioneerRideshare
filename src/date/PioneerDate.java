@@ -22,7 +22,7 @@ public final class PioneerDate extends Date implements Serializable
 
     public void changeDate(int day, int month, int year) throws InvalidDateException
     {
-        if(this.isValidDate(year, month))
+        if(this.isValidDate(year, month, day))
         {
             super.setYear(year);
             super.setMonth(month);
@@ -30,13 +30,13 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
-    public boolean isValidDate(int year, int month) throws InvalidDateException
+    public boolean isValidDate(int year, int month, int day) throws InvalidDateException
     {
-        Date today = new Date();
+        Date today = new Date(); // Object with the current date
         int relativeMonth = month;
 
         // Check if this or next year
-        if(year != today.getYear() || year != today.getYear() + 1)
+        if(year != today.getYear() && year != today.getYear() + 1)
         {
             throw new InvalidDateException("Invalid Date: Invalid Year");
         }
@@ -51,6 +51,14 @@ public final class PioneerDate extends Date implements Serializable
         if(relativeMonth > MAX_MONTHS_IN_FUTURE)
         {
             throw new InvalidDateException("Invalid Date: Date to far in the future");
+        }
+        else if(relativeMonth < 0)
+        {
+            throw new InvalidDateException("Invalid Date: Month is in the past");
+        }
+        else if(relativeMonth == 0 && day < today.getDay())
+        {
+            throw new InvalidDateException("Invalid Date: Day is in the past");
         }
         return true;
     }
