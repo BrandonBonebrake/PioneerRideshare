@@ -13,7 +13,7 @@ import java.io.Serializable;
  **/
 public final class PioneerDate extends Date implements Serializable
 {
-    private final int MAX_MONTHS_IN_FUTURE = 3;
+    private final int MAX_MONTHS_IN_FUTURE = 2;
 
     private static final long serialVersionUID = 4099097738532790603L;
 

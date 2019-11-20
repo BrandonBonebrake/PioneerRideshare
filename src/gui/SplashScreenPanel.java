@@ -145,7 +145,8 @@ final class SplashScreenPanel extends DefaultView
     private void buttonRequestClicked()
     {
         requestPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
-                                                 super.getWidth(), super.getHeight());
+                                                 super.getWidth(), super.getHeight(),
+                                                 "Request Ride");
 
         super.changeScene(requestPanel.getPane());
     }
@@ -153,7 +154,8 @@ final class SplashScreenPanel extends DefaultView
     private void buttonOfferClicked()
     {
         offerPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
-                                               super.getWidth(), super.getHeight());
+                                               super.getWidth(), super.getHeight(),
+                                               "Offer Ride");
 
         super.changeScene(offerPanel.getPane());
     }
