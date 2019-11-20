@@ -2,6 +2,9 @@ package ride;
 
 import date.Date;
 import date.PioneerDate;
+import gui.PioneerApplication;
+import javafx.scene.control.Button;
+import javafx.scene.text.Font;
 import location.Location;
 import location.Map;
 import student.Student;
@@ -55,6 +58,42 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         this.returnTime = returnTime;
         this.isOffer = isOffer;
         this.student = student;
+
+        this.rideIdentificationNumber = "12345";
+    }
+
+    public Button getButton()
+    {
+        Button button = new Button();
+
+        button.setStyle(PioneerApplication.RIDE_STYLE);
+        button.setOnAction(e -> System.out.println(this.student.getFirstName()));
+
+        if(isOffer)
+        {
+            button.setText("Request To Join");
+        }
+        else
+        {
+            button.setText("Offer To Drive");
+        }
+
+        return button;
+    }
+
+    public String getOfferRequest()
+    {
+        String offerRequest;
+
+        if(isOffer)
+        {
+            offerRequest = "Offer";
+        }
+        else
+        {
+            offerRequest = "Request";
+        }
+        return offerRequest;
     }
 
     /**
@@ -62,9 +101,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 
      @return departLocation
      **/
-    public Location getDepartLocation()
+    public String getDepartLocation()
     {
-        return departLocation;
+        return departLocation.getCity() + ",\n" + departLocation.getState();
     }
 
     /**
@@ -82,9 +121,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 
      @return returnLocation
      **/
-    public Location getReturnLocation()
+    public String getReturnLocation()
     {
-        return returnLocation;
+        return returnLocation.getCity() + ",\n" + returnLocation.getState();
     }
 
     /**
@@ -102,9 +141,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 
      @return leaveDate
      **/
-    public Date getLeaveDate()
+    public String getLeaveDate()
     {
-        return leaveDate;
+        return leaveDate.getDate();
     }
 
     /**
@@ -122,9 +161,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 
      @return returnDate
      **/
-    public Date getReturnDate()
+    public String getReturnDate()
     {
-        return returnDate;
+        return returnDate.getDate();
     }
 
     /**
@@ -142,9 +181,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 
      @return leaveTime
      **/
-    public Time getLeaveTime()
+    public String getLeaveTime()
     {
-        return leaveTime;
+        return leaveTime.getTime();
     }
 
     /**
@@ -162,9 +201,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 
      @return returnTime
      **/
-    public Time getReturnTime()
+    public String getReturnTime()
     {
-        return returnTime;
+        return returnTime.getTime();
     }
 
     /**
@@ -175,6 +214,16 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     public void setReturnTime(Time returnTime)
     {
         this.returnTime = returnTime;
+    }
+
+    public String getReturnDateTime()
+    {
+        return this.getReturnDate() + "\n" + this.getReturnTime();
+    }
+
+    public String getLeaveDateTime()
+    {
+        return this.getLeaveDate() + "\n" + this.getLeaveTime();
     }
 
     /**
@@ -257,6 +306,11 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         this.student = student;
     }
 
+    public String getStudentEmail()
+    {
+        return student.getEmail();
+    }
+
     /**
      Overridden compare method that compares the ride
      identification numbers of one ride to another.
@@ -300,7 +354,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     @Override
     public boolean equals(Object obj)
     {
-        return (obj instanceof Ride && this.compareTo((Ride)obj) == 0);
+        return (obj != null && obj instanceof Ride && this.compareTo((Ride)obj) == 0);
     }
 
     /**

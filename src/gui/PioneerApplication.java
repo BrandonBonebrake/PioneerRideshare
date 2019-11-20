@@ -4,13 +4,18 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ This class is the starting point for the GUI.
+ It starts by creating the splash screen and then passing
+ in the
+
+ @author Brandon Bonebrake
+ **/
+
 public class PioneerApplication extends Application
 {
     // Global static constants
-    protected final static String BACKGROUND_STYLE = "-fx-background-color: linear-gradient(from 0% 93% to 0% 100%, blue 0%, #903b12 100%)," +
-            "#000080,"+
-            "#d86e3a," +
-            "radial-gradient(center 50% 50%, radius 100%, blue, #000080); " +
+    protected final static String BACKGROUND_STYLE = "-fx-background-color: radial-gradient(center 50% 50%, radius 75%, blue, #000080); " +
             "-fx-background-radius: 0;";
     protected final static String EXIT_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
             "linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
@@ -28,6 +33,10 @@ public class PioneerApplication extends Application
             "-fx-font-size: 45px; -fx-text-fill: blue;";
     protected final static String LOGIN_SIGNUP_STYLE = "-fx-background-color: transparent; -fx-background-radius: 0; -fx-font-weight: bold;" +
             "-fx-font-size: 12px; -fx-text-fill: white;";
+    public final static String RIDE_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
+            "linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
+            "-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 18px;" +
+            "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
 
     // Global Constants
     private final int WIDTH  = 800;

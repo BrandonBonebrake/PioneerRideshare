@@ -26,8 +26,8 @@ public final class InvalidDateException  extends Exception
      *
      * ***/
 
-    public InvalidDateException( String message )
+    public InvalidDateException(String message)
     {
-        super( message );
+        super("Invalid Date: " + message);
     }
 }

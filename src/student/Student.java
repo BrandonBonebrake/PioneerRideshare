@@ -65,7 +65,10 @@ public final class Student implements Serializable
      *   @return Student's uwplatt email
      *
      * ***/
-    public String getEmail() { return this.getEmail(); }
+    public String getEmail()
+    {
+        return this.email;
+    }
 
     public String getPassword()
     {
@@ -270,7 +273,6 @@ public final class Student implements Serializable
      * ***/
     public String toString()
     {
-        return this.firstName + " " + this.lastName + " " +
-                this.email + " " + this.password;
+        return this.email;
     }
 }

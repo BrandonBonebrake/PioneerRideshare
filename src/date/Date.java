@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Comparator;
 
+/**
+ This class creates a Date Object that can be used to hold
+ any valid date that can exist. It can take in three ints
+ in the constructor to set the date if valid or it will
+ throw an error with details about what the error is.
+
+ @author Brandon Bonebrake
+ **/
+
 public class Date implements Comparable<Date>, Comparator<Date>, Serializable
 {
     // Class Constants
@@ -23,6 +32,9 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
 
     private static final long serialVersionUID = 4099097738532790602L;
 
+    /**
+     *
+     */
     public Date()
     {
         super();
@@ -36,8 +48,6 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
         this.setMonth(month);
         this.setDay(day);
     }
-
-    /*** Getter Methods ***/
 
     public int getDay()
     {
@@ -54,13 +64,18 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
         return year;
     }
 
+    public String getDate()
+    {
+        return this.getMonth() + "/" + this.getDay() + "/" + this.getYear();
+    }
+
     /*** Setter Methods ***/
 
     public void setDay(int day) throws InvalidDateException
     {
         if(!this.isValidDay(day))
         {
-            throw new InvalidDateException("Invalid day:" + day);
+            throw new InvalidDateException("D/**/ay " + day + " in month " + this.getMonth());
         }
         this.day = day;
     }
@@ -69,7 +84,7 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     {
         if(!this.isValidMonth(month))
         {
-            throw new InvalidDateException("Invalid month: " + month);
+            throw new InvalidDateException("Month " + month);
         }
         this.month = month;
     }
@@ -78,7 +93,7 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     {
         if(!this.isValidYear(year))
         {
-            throw new InvalidDateException("Invalid year: " + year);
+            throw new InvalidDateException("Year " + year);
         }
         this.year = year;
     }
@@ -87,6 +102,7 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
 
     public boolean isValidDay(int day)
     {
+        // Check if month has 31, 30, or 28/29 days
         return (((month == 1 || month == 3 || month == 5 || month == 7
                 || month == 8 || month == 10 || month == 12) &&
                 (day >= 1 && day <= 31)) ||
@@ -121,7 +137,7 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     @Override
     public String toString()
     {
-        return this.getMonth() + "/" + this.getDay() + "/" + this.getYear();
+        return this.getDate();
     }
 
     @Override

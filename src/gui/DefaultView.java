@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import student.InvalidStudentException;
 
 /**
     This class creates the defaults that every view in the GUI will follow.
@@ -50,7 +51,7 @@ abstract class DefaultView
         Method that all classes must implement where the methods to create the
         components are called.
      **/
-    abstract void createComponents();
+    abstract void createComponents() throws InvalidStudentException;
 
     /**
         Method that contains all the default pane settings.

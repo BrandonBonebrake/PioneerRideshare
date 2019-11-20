@@ -4,6 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import location.InvalidLocationException;
+import student.InvalidStudentException;
 
 final class SplashScreenPanel extends DefaultView
 {
@@ -115,8 +117,19 @@ final class SplashScreenPanel extends DefaultView
 
     private void buttonViewRidesClicked()
     {
-        ridePanel = new RideListingPanel(super.getStage(), super.getStage().getScene(),
-                                         super.getWidth(), super.getHeight());
+        try
+        {
+            ridePanel = new RideListingPanel(super.getStage(), super.getStage().getScene(),
+                                             super.getWidth(), super.getHeight());
+        }
+        catch (InvalidLocationException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidStudentException e)
+        {
+            e.printStackTrace();
+        }
 
         super.changeScene(ridePanel.getPane());
     }
