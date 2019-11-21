@@ -71,13 +71,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         button.setOnAction(e -> System.out.println(this.student.getFirstName()));
 
         if(isOffer)
-        {
             button.setText("Request To Join");
-        }
         else
-        {
             button.setText("Offer To Drive");
-        }
 
         return button;
     }
@@ -87,13 +83,9 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         String offerRequest;
 
         if(isOffer)
-        {
             offerRequest = "Offer";
-        }
         else
-        {
             offerRequest = "Request";
-        }
         return offerRequest;
     }
 
@@ -217,11 +209,21 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         this.returnTime = returnTime;
     }
 
+    /**
+     Return the return date and return time for the ride.
+
+     @return String     Contains return date and return time
+     **/
     public String getReturnDateTime()
     {
         return this.getReturnDate() + "\n" + this.getReturnTime();
     }
 
+    /**
+     Return the leave date and leave time for the ride.
+
+     @return String     Contains Leave date and Leave time
+     **/
     public String getLeaveDateTime()
     {
         return this.getLeaveDate() + "\n" + this.getLeaveTime();
@@ -307,6 +309,11 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         this.student = student;
     }
 
+    /**
+     Return the email of the student that created the ride.
+
+     @return String     Email of Student
+     **/
     public String getStudentEmail()
     {
         return student.getEmail();

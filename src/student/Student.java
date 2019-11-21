@@ -20,7 +20,7 @@ public final class Student implements Serializable
 
     private static final long serialVersionUID = 4099097738532790605L;
 
-    /***
+    /**
      *   Creates a client.student.Student object that holds their
      *   name and email
      *
@@ -30,7 +30,7 @@ public final class Student implements Serializable
      *
      *   @throws InvalidStudentException Must have access to the system client.time
      *
-     *  ***/
+     **/
     public Student(String firstName, String lastName, String email, String password) throws InvalidStudentException
     {
         super();
@@ -43,12 +43,12 @@ public final class Student implements Serializable
         this.setAccountNumber();
     }
 
-    /***
+    /**
      *   Return the Student's first name
      *
      *   @return Student's first name
      *
-     * ***/
+     **/
     public String getFirstName() { return this.firstName; }
 
     /***
@@ -59,12 +59,12 @@ public final class Student implements Serializable
      * ***/
     public String getLastName() { return this.lastName; }
 
-    /***
+    /**
      *   Return the Student's uwplatt email
      *
      *   @return Student's uwplatt email
      *
-     * ***/
+     **/
     public String getEmail()
     {
         return this.email;
@@ -75,37 +75,37 @@ public final class Student implements Serializable
         return this.password;
     }
 
-    /***
+    /**
      *    Return the date the students account
      *    created on
      *
      *    @return Students account creation date
      *
-     * ***/
+     **/
     public Date getAccountCreationDate()
     {
         return accountCreationDate;
     }
 
-    /***
+    /**
      *    Returns the hex account number
      *    of the user
      *
      *    @return Account number of the student
      *
-     * ***/
+     **/
     public String getAccountNumber()
     {
         return this.accountNumber;
     }
 
-    /***
+    /**
      *    Set the Student first name to the passed
      *    in value
      *
      *    @param firstName Student's first name
      *
-     * ***/
+     **/
     public void setFirstName(String firstName) throws InvalidStudentException
     {
         if(firstName == null || firstName.trim().equals(""))
@@ -115,13 +115,13 @@ public final class Student implements Serializable
         this.firstName = firstName;
     }
 
-    /***
+    /**
      *    Set the Student first name to the passed
      *    in value
      *
      *    @param lastName Student's last name
      *
-     * ***/
+     **/
     public void setLastName(String lastName) throws InvalidStudentException
     {
         if(lastName == null || lastName.trim().equals(""))
@@ -131,12 +131,12 @@ public final class Student implements Serializable
         this.lastName = lastName;
     }
 
-    /***
+    /**
      *    Set the email as long as it is a @uwplatt.edu email
      *
      *    @param email @uwplatt.edu email
      *
-     * ***/
+     **/
     public void setEmail(String email) throws InvalidStudentException
     {
         if(email.contains("@uwplatt.edu"))
@@ -171,7 +171,8 @@ public final class Student implements Serializable
         for(int i = 0; i < passArr.length; i++)
         {
             // Found a symbol in password
-            if(((passArr[i] >= 33) && (passArr[i] <= 47)) || ((passArr[i] >= 58) && (passArr[i] <= 64)) || ((passArr[i] >= 91) && (passArr[i] <= 96)) || ((passArr[i] >= 123) && (passArr[i] <= 126)))
+            if(((passArr[i] >= 33) && (passArr[i] <= 47)) || ((passArr[i] >= 58) && (passArr[i] <= 64))
+                    || ((passArr[i] >= 91) && (passArr[i] <= 96)) || ((passArr[i] >= 123) && (passArr[i] <= 126)))
                 break;
             if( i == passArr.length - 1)
                 throw new InvalidStudentException("Invalid Password: Must contain at least one symbol");
@@ -179,21 +180,21 @@ public final class Student implements Serializable
         this.password = password;
     }
 
-    /***
+    /**
      *    Sets the date of the account creation
      *    to the current system date
      *
-     * ***/
+     **/
     private void setAccountCreationDate()
     {
         this.accountCreationDate = new Date();
     }
 
-    /***
+    /**
      *    Set the account number of the student
      *    at the creation of the object
      *
-     * ***/
+     **/
     private void setAccountNumber()
     {
         StringBuilder st = new StringBuilder();
@@ -268,9 +269,9 @@ public final class Student implements Serializable
     }
 
 
-    /***
+    /**
      * @return client.student information
-     * ***/
+     **/
     public String toString()
     {
         return this.email;
