@@ -366,9 +366,12 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     @Override
     public String toString()
     {
-        return (departLocation.toString() + " " + returnLocation.toString() + " " + leaveDate.toString()
-                + " " + returnDate.toString() + " " + leaveTime.toString() + " " + returnTime.toString()
-                + " " + isOffer + " " + coordinates.toString() + " " + rideIdentificationNumber
-                + " " + student.toString());
+        //return (departLocation.toString() + " " + returnLocation.toString() + " " + leaveDate.toString()
+        //        + " " + returnDate.toString() + " " + leaveTime.toString() + " " + returnTime.toString()
+        //        + " " + isOffer + " " + coordinates.toString() + " " + rideIdentificationNumber
+        //        + " " + student.toString());
+        return departLocation.toString() + " " + returnLocation.toString() + " " + leaveDate.toString() + " " +
+                returnDate.toString() + " " + leaveTime.toString() + " " + returnTime.toString() + " " + isOffer +
+                " " + rideIdentificationNumber + " " + student.toString();
     }
 }

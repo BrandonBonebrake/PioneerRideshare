@@ -19,6 +19,7 @@ import ride.RideOffer;
 import ride.RideRequest;
 import student.InvalidStudentException;
 import student.Student;
+import time.InvalidTimeException;
 import time.PioneerTime;
 import time.Time;
 
@@ -35,7 +36,7 @@ final class RideListingPanel extends DefaultView
             new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a"))
     );
 
-    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException
+    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidTimeException
     {
         super(stage, splash, width, height);
 

@@ -4,7 +4,6 @@ import database.PSRDatabase;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class Server
 {
@@ -28,5 +27,10 @@ public class Server
         {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void main(String[] args)
+    {
+        new Server(63341, new PSRDatabase());
     }
 }

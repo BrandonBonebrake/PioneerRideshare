@@ -13,6 +13,13 @@ import javafx.stage.Stage;
 import location.InvalidLocationException;
 import location.Location;
 import ride.Ride;
+import ride.RideOffer;
+import ride.RideRequest;
+import socketCommunication.Client;
+import student.InvalidStudentException;
+import student.Student;
+import time.InvalidTimeException;
+import time.PioneerTime;
 import time.Time;
 
 final class OfferRequestRidePanel extends DefaultView
@@ -47,6 +54,7 @@ final class OfferRequestRidePanel extends DefaultView
     // Global Variables
     private String title;
     private boolean isValidRide = false;
+    private boolean isOffer = false;
 
     private ChoiceBox destState;
     private ChoiceBox leaveState;
@@ -68,13 +76,16 @@ final class OfferRequestRidePanel extends DefaultView
     private Date dateReturning;
     private Time timeLeaving;
     private Time timeReturning;
+    private Student student;
 
     OfferRequestRidePanel(Stage stage, Scene splash, int width, int height, String title)
     {
         super(stage, splash, width, height);
 
         this.title = title;
-        createComponents();
+        this.setIsOffer();
+        this.createTestStudent();
+        this.createComponents();
     }
 
     void createComponents()
@@ -109,6 +120,30 @@ final class OfferRequestRidePanel extends DefaultView
         this.createReturnTimeLabel();
         this.createLeaveTimePicker();
         this.createReturnTimePicker();
+    }
+
+    private void createTestStudent()
+    {
+        try
+        {
+            student = new Student("John", "Smith", "dummy@uwplatt.edu", "1234567qQ!");
+        }
+        catch (InvalidStudentException e)
+        {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void setIsOffer()
+    {
+        if(title.toLowerCase().contains("offer"))
+        {
+            isOffer = true;
+        }
+        else
+        {
+            isOffer = false;
+        }
     }
 
     /**
@@ -361,6 +396,29 @@ final class OfferRequestRidePanel extends DefaultView
             {
                 System.err.println(e.getCause() + " " + e.getMessage());
             }
+
+            try
+            {
+                timeLeaving = new PioneerTime(leaveTime.getText());
+                timeReturning = new PioneerTime(returnTime.getText());
+            }
+            catch (InvalidTimeException e)
+            {
+                System.err.println(e.getCause() + " " + e.getMessage());
+            }
+
+            if(isOffer)
+            {
+                ride = new RideOffer(leaveLocation, destinationLocation, (PioneerDate) dateLeaving,
+                        (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning, student);
+            }
+            else
+            {
+                ride = new RideRequest(leaveLocation, destinationLocation, (PioneerDate) dateLeaving,
+                        (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning, student);
+            }
+
+            new Client(ride);
         }
     }
 

@@ -1,5 +1,7 @@
 package socketCommunication;
 
+import ride.Ride;
+import ride.RideOffer;
 import student.Student;
 import database.PSRDatabase;
 
@@ -28,18 +30,9 @@ public class ServerReceive implements Runnable
             Object objReceive = (new ObjectInputStream(client.getInputStream())).readObject();
 
             // Check if object class is a StringBuilder and display if it is
-            if(objReceive != null && objReceive.getClass() == java.lang.StringBuilder.class)
+            if(objReceive != null && objReceive.getClass() == ride.RideOffer.class)
             {
-                System.out.println("Client: " + ((StringBuilder) objReceive).toString());
-            }
-            else if(objReceive != null && objReceive.getClass() == student.Student.class)
-            {
-                System.out.println("Client: " + ((Student)objReceive).toString());
-                this.database.addStudent((Student)objReceive);
-            }
-            else if (objReceive != null)
-            {
-                System.out.println(objReceive.getClass());
+                System.out.println("Client: " + (objReceive).toString());
             }
             else
             {

@@ -62,7 +62,10 @@ public class Time implements Serializable
      *
      ***/
 
-    public Time(String strTime) throws InvalidTimeException { this.setTime(strTime); }
+    public Time(String strTime) throws InvalidTimeException
+    {
+        this.setTime(strTime);
+    }
 
     /***
      *   Return the hour
@@ -212,10 +215,7 @@ public class Time implements Serializable
 
         if(strTime == null)
         {
-            this.setTime();
-
-            throw new InvalidTimeException(INVALID_TIME + null +
-                    " - Supplied client.time cannot be null ");
+            throw new InvalidTimeException(INVALID_TIME + "time cannot be null ");
         }
         time = strTime.split( ":" );
 
@@ -223,7 +223,7 @@ public class Time implements Serializable
 
         if( time.length == 2 && !strTime.substring( strTime.length() - 1 ).equals( ":" ) )
         {
-            // Convert first part of strTime to the hours intege
+            // Convert first part of strTime to the hours integer
 
             try
             {
@@ -234,7 +234,7 @@ public class Time implements Serializable
                 this.setHours( DEFAULT_HOUR );
 
                 throw new InvalidTimeException( INVALID_TIME + strTime +
-                        " - Hours contains a characters that are "
+                        " Hours contains a characters that are "
                         + "not integers ( " + time[ 0 ] + " )" );
             }
             // Convert second part of strTime to the minutes integer
@@ -248,7 +248,7 @@ public class Time implements Serializable
                 this.setMinutes( DEFAULT_MINUTES );
 
                 throw new InvalidTimeException( INVALID_TIME + strTime +
-                        " - Minutes contains a characters that are "
+                        " Minutes contains a characters that are "
                         + "not integers ( " + time[ 1 ] + " )" );
             }
         }
@@ -257,7 +257,7 @@ public class Time implements Serializable
             this.setTime();
 
             throw new InvalidTimeException(INVALID_TIME + strTime +
-                    " - The only character can be one colon "
+                    " The only character can be one colon "
                     + "':' to divide the client.time");
         }
     }

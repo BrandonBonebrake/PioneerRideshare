@@ -1,0 +1,7 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PioneerRideshare:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PioneerRideshare_jar</output-path>
+    <root id="archive" name="PioneerRideshare.jar">
+      <element id="module-output" name="PioneerRideshare" />
+  </artifact>
+</component>

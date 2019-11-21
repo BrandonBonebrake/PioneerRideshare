@@ -1,5 +1,7 @@
 package location;
 
+import java.io.Serializable;
+
 /***
  *    Object used to hold an address to a location.
  *
@@ -7,13 +9,15 @@ package location;
  *
  ***/
 
-public final class Location
+public final class Location implements Serializable
 {
     // Class Variables
     private String street = null;
     private String city   = null;
     private String state  = null;
     private int    zip    = 0;
+
+    private static final long serialVersionUID = 2765881055827127532L;
 
     /*** Constructor Method - Date <p>
      *
@@ -144,5 +148,10 @@ public final class Location
         {
             throw new InvalidLocationException("Invalid Zip Code: " + zip);
         }
+    }
+
+    public String toString()
+    {
+        return this.getCity() + " " + this.getState();
     }
 }
