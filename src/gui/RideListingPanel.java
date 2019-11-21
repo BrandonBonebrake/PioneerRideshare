@@ -1,9 +1,12 @@
 package gui;
 
+import comparator.RideComparator;
 import date.Date;
+import date.InvalidDateException;
 import date.PioneerDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,14 +32,20 @@ final class RideListingPanel extends DefaultView
     private TableView table = null;
     private Button backBtn = null;
 
-    Location loc = new Location("street", "Platteville", "WI", 53818);
+    private Location loc = new Location("street", "Platteville", "WI", 53818);
 
-    ObservableList<Ride> data = FXCollections.observableArrayList(
-            new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
+    private Ride ride = new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,11,21), new PioneerDate(2019, 11, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a"));
+
+
+    private ObservableList<Ride> data = FXCollections.observableArrayList(
+            new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,11,21), new PioneerDate(2019, 11, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
+            new RideRequest(loc, new Location("street", "Green Bay", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Smith", "dummy2@uwplatt.edu", "123456789!a")),
+            new RideOffer(loc, new Location("street", "Eau Claire", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Doe", "dummy2@uwplatt.edu", "123456789!a")),
             new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a"))
     );
 
-    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidTimeException
+
+    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidTimeException, InvalidDateException
     {
         super(stage, splash, width, height);
 
@@ -93,11 +102,11 @@ final class RideListingPanel extends DefaultView
         email.setPrefWidth(super.getWidth() / 5.0);
         request.setPrefWidth(super.getWidth() / 5.0 + 15);
 
-        PropertyValueFactory student = new PropertyValueFactory<String, Ride>("student");
-
         // Add the sub-columns to the columns
         location.getColumns().addAll(leaveCityState, destinationCityState);
         dateTime.getColumns().addAll(leaveDateTime, returnDateTime);
+
+        //offerRequest.setCellValueFactory(ride -> offerRequest);
 
         offerRequest.setCellValueFactory(new PropertyValueFactory<String,Ride>("offerRequest"));
         leaveCityState.setCellValueFactory(new PropertyValueFactory<String, Ride>("departLocation"));
@@ -107,11 +116,15 @@ final class RideListingPanel extends DefaultView
         email.setCellValueFactory(new PropertyValueFactory<String, Ride>("student"));
         request.setCellValueFactory(new PropertyValueFactory<Ride, Button>("button"));
 
+
+        SortedList<Ride> sortedList = new SortedList<>(data);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);
         table.setPrefSize(super.getWidth(), super.getHeight() - 75);
         table.setTranslateY(75);
         table.setPlaceholder(new Label("No rides"));
-        table.setItems(data);
+        table.setItems(sortedList);
 
         super.addComponent(table);
     }

@@ -3,5 +3,6 @@
     <output-path>$PROJECT_DIR$/out/artifacts/PioneerRideshare_jar</output-path>
     <root id="archive" name="PioneerRideshare.jar">
       <element id="module-output" name="PioneerRideshare" />
+    </root>
   </artifact>
 </component>

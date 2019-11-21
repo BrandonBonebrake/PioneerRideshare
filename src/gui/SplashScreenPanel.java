@@ -1,5 +1,6 @@
 package gui;
 
+import date.InvalidDateException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
@@ -131,6 +132,9 @@ final class SplashScreenPanel extends DefaultView
         {
             e.printStackTrace();
         } catch (InvalidTimeException e)
+        {
+            e.printStackTrace();
+        } catch (InvalidDateException e)
         {
             e.printStackTrace();
         }

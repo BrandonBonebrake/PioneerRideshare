@@ -1,5 +1,6 @@
 package ride;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import date.Date;
 import date.PioneerDate;
 import gui.PioneerApplication;
@@ -324,7 +325,8 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     @Override
     public int compare(Ride ride1, Ride ride2)
     {
-        return (ride1.rideIdentificationNumber.compareTo(ride2.rideIdentificationNumber));
+        //return (ride1.rideIdentificationNumber.compareTo(ride2.rideIdentificationNumber));
+        return Boolean.toString(ride1.isOffer).compareTo(Boolean.toString(ride2.isOffer));
     }
 
     /**
