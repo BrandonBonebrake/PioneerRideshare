@@ -268,7 +268,6 @@ public final class Student implements Serializable
         this.numCurrentRideOffers++;
     }
 
-
     /**
      * @return client.student information
      **/

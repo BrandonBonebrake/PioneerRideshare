@@ -2,6 +2,7 @@ package time;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 /*** Class - Time <p>
  *
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
  *
  ***/
 
-public class Time implements Serializable
+public abstract class Time implements Serializable, Comparable<Time>, Comparator<Time>
 {
     // Class Constants
     private final int DEFAULT_HOUR    = LocalDateTime.now().getHour();
@@ -25,18 +26,18 @@ public class Time implements Serializable
 
     private static final long serialVersionUID = 4099097738532790604L;
 
-    /***
+    /**
      *    Stores the current client.time of day in
      *    hours and minutes
      *
-     ***/
+     **/
 
     public Time()
     {
         super();
     }
 
-    /***
+    /**
      *    Stores the client.time of day in
      *    hours and minutes
      *
@@ -45,14 +46,14 @@ public class Time implements Serializable
      *
      *    @throws InvalidTimeException Must have a valid hour 0 - 23 and minute 0 - 59
      *
-     ***/
+     **/
 
     public Time(int hour, int minutes) throws InvalidTimeException
     {
         this.setTime(hour, minutes);
     }
 
-    /***
+    /**
      *    Stores the client.time of day in
      *    hours and minutes
      *
@@ -60,37 +61,37 @@ public class Time implements Serializable
      *
      *    @throws InvalidTimeException Must be on the format hh:mm
      *
-     ***/
+     **/
 
     public Time(String strTime) throws InvalidTimeException
     {
         this.setTime(strTime);
     }
 
-    /***
+    /**
      *   Return the hour
      *
      *   @return hour
      *
-     * ***/
+     **/
 
     public int getHours() { return this.hour; }
 
-    /***
+    /**
      *   Return the minutes
      *
      *   @return minutes
      *
-     * ***/
+     **/
 
     public int getMinutes() { return this.minutes; }
 
-    /***
+    /**
      *   Return the client.time in the format HH:MM
      *
      *   @return String of client.time in the format HH:MM
      *
-     * ***/
+     **/
 
     public String getTime()
     {
@@ -114,20 +115,20 @@ public class Time implements Serializable
         return hours + ":" + minutes;
     }
 
-    /***
+    /**
      *   Return the client.time the object was created
      *   in the format HH:MM
      *
      *   @return String of client.time created in the format HH:MM
      *
-     * ***/
+     **/
 
     public String getTimeCreated()
     {
         return this.DEFAULT_HOUR + ":" + this.DEFAULT_MINUTES;
     }
 
-    /***
+    /**
      *   Sets the hour to the value passed
      *   in if <code>isValidHour</code> is true
      *
@@ -135,11 +136,11 @@ public class Time implements Serializable
      *
      *   @throws InvalidTimeException thrown if hour is invalid
      *
-     * ***/
+     **/
 
     public void setHours(int hour) throws InvalidTimeException
     {
-        if( this.isValidHour(hour))
+        if(this.isValidHour(hour))
         {
             this.hour = hour;
         }
@@ -308,20 +309,15 @@ public class Time implements Serializable
 
     public boolean isValidHour(int hour)
     {
-        // Local Variable
-
-        boolean isValidHours = false;
 
         // Checks if in valid range 0 - 23
 
         if(hour >= 0 && hour <= 23)
-        {
-            isValidHours = true;
-        }
-        return isValidHours;
+            return true;
+        return false;
     }
 
-    /***
+    /**
      *    Returns true/false if the value
      *    supplied by the user is valid.
      *    Valid range is ( 0 - 59 )
@@ -330,28 +326,48 @@ public class Time implements Serializable
      *
      *    @return        Whether the minute is valid
      *
-     * ***/
-
-    public boolean isValidMinutes( int minutes )
+     **/
+    public boolean isValidMinutes(int minutes)
     {
-        // Local Variable
-
-        boolean isValidMinutes = false;
-
         // Checks if in valid range 0 - 59
 
         if(minutes >= 0 && minutes <= 59)
-        {
-            isValidMinutes = true;
-        }
-        return isValidMinutes;
+            return true;
+        return false;
     }
 
-    /***
+    public int compare(Time time1, Time time2)
+    {
+        return time1.compareTo(time2);
+    }
+
+    public int compareTo(Time time)
+    {
+        if(this.getHours() == time.getHours())
+        {
+            if(this.getMinutes() == time.getMinutes())
+                return 0;
+            else if (this.getMinutes() < time.getMinutes())
+                return -1;
+            else
+                return 1;
+        }
+        else if(this.getHours() < time.getHours())
+            return -1;
+        else
+            return 1;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return (obj != null && obj instanceof Time && this.compareTo((Time)obj) == 0);
+    }
+
+    /**
      * @return client.time in the format hh:mm
      *
-     * ***/
-
+     **/
     public String toString()
     {
         return this.getTime();
