@@ -1,7 +1,9 @@
 package socketCommunication;
 
 import database.PSRDatabase;
+import student.InvalidStudentException;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -29,8 +31,7 @@ public class Server
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException, InvalidStudentException {
         new Server(63341, new PSRDatabase());
     }
 }
