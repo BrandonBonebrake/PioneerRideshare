@@ -11,7 +11,10 @@ import java.io.Serializable;
 
 public final class Location implements Serializable
 {
-    // Class Variables
+    // Global Constants
+    private final int MIN_CITY_NAME_LENGTH = 2;
+
+    // Global Variables
     private String street = null;
     private String city   = null;
     private String state  = null;
@@ -106,12 +109,23 @@ public final class Location implements Serializable
     /***
      *    Set the city to the value that is passed in
      *
-     *    @param city Set the city to the value that is passed in
+     *    @throws InvalidLocationException Thrown if passed in
+     *    String is null, empty, or smaller than the minimum
+     *    length set above in the global constants.
      *
+     *    @param city Set the city to the value that is passed in
      * ***/
 
-    public void setCity(String city)
+    public void setCity(String city) throws InvalidLocationException
     {
+        if(city == null || city.length() == 0)
+        {
+            throw new InvalidLocationException("No City Set");
+        }
+        else if(city.length() < MIN_CITY_NAME_LENGTH)
+        {
+            throw new InvalidLocationException("Invalid City: " + city);
+        }
         this.city = city;
     }
 

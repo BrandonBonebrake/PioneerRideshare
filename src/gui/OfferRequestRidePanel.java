@@ -472,60 +472,83 @@ final class OfferRequestRidePanel extends DefaultView
     {
         int numberInvalidInput = 0;
 
-        // Check if fields possibly have valid values stored in them
-        if(this.leaveCity.getText().length() <= 2)
+        // Check that the leave location is valid
+        try
+        {
+            new Location(null, this.leaveCity.getText(),
+                    this.destState.getSelectionModel().getSelectedItem().toString(), 11111);
+            this.leaveCity.setStyle(VALID_FIELD);
+        }
+        catch (InvalidLocationException e)
         {
             this.leaveCity.setStyle(INVALID_FIELD);
             numberInvalidInput++;
         }
-        else
+
+        // Check that the destination location is valid
+        try
         {
-            this.leaveCity.setStyle(VALID_FIELD);
+            new Location(null, this.destCity.getText(),
+                    this.destState.getSelectionModel().getSelectedItem().toString(), 11111);
+            this.destCity.setStyle(VALID_FIELD);
         }
-        if(this.destCity.getText().length() <= 2)
+        catch (InvalidLocationException e)
         {
             this.destCity.setStyle(INVALID_FIELD);
             numberInvalidInput++;
         }
-        else
+
+        // Check that the leave date is valid
+        try
         {
-            this.destCity.setStyle(VALID_FIELD);
+            new PioneerDate(leaveDate.getEditor().getText());
+            leaveDate.setStyle(VALID_FIELD);
         }
-        if(leaveDate.getEditor().getText().length() < 8)
+        catch (InvalidDateException e)
         {
             leaveDate.setStyle(INVALID_FIELD);
             numberInvalidInput++;
         }
-        else
+
+        // Check that the return date is valid
+        try
         {
-            leaveDate.setStyle(VALID_FIELD);
+            new PioneerDate(returnDate.getEditor().getText());
+            returnDate.setStyle(VALID_FIELD);
         }
-        if(returnDate.getEditor().getText().length() < 8)
+        catch (InvalidDateException e)
         {
             returnDate.setStyle(INVALID_FIELD);
             numberInvalidInput++;
         }
-        else
+
+        // Check that the leave time is valid
+        try
         {
-            returnDate.setStyle(VALID_FIELD);
+            new PioneerTime(leaveTime.getText());
+            leaveTime.setStyle(VALID_FIELD);
         }
-        if(leaveTime.getText().length() < 3 || !leaveTime.getText().contains(":"))
+        catch (InvalidTimeException e)
         {
             leaveTime.setStyle(INVALID_FIELD);
             numberInvalidInput++;
         }
-        else
+
+        // Check that the return time is valid
+        try
         {
-            leaveTime.setStyle(VALID_FIELD);
+            new PioneerTime(returnTime.getText());
+            returnTime.setStyle(VALID_FIELD);
         }
-        if(returnTime.getText().length() < 3 || !returnTime.getText().contains(":"))
+        catch (InvalidTimeException e)
         {
             returnTime.setStyle(INVALID_FIELD);
             numberInvalidInput++;
         }
-        else
+
+        if(dateLeaving.compareTo(dateReturning) == 0)
         {
-            returnTime.setStyle(VALID_FIELD);
+
         }
 
         if(numberInvalidInput == 0)

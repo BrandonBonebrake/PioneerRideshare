@@ -106,8 +106,6 @@ final class RideListingPanel extends DefaultView
         location.getColumns().addAll(leaveCityState, destinationCityState);
         dateTime.getColumns().addAll(leaveDateTime, returnDateTime);
 
-        //offerRequest.setCellValueFactory(ride -> offerRequest);
-
         offerRequest.setCellValueFactory(new PropertyValueFactory<String,Ride>("offerRequest"));
         leaveCityState.setCellValueFactory(new PropertyValueFactory<String, Ride>("departLocation"));
         destinationCityState.setCellValueFactory(new PropertyValueFactory<String, Ride>("returnLocation"));
