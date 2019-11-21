@@ -118,6 +118,8 @@ public final class Location implements Serializable
 
     public void setCity(String city) throws InvalidLocationException
     {
+        char[] cityArr;
+
         if(city == null || city.length() == 0)
         {
             throw new InvalidLocationException("No City Set");
@@ -125,6 +127,16 @@ public final class Location implements Serializable
         else if(city.length() < MIN_CITY_NAME_LENGTH)
         {
             throw new InvalidLocationException("Invalid City: " + city);
+        }
+        cityArr = city.toCharArray();
+
+        for(int i = 0; i < cityArr.length; i++)
+        {
+            if(!((cityArr[i] >= 65 && cityArr[i] <= 90) ||
+                (cityArr[i] >= 97 && cityArr[i] <= 122)))
+            {
+                throw new InvalidLocationException("Invalid Character: " + cityArr[i]);
+            }
         }
         this.city = city;
     }

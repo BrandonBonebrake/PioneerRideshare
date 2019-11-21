@@ -67,6 +67,8 @@ final class OfferRequestRidePanel extends DefaultView
     private DatePicker leaveDate;
     private DatePicker returnDate;
 
+    private Label errorLabel;
+
     private ObservableList<String> stateList = FXCollections.observableArrayList();
 
     private Ride ride; // Ride object that will store all necessary ride information
@@ -120,6 +122,8 @@ final class OfferRequestRidePanel extends DefaultView
         this.createReturnTimeLabel();
         this.createLeaveTimePicker();
         this.createReturnTimePicker();
+
+        this.createErrorLabel();
     }
 
     private void createTestStudent()
@@ -161,6 +165,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createTitleLabel()
     {
         Label titleLbl = new Label(this.title);
+
         titleLbl.setTranslateX(super.getWidth() / 3);
         titleLbl.setFont(Font.font(DEFAULT_FONT_SIZE + 20));
         titleLbl.setTextFill(Color.WHITE);
@@ -172,6 +177,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createLeaveLabel()
     {
         Label leave = new Label("Leaving From");
+
         leave.setTranslateX(DEFAULT_X_TRANS);
         leave.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
         leave.setFont(Font.font(DEFAULT_FONT_SIZE));
@@ -184,12 +190,12 @@ final class OfferRequestRidePanel extends DefaultView
     private void createLeaveCityTxtBox()
     {
         leaveCity = new TextField();
+
         leaveCity.setPrefSize(CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT);
         leaveCity.setTranslateX(DEFAULT_X_TRANS);
         leaveCity.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
         leaveCity.setPromptText("Departure City");
         leaveCity.setStyle("-fx-font-weight: bold;");
-        leaveCity.setFont(Font.font(18));
 
         super.addComponent(leaveCity);
     }
@@ -210,6 +216,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createDestinationLabel()
     {
         Label destination = new Label("Destination");
+
         destination.setTranslateX(DEFAULT_X_TRANS);
         destination.setTranslateY(DEFAULT_Y_TRANS + DEST_COMP_Y_START);
         destination.setFont(Font.font(DEFAULT_FONT_SIZE));
@@ -222,12 +229,12 @@ final class OfferRequestRidePanel extends DefaultView
     private void createDestinationCityTxtBox()
     {
         destCity = new TextField();
+
         destCity.setPrefSize(CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT);
         destCity.setTranslateX(DEFAULT_X_TRANS);
         destCity.setTranslateY(DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP);
         destCity.setPromptText("Destination City");
         destCity.setStyle("-fx-font-weight: bold;");
-        destCity.setFont(Font.font(18));
 
         super.addComponent(destCity);
     }
@@ -248,6 +255,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createLeaveDateLabel()
     {
         Label leaveDate = new Label("Leave Date");
+
         leaveDate.setTranslateX(DEFAULT_X_TRANS + 300);
         leaveDate.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
         leaveDate.setFont(Font.font(DEFAULT_FONT_SIZE));
@@ -260,6 +268,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createLeaveDatePicker()
     {
         leaveDate = new DatePicker();
+
         leaveDate.setEditable(false);
         leaveDate.setPrefSize(DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT);
         leaveDate.setTranslateX(DEFAULT_X_TRANS + 300);
@@ -274,6 +283,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createReturnDateLabel()
     {
         Label returnDate = new Label("Return Date");
+
         returnDate.setTranslateX(DEFAULT_X_TRANS + 525);
         returnDate.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
         returnDate.setFont(Font.font(DEFAULT_FONT_SIZE));
@@ -286,6 +296,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createReturnDatePicker()
     {
         returnDate = new DatePicker();
+
         returnDate.setEditable(false);
         returnDate.setPrefSize(DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT);
         returnDate.setTranslateX(DEFAULT_X_TRANS + 525);
@@ -300,6 +311,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createLeaveTimeLabel()
     {
         Label leaveTime = new Label("Leave Time");
+
         leaveTime.setTranslateX(DEFAULT_X_TRANS + 300);
         leaveTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
         leaveTime.setFont(Font.font(DEFAULT_FONT_SIZE));
@@ -312,12 +324,12 @@ final class OfferRequestRidePanel extends DefaultView
     private void createLeaveTimePicker()
     {
         leaveTime = new TextField();
+
         leaveTime.setPrefSize(TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT);
         leaveTime.setTranslateX(DEFAULT_X_TRANS + 300);
         leaveTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
         leaveTime.setPromptText("hh:mm");
         leaveTime.setStyle("-fx-font-weight: bold;");
-        leaveTime.setFont(Font.font(18));
 
         super.addComponent(leaveTime);
     }
@@ -325,6 +337,7 @@ final class OfferRequestRidePanel extends DefaultView
     private void createReturnTimeLabel()
     {
         Label returnTime = new Label("Return Time");
+
         returnTime.setTranslateX(DEFAULT_X_TRANS + 525);
         returnTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
         returnTime.setFont(Font.font(DEFAULT_FONT_SIZE));
@@ -337,14 +350,27 @@ final class OfferRequestRidePanel extends DefaultView
     private void createReturnTimePicker()
     {
         returnTime = new TextField();
+
         returnTime.setPrefSize(TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT);
         returnTime.setTranslateX(DEFAULT_X_TRANS + 525);
         returnTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
         returnTime.setPromptText("hh:mm");
         returnTime.setStyle("-fx-font-weight: bold;");
-        returnTime.setFont(Font.font(18));
 
         super.addComponent(returnTime);
+    }
+
+    private void createErrorLabel()
+    {
+        errorLabel = new Label();
+
+        errorLabel.setStyle("-fx-font-weight: bold;");
+        errorLabel.setTranslateX(DEFAULT_X_TRANS + 300);
+        errorLabel.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 5);
+        errorLabel.setFont(Font.font(DEFAULT_FONT_SIZE));
+        errorLabel.setTextFill(Color.RED);
+
+        super.addComponent(errorLabel);
     }
 
     private void createBackButton()
@@ -394,7 +420,8 @@ final class OfferRequestRidePanel extends DefaultView
             }
             catch (InvalidLocationException e)
             {
-                System.err.println(e.getCause() + " " + e.getMessage());
+                // Send the error to the Server as this should be unlikely
+                new Client(e);
             }
 
             try
@@ -404,7 +431,8 @@ final class OfferRequestRidePanel extends DefaultView
             }
             catch (InvalidTimeException e)
             {
-                System.err.println(e.getCause() + " " + e.getMessage());
+                // Send the error to the Server as this should be unlikely
+                new Client(e);
             }
 
             if(isOffer)
@@ -418,6 +446,7 @@ final class OfferRequestRidePanel extends DefaultView
                         (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning, student);
             }
 
+            // Send the ride information to the server
             new Client(ride);
         }
     }
@@ -428,7 +457,16 @@ final class OfferRequestRidePanel extends DefaultView
 
         try
         {
-            dateLeaving = new PioneerDate(Integer.parseInt(dateArr[2]), Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]));
+            if(dateLeaving == null)
+            {
+                dateLeaving = new PioneerDate(Integer.parseInt(dateArr[2]), Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]));
+            }
+            else
+            {
+                dateLeaving.setYear(Integer.parseInt(dateArr[2]));
+                dateLeaving.setMonth(Integer.parseInt(dateArr[0]));
+                dateLeaving.setDay(Integer.parseInt(dateArr[1]));
+            }
 
             if(this.dateReturning != null && this.dateReturning.compareTo(this.dateLeaving) < 0)
             {
@@ -442,6 +480,7 @@ final class OfferRequestRidePanel extends DefaultView
         catch (InvalidDateException e)
         {
             this.leaveDate.setStyle(INVALID_FIELD);
+            new Client(e);
         }
     }
 
@@ -451,7 +490,16 @@ final class OfferRequestRidePanel extends DefaultView
 
         try
         {
-            dateReturning = new PioneerDate(Integer.parseInt(dateArr[2]), Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]));
+            if(dateReturning == null)
+            {
+                dateReturning = new PioneerDate(Integer.parseInt(dateArr[2]), Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]));
+            }
+            else
+            {
+                dateReturning.setYear(Integer.parseInt(dateArr[2]));
+                dateReturning.setMonth(Integer.parseInt(dateArr[0]));
+                dateReturning.setDay(Integer.parseInt(dateArr[1]));
+            }
 
             if(this.dateLeaving != null && this.dateReturning.compareTo(this.dateLeaving) < 0)
             {
@@ -465,6 +513,7 @@ final class OfferRequestRidePanel extends DefaultView
         catch (InvalidDateException e)
         {
             this.returnDate.setStyle(INVALID_FIELD);
+            new Client(e);
         }
     }
 
@@ -472,16 +521,68 @@ final class OfferRequestRidePanel extends DefaultView
     {
         int numberInvalidInput = 0;
 
-        // Check that the leave location is valid
+        // Check that the return time is valid
         try
         {
-            new Location(null, this.leaveCity.getText(),
-                    this.destState.getSelectionModel().getSelectedItem().toString(), 11111);
-            this.leaveCity.setStyle(VALID_FIELD);
+            new PioneerTime(returnTime.getText());
+
+            // Check if the dates are the same and that the return time is after the leave time
+            if(dateLeaving != null && dateReturning != null &&
+                    dateLeaving.compareTo(dateReturning) == 0 &&
+                    returnTime.getText().compareTo(leaveTime.getText()) <= 0)
+            {
+                returnTime.setStyle(INVALID_FIELD);
+                this.errorLabel.setText("Return Time Is In The Past");
+                numberInvalidInput++;
+            }
+            else
+            {
+                returnTime.setStyle(VALID_FIELD);
+            }
         }
-        catch (InvalidLocationException e)
+        catch (InvalidTimeException e)
         {
-            this.leaveCity.setStyle(INVALID_FIELD);
+            returnTime.setStyle(INVALID_FIELD);
+            this.errorLabel.setText("Invalid Return Time");
+            numberInvalidInput++;
+        }
+
+        // Check that the leave time is valid
+        try
+        {
+            new PioneerTime(leaveTime.getText());
+            leaveTime.setStyle(VALID_FIELD);
+        }
+        catch (InvalidTimeException e)
+        {
+            leaveTime.setStyle(INVALID_FIELD);
+            this.errorLabel.setText("Invalid Departure Time");
+            numberInvalidInput++;
+        }
+
+        // Check that the return date is valid
+        try
+        {
+            new PioneerDate(returnDate.getEditor().getText());
+            returnDate.setStyle(VALID_FIELD);
+        }
+        catch (InvalidDateException e)
+        {
+            returnDate.setStyle(INVALID_FIELD);
+            this.errorLabel.setText("Invalid Return Date");
+            numberInvalidInput++;
+        }
+
+        // Check that the leave date is valid
+        try
+        {
+            new PioneerDate(leaveDate.getEditor().getText());
+            leaveDate.setStyle(VALID_FIELD);
+        }
+        catch (InvalidDateException e)
+        {
+            leaveDate.setStyle(INVALID_FIELD);
+            this.errorLabel.setText("Invalid Departure Date");
             numberInvalidInput++;
         }
 
@@ -495,65 +596,28 @@ final class OfferRequestRidePanel extends DefaultView
         catch (InvalidLocationException e)
         {
             this.destCity.setStyle(INVALID_FIELD);
+            this.errorLabel.setText("Invalid Destination City");
             numberInvalidInput++;
         }
 
-        // Check that the leave date is valid
+        // Check that the leave location is valid
         try
         {
-            new PioneerDate(leaveDate.getEditor().getText());
-            leaveDate.setStyle(VALID_FIELD);
+            new Location(null, this.leaveCity.getText(),
+                    this.destState.getSelectionModel().getSelectedItem().toString(), 11111);
+            this.leaveCity.setStyle(VALID_FIELD);
         }
-        catch (InvalidDateException e)
+        catch (InvalidLocationException e)
         {
-            leaveDate.setStyle(INVALID_FIELD);
+            this.leaveCity.setStyle(INVALID_FIELD);
+            this.errorLabel.setText("Invalid Departure City");
             numberInvalidInput++;
-        }
-
-        // Check that the return date is valid
-        try
-        {
-            new PioneerDate(returnDate.getEditor().getText());
-            returnDate.setStyle(VALID_FIELD);
-        }
-        catch (InvalidDateException e)
-        {
-            returnDate.setStyle(INVALID_FIELD);
-            numberInvalidInput++;
-        }
-
-        // Check that the leave time is valid
-        try
-        {
-            new PioneerTime(leaveTime.getText());
-            leaveTime.setStyle(VALID_FIELD);
-        }
-        catch (InvalidTimeException e)
-        {
-            leaveTime.setStyle(INVALID_FIELD);
-            numberInvalidInput++;
-        }
-
-        // Check that the return time is valid
-        try
-        {
-            new PioneerTime(returnTime.getText());
-            returnTime.setStyle(VALID_FIELD);
-        }
-        catch (InvalidTimeException e)
-        {
-            returnTime.setStyle(INVALID_FIELD);
-            numberInvalidInput++;
-        }
-
-        if(dateLeaving.compareTo(dateReturning) == 0)
-        {
-
         }
 
         if(numberInvalidInput == 0)
         {
             isValidRide = true;
+            this.errorLabel.setText("");
         }
         else
         {

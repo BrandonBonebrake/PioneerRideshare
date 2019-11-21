@@ -109,6 +109,12 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
+    @Override
+    public int compareDay(Date date)
+    {
+        return super.compareDay(date);
+    }
+
     public void changeDate(int day, int month, int year) throws InvalidDateException
     {
         if(this.isValidDate(year, month, day))
