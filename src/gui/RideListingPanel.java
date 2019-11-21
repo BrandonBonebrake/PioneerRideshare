@@ -1,7 +1,5 @@
 package gui;
 
-import comparator.RideComparator;
-import date.Date;
 import date.InvalidDateException;
 import date.PioneerDate;
 import javafx.collections.FXCollections;
@@ -24,7 +22,6 @@ import student.InvalidStudentException;
 import student.Student;
 import time.InvalidTimeException;
 import time.PioneerTime;
-import time.Time;
 
 final class RideListingPanel extends DefaultView
 {
@@ -36,7 +33,7 @@ final class RideListingPanel extends DefaultView
 
     private Ride ride = new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,11,21), new PioneerDate(2019, 11, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a"));
 
-
+    // Dummy rides used to test the table
     private ObservableList<Ride> data = FXCollections.observableArrayList(
             new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,11,21), new PioneerDate(2019, 11, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
             new RideRequest(loc, new Location("street", "Green Bay", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Smith", "dummy2@uwplatt.edu", "123456789!a")),
@@ -44,8 +41,7 @@ final class RideListingPanel extends DefaultView
             new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a"))
     );
 
-
-    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidTimeException, InvalidDateException
+    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException
     {
         super(stage, splash, width, height);
 
@@ -53,7 +49,7 @@ final class RideListingPanel extends DefaultView
     }
 
     @Override
-    void createComponents() throws InvalidStudentException
+    void createComponents()
     {
         this.createBackButton();
         this.createTable();
@@ -76,7 +72,7 @@ final class RideListingPanel extends DefaultView
         super.returnView();
     }
 
-    private void createTable() throws InvalidStudentException
+    private void createTable()
     {
         final double CELL_WIDTH = super.getWidth() / 9.0;
         table = new TableView();
