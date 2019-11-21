@@ -5,8 +5,13 @@ import student.Student;
 import ride.Ride;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.PatternSyntaxException;
+import java.nio.file.Files;
 
 public class PSRDatabase
 {
@@ -16,11 +21,21 @@ public class PSRDatabase
     private ArrayList<Ride> pastRides;
 
     private static final String CORRECT_EMAIL_DOMAIN = "uwplatt.edu";
+    private Path WRIFilepath; // holds current ride info
+    private Path PRIFilepath; // holds past ride info
+    private Path SRIFilepath; // holds Student Info
+    private Path CRIFilepath; // holds passwords
 
+    public PSRDatabase() throws IOException, InvalidStudentException {
+        assert WRIFilepath != null;
+        List<String> rawStudentInfo = Files.readAllLines(SRIFilepath);
+        for (String studentInfo : rawStudentInfo) {
+            String studentDetails[] = studentInfo.split(",");
+            Student s = new Student(studentDetails[0],studentDetails[1],studentDetails[2], studentDetails[3]);
+        }
 
-    public PSRDatabase()
-    {
-        //file read
+        
+
         //{
             //get studentList, currentRides, pastRides.
             //set them all
@@ -30,7 +45,7 @@ public class PSRDatabase
     }
 
     //adds a student to the list
-    public void addStudent(student.Student aStudent)
+    public void addStudent(Student aStudent)
     {
         studentList.add(aStudent);
 
@@ -74,11 +89,17 @@ public class PSRDatabase
     public void copyMemoryToFile(String filepath)
     {
         //this one is wild
+        // call on close
 
     }
 
     public void createAccount(String email, String password)
     {
+        if(isValidStudentInfo(email) && !isEmailTaken(email))
+        {
+            createAccountActivationCode();
+            //send email with activation code
+        }
 
 
     }
@@ -96,6 +117,7 @@ public class PSRDatabase
 
     public int createAccountActivationCode()
     {
+
 
         return 0;
     }
