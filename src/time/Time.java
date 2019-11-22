@@ -47,7 +47,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *    @throws InvalidTimeException Must have a valid hour 0 - 23 and minute 0 - 59
      *
      **/
-
     public Time(int hour, int minutes) throws InvalidTimeException
     {
         this.setTime(hour, minutes);
@@ -62,7 +61,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *    @throws InvalidTimeException Must be on the format hh:mm
      *
      **/
-
     public Time(String strTime) throws InvalidTimeException
     {
         this.setTime(strTime);
@@ -74,7 +72,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *   @return hour
      *
      **/
-
     public int getHours() { return this.hour; }
 
     /**
@@ -83,7 +80,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *   @return minutes
      *
      **/
-
     public int getMinutes() { return this.minutes; }
 
     /**
@@ -92,7 +88,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *   @return String of client.time in the format HH:MM
      *
      **/
-
     public String getTime()
     {
         // Local Variables
@@ -122,7 +117,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *   @return String of client.time created in the format HH:MM
      *
      **/
-
     public String getTimeCreated()
     {
         return this.DEFAULT_HOUR + ":" + this.DEFAULT_MINUTES;
@@ -137,7 +131,6 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *   @throws InvalidTimeException thrown if hour is invalid
      *
      **/
-
     public void setHours(int hour) throws InvalidTimeException
     {
         if(this.isValidHour(hour))
@@ -146,16 +139,12 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
         }
         else
         {
-            // Default hour to system client.time
-
-            this.hour = LocalDateTime.now().getHour();
-
             throw new InvalidTimeException("Invalid hour: " + hour +
                     " - Must be in the range 0 - 23");
         }
     }
 
-    /***
+    /**
      *   Sets the minutes to the value passed
      *   in if <code>isValidMinutes</code> is true
      *
@@ -163,8 +152,7 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
      *
      *   @throws InvalidTimeException thrown if minutes are invalid
      *
-     * ***/
-
+     **/
     public void setMinutes(int minutes) throws InvalidTimeException
     {
         if(this.isValidMinutes(minutes))
@@ -173,41 +161,31 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
         }
         else
         {
-            // Default minutes to system client.time
-
-            this.minutes = LocalDateTime.now().getMinute();
-
             throw new InvalidTimeException("Invalid minute: " + minutes +
                     " - Must be in the range 0 - 59");
         }
     }
 
-    /***
+    /**
      *   Sets the client.time to the system client.time
      *
-     * ***/
-
+     **/
     public void setTime()
     {
         this.hour    = LocalDateTime.now().getHour();
         this.minutes = LocalDateTime.now().getMinute();
     }
 
-    /***
+    /**
      *   Sets the client.time to passed in String
      *
      *   @param strTime String in the format HH:MM
      *
      *   @throws InvalidTimeException thrown if client.time String is invalid
      *
-     * ***/
-
+     **/
     public void setTime(String strTime) throws InvalidTimeException
     {
-        // Local Constants
-
-        String INVALID_TIME = "Time string format is invalid (Valid hh:mm): ";
-
         // Local Variable
 
         String[] time = null;
@@ -216,48 +194,40 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
 
         if(strTime == null)
         {
-            throw new InvalidTimeException(INVALID_TIME + "time cannot be null ");
+            throw new InvalidTimeException("Time string format is invalid (Valid hh:mm): time cannot be null ");
         }
         time = strTime.split( ":" );
 
         // Tests after stTime is validated
 
-        if( time.length == 2 && !strTime.substring( strTime.length() - 1 ).equals( ":" ) )
+        if(time.length == 2 && !strTime.substring(strTime.length() - 1).equals(":"))
         {
             // Convert first part of strTime to the hours integer
-
             try
             {
-                this.setHours( Integer.parseInt( time[ 0 ] ) );
+                this.setHours(Integer.parseInt(time[ 0 ]));
             }
-            catch( NumberFormatException e )
+            catch(NumberFormatException e)
             {
-                this.setHours( DEFAULT_HOUR );
-
-                throw new InvalidTimeException( INVALID_TIME + strTime +
-                        " Hours contains a characters that are "
-                        + "not integers ( " + time[ 0 ] + " )" );
+                throw new InvalidTimeException("Time string format is invalid (Valid hh:mm): " + strTime +
+                        " Hours contains a characters that are not integers ( " + time[0] + " )");
             }
             // Convert second part of strTime to the minutes integer
 
             try
             {
-                this.setMinutes( Integer.parseInt( time[ 1 ] ) );
+                this.setMinutes(Integer.parseInt(time[1]));
             }
             catch( NumberFormatException e )
             {
-                this.setMinutes( DEFAULT_MINUTES );
-
-                throw new InvalidTimeException( INVALID_TIME + strTime +
+                throw new InvalidTimeException("Time string format is invalid (Valid hh:mm): " + strTime +
                         " Minutes contains a characters that are "
                         + "not integers ( " + time[ 1 ] + " )" );
             }
         }
         else
         {
-            this.setTime();
-
-            throw new InvalidTimeException(INVALID_TIME + strTime +
+            throw new InvalidTimeException("Time string format is invalid (Valid hh:mm): " + strTime +
                     " The only character can be one colon "
                     + "':' to divide the client.time");
         }
@@ -343,19 +313,9 @@ public abstract class Time implements Serializable, Comparable<Time>, Comparator
 
     public int compareTo(Time time)
     {
-        if(this.getHours() == time.getHours())
-        {
-            if(this.getMinutes() == time.getMinutes())
-                return 0;
-            else if (this.getMinutes() < time.getMinutes())
-                return -1;
-            else
-                return 1;
-        }
-        else if(this.getHours() < time.getHours())
-            return -1;
-        else
-            return 1;
+        int minutesTotal = (this.getHours() * 60) + this.getMinutes();
+        int minutesTotal2 = (time.getHours() * 60) + time.getMinutes();
+        return minutesTotal - minutesTotal2;
     }
 
     @Override
