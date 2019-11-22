@@ -1,5 +1,6 @@
 package database;
 
+import location.InvalidLocationException;
 import location.Location;
 import student.InvalidStudentException;
 import student.Student;
@@ -20,6 +21,7 @@ public class PSRDatabase
     private ArrayList<Student> studentList;
     private ArrayList<Ride> currentRides;
     private ArrayList<Ride> pastRides;
+    private ArrayList<Exception> exceptions;
 
     private static final String CORRECT_EMAIL_DOMAIN = "uwplatt.edu";
     private Path WRIFilepath; // holds current ride info
@@ -27,20 +29,31 @@ public class PSRDatabase
     private Path SRIFilepath; // holds Student Info
     private Path CRIFilepath; // holds passwords
 
-    public PSRDatabase() throws IOException, InvalidStudentException {
+    public PSRDatabase() throws IOException {
         assert WRIFilepath != null;
         List<String> rawStudentInfo = Files.readAllLines(SRIFilepath);
         for (String studentInfo : rawStudentInfo)
         {
-            String studentDetails[] = studentInfo.split(",");
-            Student s = new Student(studentDetails[0],studentDetails[1],studentDetails[2], studentDetails[3]);
-            addStudent(s);
+            try {
+                String[] studentDetails = studentInfo.split(",");
+                Student s = new Student(studentDetails[0], studentDetails[1], studentDetails[2], studentDetails[3]);
+                addStudent(s);
+            }
+            catch (InvalidStudentException e)
+            {
+                exceptions.add(e);
+                e.printStackTrace();
+            }
         }
         List<String> rawCurrentRideInfo = Files.readAllLines(CRIFilepath);
         for (String currentRideInfo : rawCurrentRideInfo)
         {
             String rideDetails[] = currentRideInfo.split(",");
-            //Location depLoc = new Location()rideDetails[0];
+            try {
+                Location depLoc = new Location(rideDetails[0], rideDetails[1],rideDetails[2], Integer.parseInt(rideDetails[3]));
+            } catch (InvalidLocationException e) {
+                e.printStackTrace();
+            }
 
             //Ride r = new Ride()
         }
@@ -99,19 +112,8 @@ public class PSRDatabase
 
     public void copyMemoryToFile(String filepath)
     {
-        //this one is wild
+
         // call on close
-
-    }
-
-    public void createAccount(String email, String password)
-    {
-        if(isValidStudentInfo(email) && !isEmailTaken(email))
-        {
-            createAccountActivationCode();
-            //send email with activation code
-        }
-
 
     }
 
@@ -124,12 +126,5 @@ public class PSRDatabase
         }
 
         return false;
-    }
-
-    public int createAccountActivationCode()
-    {
-
-
-        return 0;
     }
 }

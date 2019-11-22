@@ -32,6 +32,6 @@ public class Server
     }
 
     public static void main(String[] args) throws IOException, InvalidStudentException {
-        new Server(63341, new PSRDatabase());
+        new Server(63341, null);
     }
 }
