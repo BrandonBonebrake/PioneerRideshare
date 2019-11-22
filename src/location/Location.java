@@ -133,7 +133,7 @@ public final class Location implements Serializable
         for(int i = 0; i < cityArr.length; i++)
         {
             if(!((cityArr[i] >= 65 && cityArr[i] <= 90) ||
-                (cityArr[i] >= 97 && cityArr[i] <= 122)))
+                (cityArr[i] >= 97 && cityArr[i] <= 122) || cityArr[i] == 32))
             {
                 throw new InvalidLocationException("Invalid Character: " + cityArr[i]);
             }

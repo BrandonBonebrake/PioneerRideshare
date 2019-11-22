@@ -41,7 +41,6 @@ public class PioneerTime extends Time implements Serializable
     public boolean isValidHour(int hour)
     {
         // Checks if in valid range 6 - 22
-
         if(hour >= EARLIEST_TIME_IN_DAY && hour <= LATEST_TIME_IN_DAY)
             return true;
         return false;

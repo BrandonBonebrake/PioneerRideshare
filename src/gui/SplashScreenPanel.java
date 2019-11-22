@@ -133,6 +133,8 @@ final class SplashScreenPanel extends DefaultView
         } catch (InvalidDateException e)
         {
             e.printStackTrace();
+        } catch (InvalidTimeException e) {
+            e.printStackTrace();
         }
 
         super.changeScene(ridePanel.getPane());
