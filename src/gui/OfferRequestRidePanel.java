@@ -480,7 +480,6 @@ final class OfferRequestRidePanel extends DefaultView
         catch (InvalidDateException e)
         {
             this.leaveDate.setStyle(INVALID_FIELD);
-            new Client(e);
         }
     }
 
@@ -513,7 +512,6 @@ final class OfferRequestRidePanel extends DefaultView
         catch (InvalidDateException e)
         {
             this.returnDate.setStyle(INVALID_FIELD);
-            new Client(e);
         }
     }
 
