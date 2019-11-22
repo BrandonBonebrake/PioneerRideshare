@@ -1,5 +1,6 @@
 package database;
 
+import location.Location;
 import student.InvalidStudentException;
 import student.Student;
 import ride.Ride;
@@ -29,9 +30,19 @@ public class PSRDatabase
     public PSRDatabase() throws IOException, InvalidStudentException {
         assert WRIFilepath != null;
         List<String> rawStudentInfo = Files.readAllLines(SRIFilepath);
-        for (String studentInfo : rawStudentInfo) {
+        for (String studentInfo : rawStudentInfo)
+        {
             String studentDetails[] = studentInfo.split(",");
             Student s = new Student(studentDetails[0],studentDetails[1],studentDetails[2], studentDetails[3]);
+            addStudent(s);
+        }
+        List<String> rawCurrentRideInfo = Files.readAllLines(CRIFilepath);
+        for (String currentRideInfo : rawCurrentRideInfo)
+        {
+            String rideDetails[] = currentRideInfo.split(",");
+            //Location depLoc = new Location()rideDetails[0];
+
+            //Ride r = new Ride()
         }
 
         
