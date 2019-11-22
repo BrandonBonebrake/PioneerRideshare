@@ -63,6 +63,12 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         this.rideIdentificationNumber = "12345";
     }
 
+    /**
+     *    Method used for RideListingPanel to create button for table
+     *    based of if it isOffer or not.
+     *
+     *    @return button Button added to the table
+     */
     public Button getButton()
     {
         Button button = new Button();
@@ -78,6 +84,11 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         return button;
     }
 
+    /**
+     *    Method used to return String that says "Offer" or "Request".
+     *
+     *    @return String with "Offer" or "Request"
+     */
     public String getOfferRequest()
     {
         String offerRequest;
