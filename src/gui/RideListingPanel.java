@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
 import location.Location;
@@ -23,11 +22,18 @@ import student.Student;
 import time.InvalidTimeException;
 import time.PioneerTime;
 
+/**
+ * This class creates the ride listing Pane and the components
+ * that make up the Pane. The calling class is responsible
+ * for adding the Pane of this class to its view to change
+ * the scene so that this view can be interacted with.
+ *
+ * @author Brandon Bonebrake
+ */
 final class RideListingPanel extends DefaultView
 {
     // Global Variables
-    private TableView table = null;
-    private Button backBtn = null;
+    private TableView table   = null;
 
     private Location loc = new Location("street", "Platteville", "WI", 53818);
 
@@ -56,7 +62,7 @@ final class RideListingPanel extends DefaultView
 
     private void createBackButton()
     {
-        backBtn = super.createButton("Back", 200, 75,
+        Button backBtn = super.createButton("Back", 200, 75,
                 0, 0, PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(e -> this.buttonBackClicked());
     }

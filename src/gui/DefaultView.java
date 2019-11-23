@@ -8,17 +8,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import student.InvalidStudentException;
 
 /**
-    This class creates the defaults that every view in the GUI will follow.
-    The stage that is created at runtime is passed in to allow the scene to
-    be changed without needing to create a new window. The scene will
-    instead change within the same stage.
-
-    @author Brandon Bonebrake
+ * This class creates the defaults that every view in the GUI will follow.
+ * The stage that is created at runtime is passed in to allow the scene to
+ * be changed without needing to create a new window. The scene will
+ * instead change within the same stage.
+ *
+ * @author Brandon Bonebrake
  **/
-
 abstract class DefaultView
 {
     // Global Constants
@@ -45,10 +43,10 @@ abstract class DefaultView
     {
         super();
 
-        this.stage = stage;
-        this.scene = scene;
-        this.pane = new Pane();
-        this.width = width;
+        this.stage  = stage;
+        this.scene  = scene;
+        this.pane   = new Pane();
+        this.width  = width;
         this.height = height;
 
         this.paneDefaults();
@@ -58,7 +56,7 @@ abstract class DefaultView
         Method that all classes must implement where the methods to create the
         components are called.
      **/
-    abstract void createComponents() throws InvalidStudentException;
+    abstract void createComponents();
 
     /**
         Method that contains all the default pane settings.

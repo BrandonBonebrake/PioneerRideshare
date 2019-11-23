@@ -22,6 +22,14 @@ import time.InvalidTimeException;
 import time.PioneerTime;
 import time.Time;
 
+/**
+ * This class creates the offer/request Pane and the components
+ * that make up the Pane. The calling class is responsible
+ * for adding the Pane of this class to its view to change
+ * the scene so that this view can be interacted with.
+ *
+ * @author Brandon Bonebrake
+ */
 final class OfferRequestRidePanel extends DefaultView
 {
     // Global Constants
@@ -46,7 +54,6 @@ final class OfferRequestRidePanel extends DefaultView
     private final int CHOICEBOX_HEIGHT = 36; // Height of the choice boxes
 
     private final int DEFAULT_STATE_SELECTED = 48; // Default choice selected on the choice boxes (Wisconsin)
-    private final int DEFAULT_FONT_SIZE = 32;
 
     private final String VALID_FIELD = "-fx-control-inner-background: white; -fx-font-weight: bold;";
     private final String INVALID_FIELD = "-fx-control-inner-background: red; -fx-font-weight: bold;";

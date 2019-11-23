@@ -1,13 +1,21 @@
 package gui;
 
 import date.InvalidDateException;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
 import student.InvalidStudentException;
 import time.InvalidTimeException;
 
+/**
+ * This class creates the splash screen and the components
+ * that make up the Pane. The calling class is responsible
+ * for adding the Pane of this class to its view to change
+ * the scene so that this view can be interacted with.
+ *
+ * @author Brandon Bonebrake
+ */
 final class SplashScreenPanel extends DefaultView
 {
     // Global Constants
@@ -28,7 +36,7 @@ final class SplashScreenPanel extends DefaultView
 
     public SplashScreenPanel(Stage primaryStage, int width, int height)
     {
-       super(primaryStage, null, width, height);
+        super(primaryStage, null, width, height);
 
         this.createComponents();
     }
@@ -128,9 +136,9 @@ final class SplashScreenPanel extends DefaultView
     private void buttonOfferClicked()
     {
         offerPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
-                                               super.getWidth(), super.getHeight(),
-                                               "Offer Ride");
-
+                super.getWidth(), super.getHeight(),
+                "Offer Ride");
+        
         super.changeScene(offerPanel.getPane());
     }
 
