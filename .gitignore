@@ -48,3 +48,7 @@ out/production/PioneerRideshare/ride/Ride.class
 out/production/PioneerRideshare/socketCommunication/Server.class
 out/production/PioneerRideshare/time/PioneerTime.class
 out/production/PioneerRideshare/time/Time.class
+out/production/PioneerRideshare/gui/DefaultView.class
+out/production/PioneerRideshare/gui/OfferRequestRidePanel.class
+out/production/PioneerRideshare/gui/RideListingPanel.class
+out/production/PioneerRideshare/gui/SplashScreenPanel.class
