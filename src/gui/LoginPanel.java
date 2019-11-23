@@ -24,13 +24,9 @@ final class LoginPanel extends DefaultView
 
     private void createBackButton()
     {
-        backBtn = new Button("Back");
-        backBtn.setPrefSize(200, 75);
-        backBtn.setFont(Font.font(32));
-        backBtn.setStyle(PioneerApplication.EXIT_STYLE);
+        backBtn =super.createButton("Back", 200, 75,
+                0, 0, PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(event -> buttonBackClicked());
-
-        super.getPane().getChildren().add(backBtn);
     }
 
     private void buttonBackClicked()

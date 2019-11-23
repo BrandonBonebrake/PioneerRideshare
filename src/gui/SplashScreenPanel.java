@@ -44,76 +44,41 @@ final class SplashScreenPanel extends DefaultView
 
     private void createViewRidesButton()
     {
-        final int SIZE_X = 650;
-        final int SIZE_Y = 150;
-
-        viewRidesBtn = new Button("View Rides");
-        viewRidesBtn.setPrefSize(SIZE_X, SIZE_Y);
-        viewRidesBtn.setTranslateX(DEFAULT_X_TRANS - SIZE_X / 2);
-        viewRidesBtn.setTranslateY(DEFAULT_Y_TRANS + 125);
-        viewRidesBtn.setStyle(PioneerApplication.VIEW_RIDES_STYLE);
+        viewRidesBtn = super.createButton("View Rides", 650, 150,
+                DEFAULT_X_TRANS - 650 / 2, DEFAULT_Y_TRANS + 125,
+                PioneerApplication.VIEW_RIDES_STYLE);
         viewRidesBtn.setOnAction(e -> this.buttonViewRidesClicked());
-
-        super.addComponent(viewRidesBtn);
     }
 
     private void createLoginSignupButton()
     {
-        final int SIZE_X = 100;
-        final int SIZE_Y = 25;
-
-        loginSignupButton = new Button("Login/Signup");
-        loginSignupButton.setPrefSize(SIZE_X, SIZE_Y);
-        loginSignupButton.setFont(Font.font(24));
-        loginSignupButton.setTranslateX(super.getWidth() - SIZE_X);
-        loginSignupButton.setTranslateY(0);
-        loginSignupButton.setStyle(PioneerApplication.LOGIN_SIGNUP_STYLE);
+        loginSignupButton = super.createButton("Login/Signup", 100, 25,
+                super.getWidth() - 100, 0,
+                PioneerApplication.LOGIN_SIGNUP_STYLE);
         loginSignupButton.setOnAction(e -> this.buttonLoginSignupClicked());
-
-        super.addComponent(loginSignupButton);
     }
 
     private void createOfferButton()
     {
-        final int SIZE_X = 300;
-        final int SIZE_Y = 300;
-
-        offerBtn = new Button("Offer\n Ride");
-        offerBtn.setPrefSize(SIZE_X, SIZE_Y);
-        offerBtn.setFont(Font.font(32));
-        offerBtn.setTranslateX(DEFAULT_X_TRANS - SIZE_X - 25);
-        offerBtn.setTranslateY(DEFAULT_Y_TRANS - SIZE_Y / 2 - 50);
-        offerBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
+        offerBtn = super.createButton("Offer\n Ride", 300, 300,
+                DEFAULT_X_TRANS - 325, DEFAULT_Y_TRANS - 200,
+                PioneerApplication.OFFER_REQUEST_STYLE);
         offerBtn.setOnAction(event -> buttonOfferClicked());
-
-        super.addComponent(offerBtn);
     }
 
     private void createRequestButton()
     {
-        final int SIZE_X = 300;
-        final int SIZE_Y = 300;
-
-        requestBtn = new Button("Request\n   Ride");
-        requestBtn.setPrefSize(SIZE_X, SIZE_Y);
-        requestBtn.setFont(Font.font(32));
-        requestBtn.setTranslateX(DEFAULT_X_TRANS + 25);
-        requestBtn.setTranslateY(DEFAULT_Y_TRANS - SIZE_Y / 2 - 50);
-        requestBtn.setStyle(PioneerApplication.OFFER_REQUEST_STYLE);
+        requestBtn = super.createButton("Request\n   Ride", 300, 300,
+                DEFAULT_X_TRANS + 25, DEFAULT_Y_TRANS - 200,
+                PioneerApplication.OFFER_REQUEST_STYLE);
         requestBtn.setOnAction(e -> buttonRequestClicked());
-
-        super.addComponent(requestBtn);
     }
 
     private void createExitButton()
     {
-        exitBtn = new Button("Exit");
-        exitBtn.setPrefSize(200, 75);
-        exitBtn.setFont(Font.font(32));
-        exitBtn.setStyle(PioneerApplication.EXIT_STYLE);
+        exitBtn = super.createButton("Exit", 200, 75,
+                0, 0, PioneerApplication.EXIT_STYLE);
         exitBtn.setOnAction(e -> this.buttonExitClicked());
-
-        super.addComponent(exitBtn);
     }
 
     private void buttonViewRidesClicked()
@@ -130,10 +95,13 @@ final class SplashScreenPanel extends DefaultView
         catch (InvalidStudentException e)
         {
             e.printStackTrace();
-        } catch (InvalidDateException e)
+        }
+        catch (InvalidDateException e)
         {
             e.printStackTrace();
-        } catch (InvalidTimeException e) {
+        }
+        catch (InvalidTimeException e)
+        {
             e.printStackTrace();
         }
 

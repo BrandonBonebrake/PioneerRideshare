@@ -2,7 +2,11 @@ package gui;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import student.InvalidStudentException;
 
@@ -17,6 +21,9 @@ import student.InvalidStudentException;
 
 abstract class DefaultView
 {
+    // Global Constants
+    private int DEFAULT_FONT_SIZE = 32;
+
     // Global Variables
     private Stage stage; // Stage that is created at runtime which all Scenes
     private Scene scene; // Previous scene that was on the stage to allow switching
@@ -81,9 +88,68 @@ abstract class DefaultView
         this.getStage().setScene(this.getScene());
     }
 
+    /**
+     * Changes the scene to the new Pane which will add all the
+     * components to this Pane.
+     *
+     * @param newPane Pane with all components on the view
+     */
     void changeScene(Pane newPane)
     {
         this.getStage().setScene(new Scene(newPane, this.getWidth(), this.getHeight()));
+    }
+
+    /**
+     * General method to create and add labels to the Pane without needing
+     * to instantiate the Labels in the calling Object. Returns a label if
+     * more dynamic control of the Label is needed.
+     *
+     * @param text   Display text of the Label
+     * @param transX Distance from the left edge
+     * @param transY Distance from the right edge
+     * @return Label with defaults and passed in parameters set
+     */
+    Label createLabel(String text, int transX, int transY)
+    {
+        Label label = new Label(text);
+
+        label.setTranslateX(transX);
+        label.setTranslateY(transY);
+        label.setFont(Font.font(DEFAULT_FONT_SIZE));
+        label.setTextFill(Color.WHITE);
+        label.setStyle("-fx-font-weight: bold;");
+
+        this.addComponent(label);
+
+        return label;
+    }
+
+    /**
+     * General method to create and add Buttons to the Pane without
+     * needing to instantiate the Button in the calling Object. Returns
+     * a button if more dynamic control of the Button is needed.
+     *
+     * @param text   Display text of the Button
+     * @param sizeX  Size in the x-axis of the button
+     * @param sizeY  Size in the y-axis of the button
+     * @param transX Distance from the left edge
+     * @param transY Distance from the right edge
+     * @param style  Desired styling of the button
+     * @return Button with defaults and passed in parameters set
+     */
+    Button createButton(String text, int sizeX, int sizeY, int transX, int transY, String style)
+    {
+        Button button = new Button(text);
+
+        button.setPrefSize(sizeX, sizeY);
+        button.setTranslateX(transX);
+        button.setTranslateY(transY);
+        button.setFont(Font.font(DEFAULT_FONT_SIZE));
+        button.setStyle(style);
+
+        this.addComponent(button);
+
+        return button;
     }
 
     /**

@@ -93,7 +93,7 @@ final class OfferRequestRidePanel extends DefaultView
     void createComponents()
     {
         // List of every state abbreviation
-        this.createStateList();
+        this.stateList = Location.getStateList();
 
         // Title at the top of the pane
         this.createTitleLabel();
@@ -150,41 +150,15 @@ final class OfferRequestRidePanel extends DefaultView
         }
     }
 
-    /**
-     * Method that creates every abbreviation for the states in the US. Alaska and Hawaii are
-     * included but likely not a valid place to go. This method only exists so that the global
-     * variables are not cluttered with a large list like this.
-     */
-    private void createStateList()
-    {
-        stateList.addAll("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN",
-                "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM",
-                "NY", "NC" ,"ND", "OH", "OK", "OR", "PA", "RI" ,"SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
-    }
-
     private void createTitleLabel()
     {
-        Label titleLbl = new Label(this.title);
-
-        titleLbl.setTranslateX(super.getWidth() / 3);
-        titleLbl.setFont(Font.font(DEFAULT_FONT_SIZE + 20));
-        titleLbl.setTextFill(Color.WHITE);
-        titleLbl.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(titleLbl);
+        super.createLabel(this.title, super.getWidth() / 3, 0);
     }
 
     private void createLeaveLabel()
     {
-        Label leave = new Label("Leaving From");
-
-        leave.setTranslateX(DEFAULT_X_TRANS);
-        leave.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
-        leave.setFont(Font.font(DEFAULT_FONT_SIZE));
-        leave.setTextFill(Color.WHITE);
-        leave.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(leave);
+        super.createLabel("Leaving From", DEFAULT_X_TRANS,
+                DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
     }
 
     private void createLeaveCityTxtBox()
@@ -215,15 +189,8 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createDestinationLabel()
     {
-        Label destination = new Label("Destination");
-
-        destination.setTranslateX(DEFAULT_X_TRANS);
-        destination.setTranslateY(DEFAULT_Y_TRANS + DEST_COMP_Y_START);
-        destination.setFont(Font.font(DEFAULT_FONT_SIZE));
-        destination.setTextFill(Color.WHITE);
-        destination.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(destination);
+        super.createLabel("Destination", DEFAULT_X_TRANS,
+                DEFAULT_Y_TRANS + DEST_COMP_Y_START);
     }
 
     private void createDestinationCityTxtBox()
@@ -254,15 +221,8 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createLeaveDateLabel()
     {
-        Label leaveDate = new Label("Leave Date");
-
-        leaveDate.setTranslateX(DEFAULT_X_TRANS + 300);
-        leaveDate.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
-        leaveDate.setFont(Font.font(DEFAULT_FONT_SIZE));
-        leaveDate.setTextFill(Color.WHITE);
-        leaveDate.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(leaveDate);
+        super.createLabel("Leave Date", DEFAULT_X_TRANS + 300,
+                DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
     }
 
     private void createLeaveDatePicker()
@@ -282,15 +242,8 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createReturnDateLabel()
     {
-        Label returnDate = new Label("Return Date");
-
-        returnDate.setTranslateX(DEFAULT_X_TRANS + 525);
-        returnDate.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
-        returnDate.setFont(Font.font(DEFAULT_FONT_SIZE));
-        returnDate.setTextFill(Color.WHITE);
-        returnDate.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(returnDate);
+        super.createLabel("Return Date", DEFAULT_X_TRANS + 525,
+                DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
     }
 
     private void createReturnDatePicker()
@@ -310,15 +263,8 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createLeaveTimeLabel()
     {
-        Label leaveTime = new Label("Leave Time");
-
-        leaveTime.setTranslateX(DEFAULT_X_TRANS + 300);
-        leaveTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
-        leaveTime.setFont(Font.font(DEFAULT_FONT_SIZE));
-        leaveTime.setTextFill(Color.WHITE);
-        leaveTime.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(leaveTime);
+        super.createLabel("Leave Time", DEFAULT_X_TRANS + 300,
+                DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
     private void createLeaveTimePicker()
@@ -336,15 +282,8 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createReturnTimeLabel()
     {
-        Label returnTime = new Label("Return Time");
-
-        returnTime.setTranslateX(DEFAULT_X_TRANS + 525);
-        returnTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
-        returnTime.setFont(Font.font(DEFAULT_FONT_SIZE));
-        returnTime.setTextFill(Color.WHITE);
-        returnTime.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(returnTime);
+        super.createLabel("Return Time", DEFAULT_X_TRANS + 525,
+                DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
     private void createReturnTimePicker()
@@ -362,44 +301,24 @@ final class OfferRequestRidePanel extends DefaultView
 
     private void createErrorLabel()
     {
-        errorLabel = new Label();
-
-        errorLabel.setStyle("-fx-font-weight: bold;");
-        errorLabel.setTranslateX(DEFAULT_X_TRANS + 300);
-        errorLabel.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 5);
-        errorLabel.setFont(Font.font(DEFAULT_FONT_SIZE));
+        errorLabel = super.createLabel("", DEFAULT_X_TRANS + 300,
+                DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 5);
         errorLabel.setTextFill(Color.RED);
-
-        super.addComponent(errorLabel);
     }
 
     private void createBackButton()
     {
-        Button backBtn = new Button("Back");
-
-        backBtn.setPrefSize(200, 75);
-        backBtn.setFont(Font.font(DEFAULT_FONT_SIZE));
-        backBtn.setStyle(PioneerApplication.EXIT_STYLE);
+        Button backBtn = super.createButton("Back", 200, 75,
+                0, 0, PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(event -> buttonBackClicked());
-
-        super.addComponent(backBtn);
     }
 
     private void createSubmitButton()
     {
-        final int WIDTH = 200;
-        final int HEIGHT = 75;
+        Button submitBtn = super.createButton("Submit", 200, 75, super.getWidth() - 220,
+                super.getHeight() - 95, PioneerApplication.EXIT_STYLE);
 
-        Button submitBtn = new Button("Submit");
-
-        submitBtn.setPrefSize(WIDTH, HEIGHT);
-        submitBtn.setFont(Font.font(DEFAULT_FONT_SIZE));
-        submitBtn.setStyle(PioneerApplication.EXIT_STYLE);
-        submitBtn.setTranslateX(super.getWidth() - WIDTH - 20);
-        submitBtn.setTranslateY(super.getHeight() - HEIGHT - 20);
         submitBtn.setOnAction(e -> buttonSubmitClicked());
-
-        super.addComponent(submitBtn);
     }
 
     private void buttonBackClicked()

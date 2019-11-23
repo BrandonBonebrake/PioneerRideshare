@@ -1,5 +1,8 @@
 package location;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.Serializable;
 
 /***
@@ -19,6 +22,12 @@ public final class Location implements Serializable
     private String city   = null;
     private String state  = null;
     private int    zip    = 0;
+
+    private static ObservableList<String> stateList = FXCollections.observableArrayList(
+            "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN",
+            "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM",
+            "NY", "NC" ,"ND", "OH", "OK", "OR", "PA", "RI" ,"SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+    );
 
     private static final long serialVersionUID = 2765881055827127532L;
 
@@ -46,12 +55,17 @@ public final class Location implements Serializable
         this.setZip(zip);
     }
 
-    /***
+    public static ObservableList<String> getStateList()
+    {
+        return stateList;
+    }
+
+    /**
      *   Return the street
      *
      *   @return Street Address
      *
-     * ***/
+     **/
 
     public String getStreet()
     {

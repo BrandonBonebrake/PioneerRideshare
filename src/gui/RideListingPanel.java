@@ -31,11 +31,11 @@ final class RideListingPanel extends DefaultView
 
     private Location loc = new Location("street", "Platteville", "WI", 53818);
 
-    private Ride ride = new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,11,21), new PioneerDate(2019, 11, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a"));
+    private Ride ride = new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,12,21), new PioneerDate(2019, 12, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a"));
 
     // Dummy rides used to test the table
     private ObservableList<Ride> data = FXCollections.observableArrayList(
-            new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,11,21), new PioneerDate(2019, 11, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
+            new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,12,21), new PioneerDate(2019, 12, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
             new RideRequest(loc, new Location("street", "Green Bay", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Smith", "dummy2@uwplatt.edu", "123456789!a")),
             new RideOffer(loc, new Location("street", "Eau Claire", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Doe", "dummy2@uwplatt.edu", "123456789!a")),
             new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime("16:07"), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a"))
@@ -56,14 +56,9 @@ final class RideListingPanel extends DefaultView
 
     private void createBackButton()
     {
-        backBtn = new Button("Back");
-        backBtn.setPrefSize(100, 50);
-        backBtn.setMinSize(200, 75);
-        backBtn.setFont(Font.font(32));
-        backBtn.setStyle(PioneerApplication.EXIT_STYLE);
+        backBtn = super.createButton("Back", 200, 75,
+                0, 0, PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(e -> this.buttonBackClicked());
-
-        super.getPane().getChildren().add(backBtn);
     }
 
     private void buttonBackClicked()
