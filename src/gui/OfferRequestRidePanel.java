@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
 import location.Location;
@@ -59,34 +58,44 @@ final class OfferRequestRidePanel extends DefaultView
     private final String INVALID_FIELD = "-fx-control-inner-background: red; -fx-font-weight: bold;";
 
     // Global Variables
-    private String title;
-    private boolean isValidRide = false;
-    private boolean isOffer = false;
+    private String title;                // Holds whether ride is an Offer or a Request
+    private boolean isValidRide = false; // Boolean that determines if a ride will be submitted to the server
+    private boolean isOffer = false;     // Boolean that determines if a RideOffer or RideRequest Object will be created
 
-    private ChoiceBox destState;
-    private ChoiceBox leaveState;
+    private ChoiceBox destState;  // Destination state
+    private ChoiceBox leaveState; // Leave state
 
-    private TextField leaveCity;
-    private TextField destCity;
-    private TextField leaveTime;
-    private TextField returnTime;
+    private TextField leaveCity;  // Leave city
+    private TextField destCity;   // Destination city
+    private TextField leaveTime;  // Leave time
+    private TextField returnTime; // Return time
 
-    private DatePicker leaveDate;
-    private DatePicker returnDate;
+    private DatePicker leaveDate;  // Leave date
+    private DatePicker returnDate; // Return date
 
-    private Label errorLabel;
+    private Label errorLabel; // Label that displays problems with the student's input
 
-    private ObservableList<String> stateList = FXCollections.observableArrayList();
+    private ObservableList<String> stateList = FXCollections.observableArrayList(); // List of all current ride listings
 
-    private Ride ride; // Ride object that will store all necessary ride information
-    private Location leaveLocation;
-    private Location destinationLocation;
-    private Date dateLeaving;
-    private Date dateReturning;
-    private Time timeLeaving;
-    private Time timeReturning;
-    private Student student;
+    private Ride ride;                    // Ride object that will store all necessary ride information
+    private Location leaveLocation;       // Leave location object
+    private Location destinationLocation; // Destination location object
+    private Date dateLeaving;             // Leave date object
+    private Date dateReturning;           // Return date object
+    private Time timeLeaving;             // Leave time object
+    private Time timeReturning;           // Return time object
+    private Student student;              // Student that is creating the ride
 
+    /**
+     * Creates the Offer/Request Pane that will allow students
+     * to create ride offers/requests.
+     *
+     * @param stage  Main container that all scenes are a part of
+     * @param splash Previous scene that will can be set back to
+     * @param width  Width of the view
+     * @param height Height of the view
+     * @param title  Whether it is a ride offer or request
+     */
     OfferRequestRidePanel(Stage stage, Scene splash, int width, int height, String title)
     {
         super(stage, splash, width, height);
@@ -97,6 +106,9 @@ final class OfferRequestRidePanel extends DefaultView
         this.createComponents();
     }
 
+    /**
+     * Creates the components that are in the Pane
+     */
     void createComponents()
     {
         // List of every state abbreviation
@@ -133,6 +145,9 @@ final class OfferRequestRidePanel extends DefaultView
         this.createErrorLabel();
     }
 
+    /**
+     * Dummy method to test while accounts are not implemented
+     */
     private void createTestStudent()
     {
         try
@@ -145,6 +160,11 @@ final class OfferRequestRidePanel extends DefaultView
         }
     }
 
+    /**
+     * Sets whether the student is creating a ride offer or
+     * request based on the title that is passed in to
+     * this Object.
+     */
     private void setIsOffer()
     {
         if(title.toLowerCase().contains("offer"))
@@ -157,17 +177,29 @@ final class OfferRequestRidePanel extends DefaultView
         }
     }
 
+    /**
+     * Creates and displays the title of this view.
+     * Title is created from the passed in String in
+     * the constructor.
+     */
     private void createTitleLabel()
     {
         super.createLabel(this.title, super.getWidth() / 3, 0);
     }
 
+    /**
+     * Creates and displays the leave label.
+     */
     private void createLeaveLabel()
     {
         super.createLabel("Leaving From", DEFAULT_X_TRANS,
                 DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
     }
 
+    /**
+     * Creates and displays the TextField that is used
+     * to obtain the leave city.
+     */
     private void createLeaveCityTxtBox()
     {
         leaveCity = new TextField();
@@ -181,6 +213,11 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(leaveCity);
     }
 
+    /**
+     * Creates and displays the ChoiceBox that is used
+     * to obtain the state that the ride is leaving
+     * form.
+     */
     private void createLeaveStateChoiceBox()
     {
         leaveState = new ChoiceBox<>();
@@ -194,12 +231,19 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(leaveState);
     }
 
+    /**
+     * Creates and displays the destination label
+     */
     private void createDestinationLabel()
     {
         super.createLabel("Destination", DEFAULT_X_TRANS,
                 DEFAULT_Y_TRANS + DEST_COMP_Y_START);
     }
 
+    /**
+     * Creates and displays the TextField that is used
+     * to obtain the destination city.
+     */
     private void createDestinationCityTxtBox()
     {
         destCity = new TextField();
@@ -213,6 +257,10 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(destCity);
     }
 
+    /**
+     * Creates and displays the ChoiceBox that is used
+     * to obtain the destination state.
+     */
     private void createDestinationStateChoiceBox()
     {
         destState = new ChoiceBox<>();
@@ -226,12 +274,19 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(destState);
     }
 
+    /**
+     * Creates and displays the leave date Label.
+     */
     private void createLeaveDateLabel()
     {
         super.createLabel("Leave Date", DEFAULT_X_TRANS + 300,
                 DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
     }
 
+    /**
+     * Creates and displays the DatePicker that is used
+     * to pick the date that the student is leaving.
+     */
     private void createLeaveDatePicker()
     {
         leaveDate = new DatePicker();
@@ -247,12 +302,19 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(leaveDate);
     }
 
+    /**
+     * Creates and displays the return date Label.
+     */
     private void createReturnDateLabel()
     {
         super.createLabel("Return Date", DEFAULT_X_TRANS + 525,
                 DEFAULT_Y_TRANS + LEAVE_COMP_Y_START);
     }
 
+    /**
+     * Creates and displays the DatePicker that is used
+     * to pick the date that the student is returning.
+     */
     private void createReturnDatePicker()
     {
         returnDate = new DatePicker();
@@ -268,12 +330,20 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(returnDate);
     }
 
+    /**
+     * Creates and displays the leave time Label.
+     */
     private void createLeaveTimeLabel()
     {
         super.createLabel("Leave Time", DEFAULT_X_TRANS + 300,
                 DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
+    /**
+     * Creates and displays the TextField that is used
+     * by the student to enter the time that the user is
+     * leaving.
+     */
     private void createLeaveTimePicker()
     {
         leaveTime = new TextField();
@@ -287,12 +357,20 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(leaveTime);
     }
 
+    /**
+     * Creates and displays the return time Label.
+     */
     private void createReturnTimeLabel()
     {
         super.createLabel("Return Time", DEFAULT_X_TRANS + 525,
                 DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
+    /**
+     * Creates and displays the TextField that is used
+     * by the student to enter the time that the user is
+     * returning.
+     */
     private void createReturnTimePicker()
     {
         returnTime = new TextField();
@@ -306,6 +384,11 @@ final class OfferRequestRidePanel extends DefaultView
         super.addComponent(returnTime);
     }
 
+    /**
+     * Creates the error Label that is used to
+     * display any problems with the ride information
+     * that was entered by the student.
+     */
     private void createErrorLabel()
     {
         errorLabel = super.createLabel("", DEFAULT_X_TRANS + 300,
@@ -313,6 +396,10 @@ final class OfferRequestRidePanel extends DefaultView
         errorLabel.setTextFill(Color.RED);
     }
 
+    /**
+     * Creates and displays the back button that will return the
+     * view back to the splash screen.
+     */
     private void createBackButton()
     {
         Button backBtn = super.createButton("Back", 200, 75,
@@ -320,6 +407,10 @@ final class OfferRequestRidePanel extends DefaultView
         backBtn.setOnAction(event -> buttonBackClicked());
     }
 
+    /**
+     * Creates and displays the submit button that will submit the
+     * ride offer/request to the server to be added to the database.
+     */
     private void createSubmitButton()
     {
         Button submitBtn = super.createButton("Submit", 200, 75, super.getWidth() - 220,
@@ -328,11 +419,18 @@ final class OfferRequestRidePanel extends DefaultView
         submitBtn.setOnAction(e -> buttonSubmitClicked());
     }
 
+    /**
+     * Returns the view when the back button is clicked.
+     */
     private void buttonBackClicked()
     {
         super.returnView();
     }
 
+    /**
+     * Sends the ride offer/request to the server when the
+     * Submit button is clicked.
+     */
     private void buttonSubmitClicked()
     {
         colorizeBasedOnInput();
@@ -377,6 +475,9 @@ final class OfferRequestRidePanel extends DefaultView
         }
     }
 
+    /**
+     * Updates the leave date when the leave DatePicker is changed.
+     */
     private void leaveDateChanged()
     {
         String[] dateArr = leaveDate.getEditor().getText().split("/");
@@ -409,6 +510,9 @@ final class OfferRequestRidePanel extends DefaultView
         }
     }
 
+    /**
+     * Updates the return date when the return DatePicker is changed.
+     */
     private void returnDateChanged()
     {
         String[] dateArr = returnDate.getEditor().getText().split("/");
@@ -441,6 +545,9 @@ final class OfferRequestRidePanel extends DefaultView
         }
     }
 
+    /**
+     * Colorizes the fields based on if the input is valid or invalid.
+     */
     private void colorizeBasedOnInput()
     {
         int numberInvalidInput = 0;

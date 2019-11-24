@@ -47,12 +47,28 @@ final class RideListingPanel extends DefaultView
             new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime("16:07"), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a"))
     );
 
-    public RideListingPanel(Stage stage, Scene splash, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException {
-        super(stage, splash, width, height);
+    /**
+     * Creates the ride listing pane that shows all the current ride
+     * listings.
+     *
+     * @param stage     Outer container that all scenes are a part of
+     * @param prevScene The scene of the previous view
+     * @param width     Width of the scene
+     * @param height    Height of the scene
+     * @throws InvalidLocationException
+     * @throws InvalidStudentException
+     * @throws InvalidDateException
+     * @throws InvalidTimeException
+     */
+    public RideListingPanel(Stage stage, Scene prevScene, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException {
+        super(stage, prevScene, width, height);
 
         this.createComponents();
     }
 
+    /**
+     * Creates the components that are on the Pane
+     */
     @Override
     void createComponents()
     {
@@ -60,6 +76,9 @@ final class RideListingPanel extends DefaultView
         this.createTable();
     }
 
+    /**
+     * Creates the back button on the Pane
+     */
     private void createBackButton()
     {
         Button backBtn = super.createButton("Back", 200, 75,
@@ -67,11 +86,17 @@ final class RideListingPanel extends DefaultView
         backBtn.setOnAction(e -> this.buttonBackClicked());
     }
 
+    /**
+     * Returns the view back to the scene that originally created the scene
+     */
     private void buttonBackClicked()
     {
         super.returnView();
     }
 
+    /**
+     * Creates the table that all the current ride offers/requests are a part of
+     */
     private void createTable()
     {
         final double CELL_WIDTH = super.getWidth() / 9.0;

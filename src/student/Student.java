@@ -162,6 +162,12 @@ public final class Student implements Serializable
         }
     }
 
+    /**
+     * Set the password of the student to the passed in value
+     *
+     * @param password Password that the student set
+     * @throws InvalidStudentException Thrown if student password is invalid
+     */
     public void setPassword(String password) throws InvalidStudentException
     {
         char[] passArr = password.toCharArray();
@@ -170,7 +176,7 @@ public final class Student implements Serializable
         if(passArr.length < 8)
             throw new InvalidStudentException("Invalid Password: Must be at least 8 characters long");
 
-        // Looking for a number in the password
+        // Looking for a number to be in the password
         for(int i = 0; i < passArr.length; i++)
         {
             // Found a number in password
@@ -202,11 +208,16 @@ public final class Student implements Serializable
         this.accountCreationDate = new Date();
     }
 
+    /**
+     * Set the account creation date to the passed
+     * in date value
+     *
+     * @param date Date that the student account was created
+     */
     private void setAccountCreationDate(Date date)
     {
         this.accountCreationDate = date;
     }
-
 
     /**
      *    Set the account number of the student
@@ -262,11 +273,22 @@ public final class Student implements Serializable
         this.accountNumber = st.toString();
     }
 
+    /**
+     * Set the account number to the passed in strings value
+     *
+     * @param acctNo
+     */
     private void setAccountNumber(String acctNo)
     {
         this.accountNumber = acctNo;
     }
 
+    /**
+     * Increments the number of ride requests that the student has
+     * if it is within the valid range
+     *
+     * @throws InvalidStudentException
+     */
     public void incrementRideRequests() throws InvalidStudentException
     {
         if(this.numCurrentRideRequests >= MAX_RIDE_REQUESTS)
@@ -276,6 +298,12 @@ public final class Student implements Serializable
         this.numCurrentRideRequests++;
     }
 
+    /**
+     * Increments the number of ride offers that the student has
+     * if it is within the valid range
+     *
+     * @throws InvalidStudentException
+     */
     public void incrementRideOffers() throws InvalidStudentException
     {
         if(this.numCurrentRideOffers >= MAX_RIDE_OFFERS)
@@ -285,6 +313,12 @@ public final class Student implements Serializable
         this.numCurrentRideOffers++;
     }
 
+    /**
+     * Decrements the number of ride requests that the student has
+     * if it is within the valid range
+     *
+     * @throws InvalidStudentException
+     */
     public void decrementRideRequests() throws InvalidStudentException
     {
         if(this.numCurrentRideRequests <= 0)
@@ -294,6 +328,12 @@ public final class Student implements Serializable
         this.numCurrentRideRequests--;
     }
 
+    /**
+     * Decrements the number of ride offers that the student has
+     * if it is within the valid range
+     *
+     * @throws InvalidStudentException
+     */
     public void decrementRideOffers() throws InvalidStudentException
     {
         if(this.numCurrentRideOffers <= 0)

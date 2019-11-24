@@ -19,9 +19,6 @@ import javafx.stage.Stage;
  **/
 abstract class DefaultView
 {
-    // Global Constants
-    private int DEFAULT_FONT_SIZE = 32;
-
     // Global Variables
     private Stage stage; // Stage that is created at runtime which all Scenes
     private Scene scene; // Previous scene that was on the stage to allow switching
@@ -103,8 +100,8 @@ abstract class DefaultView
      * more dynamic control of the Label is needed.
      *
      * @param text   Display text of the Label
-     * @param transX Distance from the left edge
-     * @param transY Distance from the right edge
+     * @param transX Distance from the x-axis
+     * @param transY Distance from the y-axis
      * @return Label with defaults and passed in parameters set
      */
     Label createLabel(String text, int transX, int transY)
@@ -113,7 +110,7 @@ abstract class DefaultView
 
         label.setTranslateX(transX);
         label.setTranslateY(transY);
-        label.setFont(Font.font(DEFAULT_FONT_SIZE));
+        label.setFont(Font.font(32));
         label.setTextFill(Color.WHITE);
         label.setStyle("-fx-font-weight: bold;");
 
@@ -130,8 +127,8 @@ abstract class DefaultView
      * @param text   Display text of the Button
      * @param sizeX  Size in the x-axis of the button
      * @param sizeY  Size in the y-axis of the button
-     * @param transX Distance from the left edge
-     * @param transY Distance from the right edge
+     * @param transX Distance from the x-axis
+     * @param transY Distance from the y-axis
      * @param style  Desired styling of the button
      * @return Button with defaults and passed in parameters set
      */
@@ -142,7 +139,7 @@ abstract class DefaultView
         button.setPrefSize(sizeX, sizeY);
         button.setTranslateX(transX);
         button.setTranslateY(transY);
-        button.setFont(Font.font(DEFAULT_FONT_SIZE));
+        button.setFont(Font.font(32));
         button.setStyle(style);
 
         this.addComponent(button);
