@@ -39,8 +39,8 @@ public final class Student implements Serializable
         this.setLastName(lastName);
         this.setEmail(email);
         this.setPassword(password);
-        this.setAccountCreationDate(null);
-        this.setAccountNumber("");
+        this.setAccountCreationDate();
+        this.setAccountNumber();
     }
 
     public Student(String firstName, String lastName, String email, String password, Date accountCreationDate,
@@ -64,12 +64,12 @@ public final class Student implements Serializable
      **/
     public String getFirstName() { return this.firstName; }
 
-    /***
+    /**
      *   Return the Student's last name
      *
      *   @return Student's last name
      *
-     * ***/
+     * **/
     public String getLastName() { return this.lastName; }
 
     /**
@@ -196,75 +196,75 @@ public final class Student implements Serializable
     /**
      *    Sets the date of the account creation
      *    to the current system date
-     *
      **/
+    private void setAccountCreationDate()
+    {
+        this.accountCreationDate = new Date();
+    }
+
     private void setAccountCreationDate(Date date)
     {
-        if (date == null)
-            this.accountCreationDate = new Date();
-        else
-            this.accountCreationDate = date;
+        this.accountCreationDate = date;
     }
+
 
     /**
      *    Set the account number of the student
-     *    at the creation of the object
-     *
+     *    at the creation of the object based on
+     *    values set to email, account creation
+     *    date, ect...
      **/
+    private void setAccountNumber()
+    {
+        StringBuilder st = new StringBuilder();
+        String temp = String.valueOf(getAccountCreationDate().getMonth());
+        String temp1[]  = getEmail().split("@uwplatt.edu"); // Get the name portion of the email
+        char[] emailArr = temp1[0].toCharArray(); // Convert the name of the email to chars
+
+        st.append(getAccountCreationDate().getYear());
+
+        // Add month to account number
+        if(temp.length() == 1)
+            temp = "0" + temp;
+        st.append(temp);
+
+        // Add day to account number
+        temp = String.valueOf(getAccountCreationDate().getDay());
+        if(temp.length() == 1)
+            temp = "0" + temp;
+        st.append(temp);
+
+        // Convert date to hex
+        temp = Long.toHexString(Long.parseLong(st.toString()));
+
+        // Remove what is in st and add the hex equivalent
+        st.delete(0, st.length());
+        st.append(temp);
+
+        // XOR the email and add it to the account number
+        for(int i = 0; i < emailArr.length; i++)
+        {
+            emailArr[i] = (char) (emailArr[i] ^ 1);
+            st.append((int) emailArr[i] ^ 1);
+        }
+
+        // Make the length uniform
+        while(st.length() < 64)
+        {
+            st.append(0);
+        }
+
+        // Remove any characters over the limit
+        while (st.length() > 64)
+        {
+            st.deleteCharAt(st.length() - 1);
+        }
+        this.accountNumber = st.toString();
+    }
+
     private void setAccountNumber(String acctNo)
     {
-        if (acctNo == "") {
-            StringBuilder st = new StringBuilder();
-            long accountNumber = 0;
-            char[] yearArr = String.valueOf(this.getAccountCreationDate().getYear()).toCharArray();
-            char[] monthArr = String.valueOf(this.getAccountCreationDate().getMonth()).toCharArray();
-            char[] dayArr = String.valueOf(this.getAccountCreationDate().getDay()).toCharArray();
-            char[] lastName = this.getLastName().toUpperCase().toCharArray();
-            char[] firstName = this.getFirstName().toUpperCase().toCharArray();
-
-            // Append the year value to account number
-            st.append(Character.getNumericValue(yearArr[0]));
-            st.append(Character.getNumericValue(yearArr[1]));
-            st.append(Character.getNumericValue(yearArr[2]));
-            st.append(Character.getNumericValue(yearArr[3]));
-
-            // Append month value to account number
-            st.append(Character.getNumericValue(monthArr[0]));
-
-            if (monthArr.length == 2)
-                st.append(Character.getNumericValue(monthArr[1]));
-            else
-                st.append("00");
-
-            // Append day value to account number
-            st.append(Character.getNumericValue(dayArr[0]));
-
-            if (dayArr.length == 2)
-                st.append(Character.getNumericValue(dayArr[1]));
-            else
-                st.append("00");
-
-            // Append last name to account number
-            for (char c : lastName) {
-                st.append(Character.getNumericValue(c));
-            }
-            // Append first name to account number
-            for (char c : firstName) {
-                st.append(Character.getNumericValue(c));
-            }
-
-            while (st.length() < 54)
-                st.append("0");
-
-            // Remove everything in st and convert it to hex
-            st.delete(0, st.length());
-            st.append(Long.toHexString(accountNumber));
-
-            // Set hex value to the account number
-            this.accountNumber = st.toString();
-        } else {
-            this.accountNumber = acctNo;
-        }
+        this.accountNumber = acctNo;
     }
 
     public void incrementRideRequests() throws InvalidStudentException
@@ -285,8 +285,26 @@ public final class Student implements Serializable
         this.numCurrentRideOffers++;
     }
 
+    public void decrementRideRequests() throws InvalidStudentException
+    {
+        if(this.numCurrentRideRequests <= 0)
+        {
+            throw new InvalidStudentException("Invalid Number Ride Requests. Min of 0");
+        }
+        this.numCurrentRideRequests--;
+    }
+
+    public void decrementRideOffers() throws InvalidStudentException
+    {
+        if(this.numCurrentRideOffers <= 0)
+        {
+            throw new InvalidStudentException("Invalid Number Ride Offers. Min of 0");
+        }
+        this.numCurrentRideOffers--;
+    }
+
     /**
-     * @return client.student information
+     * @return student information
      **/
     public String toString()
     {

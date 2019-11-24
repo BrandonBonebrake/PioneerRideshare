@@ -31,8 +31,7 @@ public final class Location implements Serializable
 
     private static final long serialVersionUID = 2765881055827127532L;
 
-    /*** Constructor Method - Date <p>
-     *
+    /**
      *   Creates an Address object to hold
      *   an object
      *
@@ -43,7 +42,30 @@ public final class Location implements Serializable
      *
      *   @throws InvalidLocationException Must have access to the system client.time
      *
-     *  ***/
+     **/
+
+    public Location(String street, String city, String state, int zip) throws InvalidLocationException
+    {
+        super();
+
+        this.setState(state);
+        this.setCity(city);
+        this.setStreet(street);
+        this.setZip(Integer.toString(zip));
+    }
+
+    /**
+     *   Creates an Address object to hold
+     *   an object
+     *
+     *   @param street Street Address
+     *   @param city   City
+     *   @param state  State
+     *   @param zip    Zip Code
+     *
+     *   @throws InvalidLocationException Must have access to the system client.time
+     *
+     **/
 
     public Location(String street, String city, String state, String zip) throws InvalidLocationException
     {
