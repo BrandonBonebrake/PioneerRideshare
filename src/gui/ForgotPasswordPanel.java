@@ -8,6 +8,8 @@ final class ForgotPasswordPanel extends DefaultView
     ForgotPasswordPanel(Stage stage, Scene scene, int width, int height)
     {
         super(stage, scene, width, height);
+
+        this.createComponents();
     }
 
     @Override

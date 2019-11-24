@@ -9,6 +9,7 @@ import java.net.Socket;
 
 public class Server
 {
+    private static final int port = 63341;
 
     public Server(int port, PSRDatabase database)
     {
@@ -32,6 +33,9 @@ public class Server
     }
 
     public static void main(String[] args) throws IOException, InvalidStudentException {
-        new Server(63341, null);
+        new Server(port, null);
+    }
+    public static int getPort() {
+        return port;
     }
 }

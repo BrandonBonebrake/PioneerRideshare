@@ -39,8 +39,21 @@ public final class Student implements Serializable
         this.setLastName(lastName);
         this.setEmail(email);
         this.setPassword(password);
-        this.setAccountCreationDate();
-        this.setAccountNumber();
+        this.setAccountCreationDate(null);
+        this.setAccountNumber("");
+    }
+
+    public Student(String firstName, String lastName, String email, String password, Date accountCreationDate,
+                   String accountNumber) throws InvalidStudentException
+    {
+        super();
+
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setAccountCreationDate(accountCreationDate);
+        this.setAccountNumber(accountNumber);
     }
 
     /**
@@ -185,9 +198,12 @@ public final class Student implements Serializable
      *    to the current system date
      *
      **/
-    private void setAccountCreationDate()
+    private void setAccountCreationDate(Date date)
     {
-        this.accountCreationDate = new Date();
+        if (date == null)
+            this.accountCreationDate = new Date();
+        else
+            this.accountCreationDate = date;
     }
 
     /**
@@ -195,59 +211,60 @@ public final class Student implements Serializable
      *    at the creation of the object
      *
      **/
-    private void setAccountNumber()
+    private void setAccountNumber(String acctNo)
     {
-        StringBuilder st = new StringBuilder();
-        long accountNumber = 0;
-        char[] yearArr   = String.valueOf(this.getAccountCreationDate().getYear()).toCharArray();
-        char[] monthArr  = String.valueOf(this.getAccountCreationDate().getMonth()).toCharArray();
-        char[] dayArr    = String.valueOf(this.getAccountCreationDate().getDay()).toCharArray();
-        char[] lastName  = this.getLastName().toUpperCase().toCharArray();
-        char[] firstName = this.getFirstName().toUpperCase().toCharArray();
+        if (acctNo == "") {
+            StringBuilder st = new StringBuilder();
+            long accountNumber = 0;
+            char[] yearArr = String.valueOf(this.getAccountCreationDate().getYear()).toCharArray();
+            char[] monthArr = String.valueOf(this.getAccountCreationDate().getMonth()).toCharArray();
+            char[] dayArr = String.valueOf(this.getAccountCreationDate().getDay()).toCharArray();
+            char[] lastName = this.getLastName().toUpperCase().toCharArray();
+            char[] firstName = this.getFirstName().toUpperCase().toCharArray();
 
-        // Append the year value to account number
-        st.append(Character.getNumericValue(yearArr[0]));
-        st.append(Character.getNumericValue(yearArr[1]));
-        st.append(Character.getNumericValue(yearArr[2]));
-        st.append(Character.getNumericValue(yearArr[3]));
+            // Append the year value to account number
+            st.append(Character.getNumericValue(yearArr[0]));
+            st.append(Character.getNumericValue(yearArr[1]));
+            st.append(Character.getNumericValue(yearArr[2]));
+            st.append(Character.getNumericValue(yearArr[3]));
 
-        // Append month value to account number
-        st.append(Character.getNumericValue(monthArr[0]));
+            // Append month value to account number
+            st.append(Character.getNumericValue(monthArr[0]));
 
-        if(monthArr.length == 2)
-            st.append(Character.getNumericValue(monthArr[1]));
-        else
-            st.append("00");
+            if (monthArr.length == 2)
+                st.append(Character.getNumericValue(monthArr[1]));
+            else
+                st.append("00");
 
-        // Append day value to account number
-        st.append(Character.getNumericValue(dayArr[0]));
+            // Append day value to account number
+            st.append(Character.getNumericValue(dayArr[0]));
 
-        if(dayArr.length == 2)
-            st.append(Character.getNumericValue(dayArr[1]));
-        else
-            st.append("00");
+            if (dayArr.length == 2)
+                st.append(Character.getNumericValue(dayArr[1]));
+            else
+                st.append("00");
 
-        // Append last name to account number
-        for (char c : lastName)
-        {
-            st.append(Character.getNumericValue(c));
+            // Append last name to account number
+            for (char c : lastName) {
+                st.append(Character.getNumericValue(c));
+            }
+            // Append first name to account number
+            for (char c : firstName) {
+                st.append(Character.getNumericValue(c));
+            }
+
+            while (st.length() < 54)
+                st.append("0");
+
+            // Remove everything in st and convert it to hex
+            st.delete(0, st.length());
+            st.append(Long.toHexString(accountNumber));
+
+            // Set hex value to the account number
+            this.accountNumber = st.toString();
+        } else {
+            this.accountNumber = acctNo;
         }
-
-        // Append first name to account number
-        for (char c : firstName)
-        {
-            st.append(Character.getNumericValue(c));
-        }
-
-        while (st.length() < 54)
-            st.append("0");
-
-        // Remove everything in st and convert it to hex
-        st.delete(0, st.length());
-        st.append(Long.toHexString(accountNumber));
-
-        // Set hex value to the account number
-        this.accountNumber = st.toString();
     }
 
     public void incrementRideRequests() throws InvalidStudentException

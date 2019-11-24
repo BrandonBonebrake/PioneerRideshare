@@ -2,6 +2,7 @@ package database;
 
 import location.InvalidLocationException;
 import location.Location;
+import socketCommunication.Server;
 import student.InvalidStudentException;
 import student.Student;
 import ride.Ride;
@@ -10,10 +11,17 @@ import ride.Ride;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.PatternSyntaxException;
 import java.nio.file.Files;
+import java.sql.*;
+import javax.sql.*;
+import javax.naming.*;
 
 public class PSRDatabase
 {
@@ -28,6 +36,7 @@ public class PSRDatabase
     private Path PRIFilepath; // holds past ride info
     private Path SRIFilepath; // holds Student Info
     private Path CRIFilepath; // holds passwords
+    private static final String dbms = "mysql";
 
     public PSRDatabase() throws IOException {
         assert WRIFilepath != null;
@@ -46,26 +55,73 @@ public class PSRDatabase
             }
         }
         List<String> rawCurrentRideInfo = Files.readAllLines(CRIFilepath);
-        for (String currentRideInfo : rawCurrentRideInfo)
-        {
+        for (String currentRideInfo : rawCurrentRideInfo) {
             String rideDetails[] = currentRideInfo.split(",");
             try {
-                Location depLoc = new Location(rideDetails[0], rideDetails[1],rideDetails[2], Integer.parseInt(rideDetails[3]));
+                Location depLoc = new Location(rideDetails[0], rideDetails[1], rideDetails[2], rideDetails[3]);
             } catch (InvalidLocationException e) {
                 e.printStackTrace();
             }
-
-            //Ride r = new Ride()
         }
+    }
 
-        
+    // Make connection to Server
+    public Connection getConnection(String user, String pass) throws SQLException {
 
-        //{
-            //get studentList, currentRides, pastRides.
-            //set them all
-        //}
-        //copyMemoryToFile(filepath); CALL IF CLOSE OR GOING TO CRAS    H
-        //pull arraylists from database, populate
+        Connection conn = null;
+        Properties connectionProps = new Properties();
+        connectionProps.put("user", user);
+        connectionProps.put("password", pass);
+
+        if (this.dbms.equals("mysql")) {
+
+            conn = DriverManager.getConnection(
+                    "jdbc:" + this.dbms + "://" +
+                            "localhost" +
+                            ":" + Server.getPort() + "/",
+                    connectionProps);
+        } else if (this.dbms.equals("derby")) {
+            conn = DriverManager.getConnection(
+                    "jdbc:" + this.dbms + ":" +
+                            //this.dbName +
+                            ";create=true",
+                    connectionProps);
+        }
+        System.out.println("Connected to database");
+        return conn;
+    }
+
+    public static void createTable(Connection conn, String dbName, String tableName)
+            throws SQLException
+    {
+        Statement stmt = null;
+
+    }
+
+    public static void viewTable(Connection con, String dbName)
+            throws SQLException {
+
+        Statement stmt = null;
+        String query = "select F_NAME, L_NAME, EMAIL, PASSWORD, " +
+                "from " + dbName + ".STUDENTS";
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String coffeeName = rs.getString("COF_NAME");
+                int supplierID = rs.getInt("SUP_ID");
+                float price = rs.getFloat("PRICE");
+                int sales = rs.getInt("SALES");
+                int total = rs.getInt("TOTAL");
+                System.out.println(coffeeName + "\t" + supplierID +
+                        "\t" + price + "\t" + sales +
+                        "\t" + total);
+            }
+        } catch (SQLException e ) {
+            //JDBCTutorialUtilities.printSQLException(e);
+        } finally {
+            if (stmt != null) { stmt.close(); }
+        }
     }
 
     //adds a student to the list

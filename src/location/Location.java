@@ -21,7 +21,7 @@ public final class Location implements Serializable
     private String street = null;
     private String city   = null;
     private String state  = null;
-    private int    zip    = 0;
+    private String zip    = null;
 
     private static ObservableList<String> stateList = FXCollections.observableArrayList(
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN",
@@ -45,7 +45,7 @@ public final class Location implements Serializable
      *
      *  ***/
 
-    public Location(String street, String city, String state, int zip) throws InvalidLocationException
+    public Location(String street, String city, String state, String zip) throws InvalidLocationException
     {
         super();
 
@@ -103,7 +103,7 @@ public final class Location implements Serializable
      *
      * ***/
 
-    public int getZip()
+    public String getZip()
     {
         return this.zip;
     }
@@ -147,7 +147,7 @@ public final class Location implements Serializable
         for(int i = 0; i < cityArr.length; i++)
         {
             if(!((cityArr[i] >= 65 && cityArr[i] <= 90) ||
-                (cityArr[i] >= 97 && cityArr[i] <= 122) || cityArr[i] == 32))
+                (cityArr[i] >= 97 && cityArr[i] <= 122) || cityArr[i] == 32 || cityArr[i] == 46))
             {
                 throw new InvalidLocationException("Invalid Character: " + cityArr[i]);
             }
@@ -178,9 +178,9 @@ public final class Location implements Serializable
      *
      * ***/
 
-    public void setZip(int zip) throws InvalidLocationException
+    public void setZip(String zip) throws InvalidLocationException
     {
-        if(Integer.toString(zip).length() == 5)
+        if(zip.length() == 5)
         {
             this.zip = zip;
         }
