@@ -6,7 +6,11 @@ import date.PioneerDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
@@ -202,15 +206,8 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveCityTxtBox()
     {
-        leaveCity = new TextField();
-
-        leaveCity.setPrefSize(CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT);
-        leaveCity.setTranslateX(DEFAULT_X_TRANS);
-        leaveCity.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
-        leaveCity.setPromptText("Departure City");
-        leaveCity.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(leaveCity);
+        leaveCity = super.createTextField("Departure City", CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT,
+                DEFAULT_X_TRANS, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
     }
 
     /**
@@ -220,15 +217,8 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveStateChoiceBox()
     {
-        leaveState = new ChoiceBox<>();
-
-        leaveState.setPrefSize(CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT);
-        leaveState.setItems(stateList);
-        leaveState.setTranslateX(DEFAULT_X_TRANS);
-        leaveState.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
-        leaveState.setValue(stateList.get(DEFAULT_STATE_SELECTED)); // Default to Wisconsin
-
-        super.addComponent(leaveState);
+        leaveState = super.createChoiceBox(stateList, DEFAULT_STATE_SELECTED, CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT,
+                DEFAULT_X_TRANS, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
     /**
@@ -246,15 +236,8 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createDestinationCityTxtBox()
     {
-        destCity = new TextField();
-
-        destCity.setPrefSize(CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT);
-        destCity.setTranslateX(DEFAULT_X_TRANS);
-        destCity.setTranslateY(DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP);
-        destCity.setPromptText("Destination City");
-        destCity.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(destCity);
+        destCity = super.createTextField("Destination City", CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT,
+                DEFAULT_X_TRANS, DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP);
     }
 
     /**
@@ -263,15 +246,8 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createDestinationStateChoiceBox()
     {
-        destState = new ChoiceBox<>();
-
-        destState.setPrefSize(CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT);
-        destState.setItems(stateList);
-        destState.setTranslateX(DEFAULT_X_TRANS);
-        destState.setTranslateY(DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
-        destState.setValue(stateList.get(DEFAULT_STATE_SELECTED)); // Default to Wisconsin
-
-        super.addComponent(destState);
+        destState = super.createChoiceBox(stateList, DEFAULT_STATE_SELECTED, CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT,
+                DEFAULT_X_TRANS, DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
     /**
@@ -289,17 +265,9 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveDatePicker()
     {
-        leaveDate = new DatePicker();
-
-        leaveDate.setEditable(false);
-        leaveDate.setPrefSize(DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT);
-        leaveDate.setTranslateX(DEFAULT_X_TRANS + 300);
-        leaveDate.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
-        leaveDate.setStyle("-fx-font-weight: bold;");
-        leaveDate.setPromptText("dd/mm/yyyy");
+        leaveDate = super.createDatePicker("dd/mm/yyyy", DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT,
+                DEFAULT_X_TRANS + 300, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
         leaveDate.setOnAction(e -> leaveDateChanged());
-
-        super.addComponent(leaveDate);
     }
 
     /**
@@ -317,17 +285,9 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createReturnDatePicker()
     {
-        returnDate = new DatePicker();
-
-        returnDate.setEditable(false);
-        returnDate.setPrefSize(DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT);
-        returnDate.setTranslateX(DEFAULT_X_TRANS + 525);
-        returnDate.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
-        returnDate.setStyle("-fx-font-weight: bold;");
-        returnDate.setPromptText("dd/mm/yyyy");
+        returnDate = super.createDatePicker("dd/mm/yyyy", DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT,
+                DEFAULT_X_TRANS + 525, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
         returnDate.setOnAction(event -> returnDateChanged());
-
-        super.addComponent(returnDate);
     }
 
     /**
@@ -346,15 +306,8 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveTimePicker()
     {
-        leaveTime = new TextField();
-
-        leaveTime.setPrefSize(TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT);
-        leaveTime.setTranslateX(DEFAULT_X_TRANS + 300);
-        leaveTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
-        leaveTime.setPromptText("hh:mm");
-        leaveTime.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(leaveTime);
+        leaveTime = super.createTextField("hh:mm", TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT,
+                DEFAULT_X_TRANS + 300, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
     }
 
     /**
@@ -373,15 +326,8 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createReturnTimePicker()
     {
-        returnTime = new TextField();
-
-        returnTime.setPrefSize(TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT);
-        returnTime.setTranslateX(DEFAULT_X_TRANS + 525);
-        returnTime.setTranslateY(DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
-        returnTime.setPromptText("hh:mm");
-        returnTime.setStyle("-fx-font-weight: bold;");
-
-        super.addComponent(returnTime);
+        returnTime = super.createTextField("hh:mm", TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT,
+                DEFAULT_X_TRANS + 525, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
     }
 
     /**

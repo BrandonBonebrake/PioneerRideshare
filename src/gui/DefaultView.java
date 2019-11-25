@@ -1,9 +1,13 @@
 package gui;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -145,6 +149,89 @@ abstract class DefaultView
         this.addComponent(button);
 
         return button;
+    }
+
+    /**
+     * General method to create and add TextFields to the Pane without
+     * needing to instantiate the TextField in the calling Object. Returns
+     * a text field if more dynamic control of the TextField is needed.
+     *
+     * @param prompt Text Displayed when there is no input
+     * @param sizeX  Size in the x-axis
+     * @param sizeY  Size in hte y-axis
+     * @param transX Distance from the x-axis
+     * @param transY Distance from the y-axis
+     * @return TextField with defaults and passed in parameters set
+     */
+    TextField createTextField(String prompt, int sizeX, int sizeY, int transX, int transY)
+    {
+        TextField textField = new TextField();
+
+        textField.setPromptText(prompt);
+        textField.setPrefSize(sizeX, sizeY);
+        textField.setTranslateX(transX);
+        textField.setTranslateY(transY);
+        textField.setStyle("-fx-font-weight: bold;");
+
+        this.addComponent(textField);
+
+        return textField;
+    }
+
+    /**
+     * General method to create and add DatePickers to the Pane without
+     * needing to instantiate the DatePicker in the calling Object. Returns
+     * a date picker if more dynamic control of the DatePicker is needed.
+     *
+     * @param prompt Text Displayed when there is no input
+     * @param sizeX  Size in the x-axis
+     * @param sizeY  Size in the y-axis
+     * @param transX Distance from the x-axis
+     * @param transY Distance from the y-axis
+     * @return DatePicker with defaults and passed in parameters set
+     */
+    DatePicker createDatePicker(String prompt, int sizeX, int sizeY, int transX, int transY)
+    {
+        DatePicker datePicker = new DatePicker();
+
+        datePicker.setEditable(false);
+        datePicker.setPromptText(prompt);
+        datePicker.setPrefSize(sizeX, sizeY);
+        datePicker.setTranslateX(transX);
+        datePicker.setTranslateY(transY);
+        datePicker.setStyle("-fx-font-weight: bold;");
+
+        this.addComponent(datePicker);
+
+        return datePicker;
+    }
+
+    /**
+     * General method to create and add ChoiceBoxes to the Pane without
+     * needing to instantiate the ChoiceBox in the calling Object. Returns
+     * a choice box if more dynamic control of the ChoiceBox is needed.
+     *
+     * @param items        List of all items to display
+     * @param selectedItem List item to default to displaying
+     * @param sizeX        Size in the x-axis
+     * @param sizeY        Size in the y-axis
+     * @param transX       Distance from the x-axis
+     * @param transY       Distance from the y-axis
+     * @return ChoiceBox with defaults and passed in parameters set
+     */
+    ChoiceBox createChoiceBox(ObservableList items, int selectedItem, int sizeX, int sizeY, int transX, int transY)
+    {
+        ChoiceBox choiceBox = new ChoiceBox();
+
+        choiceBox.setItems(items);
+        choiceBox.setValue(items.get(selectedItem));
+        choiceBox.setPrefSize(sizeX, sizeY);
+        choiceBox.setTranslateX(transX);
+        choiceBox.setTranslateY(transY);
+
+        this.addComponent(choiceBox);
+
+        return choiceBox;
     }
 
     /**
