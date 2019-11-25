@@ -273,7 +273,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     /**
      Set the coordinates of the Ride.
 
-     @param coordinates
+     @param coordinates Map object that holds the coordinates of the location
      **/
     public void setCoordinates(Map coordinates)
     {
@@ -334,11 +334,11 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
      Overridden compare method that compares the ride
      identification numbers of one ride to another.
 
-     @param ride1       Ride1 to be compared
-     @param ride2       Ride2 to be compared
-     @return int        negative if ride1 < ride2
-                        zero if ride1 == ride2
-                        positive if ride1 > ride2
+     @param ride1 Ride1 to be compared
+     @param ride2 Ride2 to be compared
+     @return int  negative if ride1 less than ride2
+                  zero if ride1 equal to ride2
+                  positive if ride1 greater than ride2
      **/
     @Override
     public int compare(Ride ride1, Ride ride2)
@@ -352,10 +352,10 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
      identification number to another ride's
      identification number.
 
-     @param ride        Ride to be compared
-     @return int        negative if this < ride2
-                        zero if this == ride2
-                        positive if this > ride2
+     @param ride Ride to be compared
+     @return int negative if this less than ride2
+                 zero if this equal to ride2
+                 positive if this larger than ride2
      **/
     @Override
     public int compareTo(Ride ride)

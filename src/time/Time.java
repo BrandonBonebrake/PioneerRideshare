@@ -293,9 +293,9 @@ public class Time implements Serializable, Comparable<Time>, Comparator<Time>
      *    Compares two times to each other and returns
      *    the difference between the two in minutes.
      *
-     *    @param    time1
-     *    @param    time2
-     *    @return   int Difference between time1 & time2 in minutes
+     *    @param    time1 First time to compare
+     *    @param    time2 Second time to compare to
+     *    @return   int Difference between time1 and time2 in minutes
      **/
     public int compare(Time time1, Time time2)
     {
@@ -307,7 +307,7 @@ public class Time implements Serializable, Comparable<Time>, Comparator<Time>
      *    the difference between the two in minutes.
      *
      *    @param    time compare to this
-     *    @return   int Difference between time1 & time2 in minutes
+     *    @return   int Difference between time1 and time2 in minutes
      **/
     public int compareTo(Time time)
     {

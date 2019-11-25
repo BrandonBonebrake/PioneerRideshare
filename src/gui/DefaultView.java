@@ -72,6 +72,8 @@ abstract class DefaultView
         Quick method to add components to the view so a
         super.getPane().getChildren().add(####); is not
         needed to add a component to the pane.
+
+        @param component Component to add to the pane
      **/
     void addComponent(Node component)
     {

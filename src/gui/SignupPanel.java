@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 final class SignupPanel extends DefaultView
 {
     /**
-     * 
+     *
      *
      * @param stage  The stage that was created at runtime
      * @param scene  The previous scene that can be set back to

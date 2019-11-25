@@ -21,14 +21,15 @@ public final class Student implements Serializable
     private static final long serialVersionUID = 4099097738532790605L;
 
     /**
-     *   Creates a client.student.Student object that holds their
-     *   name and email
+     * Creates a client.student.Student object that holds their
+     * name and email
      *
-     *   @param firstName First name of client.student
-     *   @param lastName  Last name of client.student
-     *   @param email     Email of client.student
+     * @param firstName First name of client.student
+     * @param lastName  Last name of client.student
+     * @param email     Email of client.student
+     * @param password  Password of the students account
      *
-     *   @throws InvalidStudentException Must have access to the system client.time
+     * @throws InvalidStudentException Must have access to the system client.time
      *
      **/
     public Student(String firstName, String lastName, String email, String password) throws InvalidStudentException
@@ -43,6 +44,20 @@ public final class Student implements Serializable
         this.setAccountNumber();
     }
 
+    /**
+     * Creates a client.student.Student object that holds their
+     * name and email
+     *
+     * @param firstName First name of client.student
+     * @param lastName  Last name of client.student
+     * @param email     Email of client.student
+     * @param password  Password of the students account
+     * @param accountCreationDate Date account was created
+     * @param accountNumber Unique number tied to the account
+     *
+     * @throws InvalidStudentException Must have access to the system client.time
+     *
+     **/
     public Student(String firstName, String lastName, String email, String password, Date accountCreationDate,
                    String accountNumber) throws InvalidStudentException
     {
@@ -117,7 +132,7 @@ public final class Student implements Serializable
      *    in value
      *
      *    @param firstName Student's first name
-     *
+     *    @throws InvalidStudentException Thrown if name is empty or null
      **/
     public void setFirstName(String firstName) throws InvalidStudentException
     {
@@ -129,11 +144,11 @@ public final class Student implements Serializable
     }
 
     /**
-     *    Set the Student first name to the passed
-     *    in value
+     * Set the Student first name to the passed
+     * in value.
      *
-     *    @param lastName Student's last name
-     *
+     * @param lastName Student's last name
+     * @throws InvalidStudentException Thrown if name is empty or null.
      **/
     public void setLastName(String lastName) throws InvalidStudentException
     {
@@ -145,10 +160,10 @@ public final class Student implements Serializable
     }
 
     /**
-     *    Set the email as long as it is a @uwplatt.edu email
+     * Set the email as long as it is a @uwplatt.edu email
      *
-     *    @param email @uwplatt.edu email
-     *
+     * @param email uwplatt.edu email
+     * @throws InvalidStudentException Thrown if email is not a uw-platteville email
      **/
     public void setEmail(String email) throws InvalidStudentException
     {
@@ -200,8 +215,8 @@ public final class Student implements Serializable
     }
 
     /**
-     *    Sets the date of the account creation
-     *    to the current system date
+     * Sets the date of the account creation
+     * to the current system date
      **/
     private void setAccountCreationDate()
     {
@@ -220,10 +235,10 @@ public final class Student implements Serializable
     }
 
     /**
-     *    Set the account number of the student
-     *    at the creation of the object based on
-     *    values set to email, account creation
-     *    date, ect...
+     * Set the account number of the student
+     * at the creation of the object based on
+     * values set to email, account creation
+     * date, ect...
      **/
     private void setAccountNumber()
     {
@@ -276,7 +291,7 @@ public final class Student implements Serializable
     /**
      * Set the account number to the passed in strings value
      *
-     * @param acctNo
+     * @param acctNo Account number of the student
      */
     private void setAccountNumber(String acctNo)
     {
@@ -287,7 +302,7 @@ public final class Student implements Serializable
      * Increments the number of ride requests that the student has
      * if it is within the valid range
      *
-     * @throws InvalidStudentException
+     * @throws InvalidStudentException Thrown if there are to many ride requests
      */
     public void incrementRideRequests() throws InvalidStudentException
     {
@@ -302,7 +317,7 @@ public final class Student implements Serializable
      * Increments the number of ride offers that the student has
      * if it is within the valid range
      *
-     * @throws InvalidStudentException
+     * @throws InvalidStudentException Thrown if there are to many ride offers
      */
     public void incrementRideOffers() throws InvalidStudentException
     {
@@ -332,7 +347,7 @@ public final class Student implements Serializable
      * Decrements the number of ride offers that the student has
      * if it is within the valid range
      *
-     * @throws InvalidStudentException
+     * @throws InvalidStudentException Thrown if there is no rides on this account
      */
     public void decrementRideOffers() throws InvalidStudentException
     {

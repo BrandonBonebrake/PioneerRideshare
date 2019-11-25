@@ -88,7 +88,6 @@ public final class Location implements Serializable
      *   @return Street Address
      *
      **/
-
     public String getStreet()
     {
         return this.street;
@@ -100,7 +99,6 @@ public final class Location implements Serializable
      *   @return City
      *
      * ***/
-
     public String getCity()
     {
         return this.city;
@@ -112,7 +110,6 @@ public final class Location implements Serializable
      *   @return State
      *
      * ***/
-
     public String getState()
     {
         return this.state;
@@ -124,7 +121,6 @@ public final class Location implements Serializable
      *   @return zip code
      *
      * ***/
-
     public String getZip()
     {
         return this.zip;
@@ -136,7 +132,6 @@ public final class Location implements Serializable
      *    @param street Set the street to the value that is passed in
      *
      * ***/
-
     public void setStreet(String street)
     {
         this.street = street;
@@ -151,7 +146,6 @@ public final class Location implements Serializable
      *
      *    @param city Set the city to the value that is passed in
      * ***/
-
     public void setCity(String city) throws InvalidLocationException
     {
         char[] cityArr;
@@ -185,21 +179,19 @@ public final class Location implements Serializable
      *    @param state State in the long or shorthand version
      *
      * ***/
-
     public void setState(String state)
     {
         this.state = state.toUpperCase().trim();
     }
 
     /***
-     *    Set the zip code to passed in
-     *    integer value so long as it is
-     *    5 characters long.
+     * Set the zip code to passed in
+     * integer value so long as it is
+     * 5 characters long.
      *
-     *    @param zip zip code that is 5 characters long
-     *
+     * @param zip zip code that is 5 characters long
+     * @throws InvalidLocationException Thrown if not five characters included
      * ***/
-
     public void setZip(String zip) throws InvalidLocationException
     {
         if(zip.length() == 5)

@@ -33,7 +33,7 @@ import time.PioneerTime;
 final class RideListingPanel extends DefaultView
 {
     // Global Variables
-    private TableView table   = null;
+    private TableView table = null;
 
     private Location loc = new Location("street", "Platteville", "WI", 53818);
 
@@ -60,7 +60,8 @@ final class RideListingPanel extends DefaultView
      * @throws InvalidDateException
      * @throws InvalidTimeException
      */
-    public RideListingPanel(Stage stage, Scene prevScene, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException {
+    public RideListingPanel(Stage stage, Scene prevScene, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException
+    {
         super(stage, prevScene, width, height);
 
         this.createComponents();
