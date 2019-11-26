@@ -32,8 +32,6 @@ import time.PioneerTime;
  */
 final class RideListingPanel extends DefaultView
 {
-    // Global Variables
-    private TableView table = null;
 
     private Location loc = new Location("street", "Platteville", "WI", 53818);
 
@@ -44,7 +42,10 @@ final class RideListingPanel extends DefaultView
             new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,12,21), new PioneerDate(2019, 12, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
             new RideRequest(loc, new Location("street", "Green Bay", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Smith", "dummy2@uwplatt.edu", "123456789!a")),
             new RideOffer(loc, new Location("street", "Eau Claire", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Doe", "dummy2@uwplatt.edu", "123456789!a")),
-            new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime("16:07"), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a"))
+            new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime("16:07"), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a")),
+            ride,
+            ride,
+            ride
     );
 
     /**
@@ -55,12 +56,12 @@ final class RideListingPanel extends DefaultView
      * @param prevScene The scene of the previous view
      * @param width     Width of the scene
      * @param height    Height of the scene
-     * @throws InvalidLocationException
-     * @throws InvalidStudentException
-     * @throws InvalidDateException
-     * @throws InvalidTimeException
+     * @throws InvalidLocationException Thrown if Location is invalid
+     * @throws InvalidStudentException  Thrown if student is invalid
+     * @throws InvalidDateException     Thrown if PioneerDate is invalid
+     * @throws InvalidTimeException     Thrown if PioneerTime is invalid
      */
-    public RideListingPanel(Stage stage, Scene prevScene, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException
+    RideListingPanel(Stage stage, Scene prevScene, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException
     {
         super(stage, prevScene, width, height);
 
@@ -100,20 +101,21 @@ final class RideListingPanel extends DefaultView
      */
     private void createTable()
     {
-        final double CELL_WIDTH = super.getWidth() / 9.0;
-        table = new TableView();
-        table.setEditable(true);
+        SortedList<Ride> sortedList = new SortedList<>(data);
+        double CELL_WIDTH = super.getWidth() / 9.0;
+        TableView table = new TableView();
+        table.setEditable(false);
 
         // Create all the columns that will represent the different data points we will display to the user
-        TableColumn offerRequest = new TableColumn("Offer/Request");
-        TableColumn leaveCityState = new TableColumn("Leaving");
-        TableColumn destinationCityState = new TableColumn("Destination");
-        TableColumn location = new TableColumn("City/State");
-        TableColumn leaveDateTime = new TableColumn("Leaving");
-        TableColumn returnDateTime = new TableColumn("Returning");
-        TableColumn dateTime = new TableColumn("Date/Time");
-        TableColumn email = new TableColumn("Email @uwplatt.edu");
-        TableColumn request = new TableColumn("Request to Join/Offer to Drive");
+        TableColumn location                           = new TableColumn("City/State");
+        TableColumn dateTime                           = new TableColumn("Date/Time");
+        TableColumn<String, Ride> offerRequest         = new TableColumn<>("Offer/Request");
+        TableColumn<String, Ride> leaveCityState       = new TableColumn<>("Leaving");
+        TableColumn<String, Ride> destinationCityState = new TableColumn<>("Destination");
+        TableColumn<String, Ride> leaveDateTime        = new TableColumn<>("Leaving");
+        TableColumn<String, Ride> returnDateTime       = new TableColumn<>("Returning");
+        TableColumn<String, Ride> email                = new TableColumn<>("Email @uwplatt.edu");
+        TableColumn<Ride, Button> request              = new TableColumn<>("Request to Join/Offer to Drive");
 
         // Set the column widths
         offerRequest.setPrefWidth(105);
@@ -128,16 +130,14 @@ final class RideListingPanel extends DefaultView
         location.getColumns().addAll(leaveCityState, destinationCityState);
         dateTime.getColumns().addAll(leaveDateTime, returnDateTime);
 
-        offerRequest.setCellValueFactory(new PropertyValueFactory<String,Ride>("offerRequest"));
-        leaveCityState.setCellValueFactory(new PropertyValueFactory<String, Ride>("departLocation"));
-        destinationCityState.setCellValueFactory(new PropertyValueFactory<String, Ride>("returnLocation"));
-        leaveDateTime.setCellValueFactory(new PropertyValueFactory<String, Ride>("leaveDateTime"));
-        returnDateTime.setCellValueFactory(new PropertyValueFactory<String, Ride>("returnDateTime"));
-        email.setCellValueFactory(new PropertyValueFactory<String, Ride>("student"));
-        request.setCellValueFactory(new PropertyValueFactory<Ride, Button>("button"));
+        offerRequest.setCellValueFactory(new PropertyValueFactory<>("offerRequest"));
+        leaveCityState.setCellValueFactory(new PropertyValueFactory<>("departLocation"));
+        destinationCityState.setCellValueFactory(new PropertyValueFactory<>("returnLocation"));
+        leaveDateTime.setCellValueFactory(new PropertyValueFactory<>("leaveDateTime"));
+        returnDateTime.setCellValueFactory(new PropertyValueFactory<>("returnDateTime"));
+        email.setCellValueFactory(new PropertyValueFactory<>("student"));
+        request.setCellValueFactory(new PropertyValueFactory<>("button"));
 
-
-        SortedList<Ride> sortedList = new SortedList<>(data);
         sortedList.comparatorProperty().bind(table.comparatorProperty());
 
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);

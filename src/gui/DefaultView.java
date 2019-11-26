@@ -185,19 +185,18 @@ abstract class DefaultView
      * needing to instantiate the DatePicker in the calling Object. Returns
      * a date picker if more dynamic control of the DatePicker is needed.
      *
-     * @param prompt Text Displayed when there is no input
      * @param sizeX  Size in the x-axis
      * @param sizeY  Size in the y-axis
      * @param transX Distance from the x-axis
      * @param transY Distance from the y-axis
      * @return DatePicker with defaults and passed in parameters set
      */
-    DatePicker createDatePicker(String prompt, int sizeX, int sizeY, int transX, int transY)
+    DatePicker createDatePicker(int sizeX, int sizeY, int transX, int transY)
     {
         DatePicker datePicker = new DatePicker();
 
         datePicker.setEditable(false);
-        datePicker.setPromptText(prompt);
+        datePicker.setPromptText("dd/mm/yyyy");
         datePicker.setPrefSize(sizeX, sizeY);
         datePicker.setTranslateX(transX);
         datePicker.setTranslateY(transY);
@@ -214,19 +213,18 @@ abstract class DefaultView
      * a choice box if more dynamic control of the ChoiceBox is needed.
      *
      * @param items        List of all items to display
-     * @param selectedItem List item to default to displaying
      * @param sizeX        Size in the x-axis
      * @param sizeY        Size in the y-axis
      * @param transX       Distance from the x-axis
      * @param transY       Distance from the y-axis
      * @return ChoiceBox with defaults and passed in parameters set
      */
-    ChoiceBox createChoiceBox(ObservableList items, int selectedItem, int sizeX, int sizeY, int transX, int transY)
+    ChoiceBox<String> createChoiceBox(ObservableList<String> items, int sizeX, int sizeY, int transX, int transY)
     {
-        ChoiceBox choiceBox = new ChoiceBox();
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
         choiceBox.setItems(items);
-        choiceBox.setValue(items.get(selectedItem));
+        choiceBox.setValue(items.get(48));
         choiceBox.setPrefSize(sizeX, sizeY);
         choiceBox.setTranslateX(transX);
         choiceBox.setTranslateY(transY);
@@ -253,7 +251,7 @@ abstract class DefaultView
      *
      * @return Previous scene that the view was on
      */
-    Scene getScene()
+    private Scene getScene()
     {
         return this.scene;
     }

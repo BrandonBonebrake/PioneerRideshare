@@ -1,7 +1,6 @@
 package gui;
 
 import date.InvalidDateException;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
@@ -22,19 +21,7 @@ final class SplashScreenPanel extends DefaultView
     private final int DEFAULT_X_TRANS = 400;
     private final int DEFAULT_Y_TRANS = 300;
 
-    // Global Variables
-    private Button exitBtn;
-    private Button offerBtn;
-    private Button requestBtn;
-    private Button viewRidesBtn;
-    private Button loginSignupButton;
-
-    private RideListingPanel ridePanel;
-    private LoginPanel loginPanel;
-    private OfferRequestRidePanel requestPanel;
-    private OfferRequestRidePanel offerPanel;
-
-    public SplashScreenPanel(Stage primaryStage, int width, int height)
+    SplashScreenPanel(Stage primaryStage, int width, int height)
     {
         super(primaryStage, null, width, height);
 
@@ -52,7 +39,7 @@ final class SplashScreenPanel extends DefaultView
 
     private void createViewRidesButton()
     {
-        viewRidesBtn = super.createButton("View Rides", 650, 150,
+        Button viewRidesBtn = super.createButton("View Rides", 650, 150,
                 DEFAULT_X_TRANS - 650 / 2, DEFAULT_Y_TRANS + 125,
                 PioneerApplication.VIEW_RIDES_STYLE);
         viewRidesBtn.setOnAction(e -> this.buttonViewRidesClicked());
@@ -60,7 +47,7 @@ final class SplashScreenPanel extends DefaultView
 
     private void createLoginSignupButton()
     {
-        loginSignupButton = super.createButton("Login/Signup", 100, 25,
+        Button loginSignupButton = super.createButton("Login/Signup", 100, 25,
                 super.getWidth() - 100, 0,
                 PioneerApplication.LOGIN_SIGNUP_STYLE);
         loginSignupButton.setOnAction(e -> this.buttonLoginSignupClicked());
@@ -68,7 +55,7 @@ final class SplashScreenPanel extends DefaultView
 
     private void createOfferButton()
     {
-        offerBtn = super.createButton("Offer\n Ride", 300, 300,
+        Button offerBtn = super.createButton("Offer\n Ride", 300, 300,
                 DEFAULT_X_TRANS - 325, DEFAULT_Y_TRANS - 200,
                 PioneerApplication.OFFER_REQUEST_STYLE);
         offerBtn.setOnAction(event -> buttonOfferClicked());
@@ -76,7 +63,7 @@ final class SplashScreenPanel extends DefaultView
 
     private void createRequestButton()
     {
-        requestBtn = super.createButton("Request\n   Ride", 300, 300,
+        Button requestBtn = super.createButton("Request\n   Ride", 300, 300,
                 DEFAULT_X_TRANS + 25, DEFAULT_Y_TRANS - 200,
                 PioneerApplication.OFFER_REQUEST_STYLE);
         requestBtn.setOnAction(e -> buttonRequestClicked());
@@ -84,58 +71,47 @@ final class SplashScreenPanel extends DefaultView
 
     private void createExitButton()
     {
-        exitBtn = super.createButton("Exit", 200, 75,
+        // Global Variables
+        Button exitBtn = super.createButton("Exit", 200, 75,
                 0, 0, PioneerApplication.EXIT_STYLE);
         exitBtn.setOnAction(e -> this.buttonExitClicked());
     }
 
     private void buttonViewRidesClicked()
     {
+        RideListingPanel ridePanel;
         try
         {
             ridePanel = new RideListingPanel(super.getStage(), super.getStage().getScene(),
                                              super.getWidth(), super.getHeight());
+            super.changeScene(ridePanel.getPane());
         }
-        catch (InvalidLocationException e)
+        catch (InvalidLocationException | InvalidTimeException | InvalidDateException | InvalidStudentException e)
         {
-            e.printStackTrace();
+            System.err.println("Splash Screen Panel: (View Rides Panel Clicked) " + e.getMessage());
         }
-        catch (InvalidStudentException e)
-        {
-            e.printStackTrace();
-        }
-        catch (InvalidDateException e)
-        {
-            e.printStackTrace();
-        }
-        catch (InvalidTimeException e)
-        {
-            e.printStackTrace();
-        }
-
-        super.changeScene(ridePanel.getPane());
     }
 
     private void buttonLoginSignupClicked()
     {
-        loginPanel = new LoginPanel(super.getStage(), super.getStage().getScene(),
-                                    super.getWidth(), super.getHeight());
+        LoginPanel loginPanel = new LoginPanel(super.getStage(), super.getStage().getScene(),
+                super.getWidth(), super.getHeight());
 
         super.changeScene(loginPanel.getPane());
     }
 
     private void buttonRequestClicked()
     {
-        requestPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
-                                                 super.getWidth(), super.getHeight(),
-                                                 "Request Ride");
+        OfferRequestRidePanel requestPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
+                super.getWidth(), super.getHeight(),
+                "Request Ride");
 
         super.changeScene(requestPanel.getPane());
     }
 
     private void buttonOfferClicked()
     {
-        offerPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
+        OfferRequestRidePanel offerPanel = new OfferRequestRidePanel(super.getStage(), super.getStage().getScene(),
                 super.getWidth(), super.getHeight(),
                 "Offer Ride");
         

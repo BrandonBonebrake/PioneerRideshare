@@ -15,23 +15,23 @@ import javafx.stage.Stage;
 public class PioneerApplication extends Application
 {
     // Global static constants
-    protected final static String BACKGROUND_STYLE = "-fx-background-color: radial-gradient(center 50% 50%, radius 75%, blue, #000080); " +
+    final static String BACKGROUND_STYLE = "-fx-background-color: radial-gradient(center 50% 50%, radius 75%, blue, #000080); " +
             "-fx-background-radius: 0;";
-    protected final static String EXIT_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
+    final static String EXIT_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
             "linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
             "-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 30px;" +
             "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
-    protected final static String OFFER_REQUEST_STYLE = "-fx-background-color: linear-gradient(darkBlue, blue)," +
+    final static String OFFER_REQUEST_STYLE = "-fx-background-color: linear-gradient(darkBlue, blue)," +
             "linear-gradient(blue, blue)," +
             "linear-gradient(orange, #ffc266);" +
             "-fx-background-radius: 50;" +
             "-fx-font-weight: bold;" +
             "-fx-font-size: 45px;" +
             "-fx-text-fill: blue;";
-    protected final static String VIEW_RIDES_STYLE = "-fx-background-color: linear-gradient(darkBlue, blue), linear-gradient(blue, blue)," +
+    final static String VIEW_RIDES_STYLE = "-fx-background-color: linear-gradient(darkBlue, blue), linear-gradient(blue, blue)," +
             "linear-gradient(#ffc266, orange); -fx-background-radius: 50; -fx-font-weight: bold;" +
             "-fx-font-size: 45px; -fx-text-fill: blue;";
-    protected final static String LOGIN_SIGNUP_STYLE = "-fx-background-color: transparent; -fx-background-radius: 0; -fx-font-weight: bold;" +
+    final static String LOGIN_SIGNUP_STYLE = "-fx-background-color: transparent; -fx-background-radius: 0; -fx-font-weight: bold;" +
             "-fx-font-size: 12px; -fx-text-fill: white;";
     public final static String RIDE_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
             "linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
@@ -39,13 +39,14 @@ public class PioneerApplication extends Application
             "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
 
     // Global Constants
-    private final int WIDTH  = 800;
-    private final int HEIGHT = 620;
-    private final String NAME = "Pioneer Rideshare";
+
 
     @Override
     public void start(Stage primaryStage)
     {
+        final int WIDTH  = 800;
+        final int HEIGHT = 620;
+        final String NAME = "Pioneer Rideshare";
         SplashScreenPanel splash = new SplashScreenPanel(primaryStage, WIDTH, HEIGHT);
 
         primaryStage.setTitle(NAME);

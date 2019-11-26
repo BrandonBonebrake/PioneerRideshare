@@ -47,24 +47,22 @@ final class OfferRequestRidePanel extends DefaultView
     private final int DATE_PICKER_WIDTH  = 150; // Width of the date pickers
     private final int DATE_PICKER_HEIGHT = 37;  // Height of the date pickers
 
-    private final int CITY_TXTBOX_WIDTH  = 220; // Width of the text fields
-    private final int CITY_TXTBOX_HEIGHT = 40;  // Height of the text fields
+    private final int CITY_TEXT_BOX_WIDTH = 220; // Width of the text fields
+    private final int CITY_TEXT_BOX_HEIGHT = 40; // Height of the text fields
 
-    private final int TIME_TXTBOX_WIDTH = 100;
-    private final int TIME_TXTBOX_HEIGHT = CITY_TXTBOX_HEIGHT;
+    private final int TIME_TEXT_BOX_WIDTH = 100; // Width of the time text field
+    private final int TIME_TEXT_BOX_HEIGHT = 40; // Height of the time text field
 
-    private final int CHOICEBOX_WIDTH  = 64; // Width of the choice boxes
-    private final int CHOICEBOX_HEIGHT = 36; // Height of the choice boxes
-
-    private final int DEFAULT_STATE_SELECTED = 48; // Default choice selected on the choice boxes (Wisconsin)
+    private final int CHOICE_BOX_WIDTH = 64;  // Width of the choice boxes
+    private final int CHOICE_BOX_HEIGHT = 36; // Height of the choice boxes
 
     private final String VALID_FIELD = "-fx-control-inner-background: white; -fx-font-weight: bold;";
     private final String INVALID_FIELD = "-fx-control-inner-background: red; -fx-font-weight: bold;";
 
     // Global Variables
-    private String title;                // Holds whether ride is an Offer or a Request
-    private boolean isValidRide = false; // Boolean that determines if a ride will be submitted to the server
-    private boolean isOffer = false;     // Boolean that determines if a RideOffer or RideRequest Object will be created
+    private String  title;        // Holds whether ride is an Offer or a Request
+    private boolean isValidRide;  // Boolean that determines if a ride will be submitted to the server
+    private boolean isOffer;      // Boolean that determines if a RideOffer or RideRequest Object will be created
 
     private ChoiceBox destState;  // Destination state
     private ChoiceBox leaveState; // Leave state
@@ -81,7 +79,6 @@ final class OfferRequestRidePanel extends DefaultView
 
     private ObservableList<String> stateList = FXCollections.observableArrayList(); // List of all current ride listings
 
-    private Ride ride;                    // Ride object that will store all necessary ride information
     private Location leaveLocation;       // Leave location object
     private Location destinationLocation; // Destination location object
     private Date dateLeaving;             // Leave date object
@@ -105,7 +102,7 @@ final class OfferRequestRidePanel extends DefaultView
         super(stage, splash, width, height);
 
         this.title = title;
-        this.setIsOffer();
+        this.isOffer = this.getIsOffer();
         this.createTestStudent();
         this.createComponents();
     }
@@ -169,16 +166,9 @@ final class OfferRequestRidePanel extends DefaultView
      * request based on the title that is passed in to
      * this Object.
      */
-    private void setIsOffer()
+    private boolean getIsOffer()
     {
-        if(title.toLowerCase().contains("offer"))
-        {
-            isOffer = true;
-        }
-        else
-        {
-            isOffer = false;
-        }
+        return title.toLowerCase().contains("offer");
     }
 
     /**
@@ -206,7 +196,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveCityTxtBox()
     {
-        leaveCity = super.createTextField("Departure City", CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT,
+        leaveCity = super.createTextField("Departure City", CITY_TEXT_BOX_WIDTH, CITY_TEXT_BOX_HEIGHT,
                 DEFAULT_X_TRANS, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
     }
 
@@ -217,7 +207,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveStateChoiceBox()
     {
-        leaveState = super.createChoiceBox(stateList, DEFAULT_STATE_SELECTED, CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT,
+        leaveState = super.createChoiceBox(stateList, CHOICE_BOX_WIDTH, CHOICE_BOX_HEIGHT,
                 DEFAULT_X_TRANS, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
@@ -236,7 +226,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createDestinationCityTxtBox()
     {
-        destCity = super.createTextField("Destination City", CITY_TXTBOX_WIDTH, CITY_TXTBOX_HEIGHT,
+        destCity = super.createTextField("Destination City", CITY_TEXT_BOX_WIDTH, CITY_TEXT_BOX_HEIGHT,
                 DEFAULT_X_TRANS, DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP);
     }
 
@@ -246,7 +236,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createDestinationStateChoiceBox()
     {
-        destState = super.createChoiceBox(stateList, DEFAULT_STATE_SELECTED, CHOICEBOX_WIDTH, CHOICEBOX_HEIGHT,
+        destState = super.createChoiceBox(stateList, CHOICE_BOX_WIDTH, CHOICE_BOX_HEIGHT,
                 DEFAULT_X_TRANS, DEFAULT_Y_TRANS + DEST_COMP_Y_START + DIST_Y_BETWEEN_COMP * 2);
     }
 
@@ -265,7 +255,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveDatePicker()
     {
-        leaveDate = super.createDatePicker("dd/mm/yyyy", DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT,
+        leaveDate = super.createDatePicker(DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT,
                 DEFAULT_X_TRANS + 300, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
         leaveDate.setOnAction(e -> leaveDateChanged());
     }
@@ -285,7 +275,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createReturnDatePicker()
     {
-        returnDate = super.createDatePicker("dd/mm/yyyy", DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT,
+        returnDate = super.createDatePicker(DATE_PICKER_WIDTH, DATE_PICKER_HEIGHT,
                 DEFAULT_X_TRANS + 525, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP);
         returnDate.setOnAction(event -> returnDateChanged());
     }
@@ -306,7 +296,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createLeaveTimePicker()
     {
-        leaveTime = super.createTextField("hh:mm", TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT,
+        leaveTime = super.createTextField("hh:mm", TIME_TEXT_BOX_WIDTH, TIME_TEXT_BOX_HEIGHT,
                 DEFAULT_X_TRANS + 300, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
     }
 
@@ -326,7 +316,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void createReturnTimePicker()
     {
-        returnTime = super.createTextField("hh:mm", TIME_TXTBOX_WIDTH, TIME_TXTBOX_HEIGHT,
+        returnTime = super.createTextField("hh:mm", TIME_TEXT_BOX_WIDTH, TIME_TEXT_BOX_HEIGHT,
                 DEFAULT_X_TRANS + 525, DEFAULT_Y_TRANS + LEAVE_COMP_Y_START + DIST_Y_BETWEEN_COMP * 3);
     }
 
@@ -379,7 +369,9 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void buttonSubmitClicked()
     {
-        colorizeBasedOnInput();
+        Ride ride;
+
+        this.colorizeBasedOnInput();
 
         if(isValidRide)
         {
@@ -405,6 +397,7 @@ final class OfferRequestRidePanel extends DefaultView
                 new Client(e);
             }
 
+            // Ride object that will store all necessary ride information
             if(isOffer)
             {
                 ride = new RideOffer(leaveLocation, destinationLocation, (PioneerDate) dateLeaving,
