@@ -411,6 +411,8 @@ final class OfferRequestRidePanel extends DefaultView
 
             // Send the ride information to the server
             new Client(ride);
+            PopUpPanel.display("Success");
+            this.buttonBackClicked();
         }
     }
 

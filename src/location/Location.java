@@ -132,7 +132,7 @@ public final class Location implements Serializable
      *    @param street Set the street to the value that is passed in
      *
      * ***/
-    public void setStreet(String street)
+    private void setStreet(String street)
     {
         this.street = street;
     }
@@ -146,7 +146,7 @@ public final class Location implements Serializable
      *
      *    @param city Set the city to the value that is passed in
      * ***/
-    public void setCity(String city) throws InvalidLocationException
+    private void setCity(String city) throws InvalidLocationException
     {
         char[] cityArr;
 
@@ -160,12 +160,10 @@ public final class Location implements Serializable
         }
         cityArr = city.toCharArray();
 
-        for(int i = 0; i < cityArr.length; i++)
-        {
-            if(!((cityArr[i] >= 65 && cityArr[i] <= 90) ||
-                (cityArr[i] >= 97 && cityArr[i] <= 122) || cityArr[i] == 32 || cityArr[i] == 46))
-            {
-                throw new InvalidLocationException("Invalid Character: " + cityArr[i]);
+        for (char c : cityArr) {
+            if (!((c >= 65 && c <= 90) ||
+                    (c >= 97 && c <= 122) || c == 32 || c == 46)) {
+                throw new InvalidLocationException("Invalid Character: " + c);
             }
         }
         this.city = city;
@@ -179,7 +177,7 @@ public final class Location implements Serializable
      *    @param state State in the long or shorthand version
      *
      * ***/
-    public void setState(String state)
+    private void setState(String state)
     {
         this.state = state.toUpperCase().trim();
     }
@@ -192,7 +190,7 @@ public final class Location implements Serializable
      * @param zip zip code that is 5 characters long
      * @throws InvalidLocationException Thrown if not five characters included
      * ***/
-    public void setZip(String zip) throws InvalidLocationException
+    private void setZip(String zip) throws InvalidLocationException
     {
         if(zip.length() == 5)
         {

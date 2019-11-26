@@ -1,7 +1,6 @@
 package date;
 
 import java.io.Serializable;
-import java.text.ParseException;
 
 /**
  This class creates a PioneerDate Object that can be used to hold
@@ -115,7 +114,7 @@ public final class PioneerDate extends Date implements Serializable
         return super.compareDay(date);
     }
 
-    public void changeDate(int day, int month, int year) throws InvalidDateException
+    private void changeDate(int day, int month, int year) throws InvalidDateException
     {
         if(this.isValidDate(year, month, day))
         {
@@ -125,7 +124,7 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
-    public boolean isValidDate(int year, int month, int day) throws InvalidDateException
+    private boolean isValidDate(int year, int month, int day) throws InvalidDateException
     {
         Date today = new Date(); // Object with the current date
         int relativeMonth = month;

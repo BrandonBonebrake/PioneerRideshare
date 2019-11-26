@@ -112,17 +112,17 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
                         (this.isLeapYear() && day <= 29)));
     }
 
-    public boolean isValidMonth(int month)
+    private boolean isValidMonth(int month)
     {
         return (month >= MIN_MONTH && month <= MAX_MONTH);
     }
 
-    public boolean isValidYear(int year)
+    private boolean isValidYear(int year)
     {
         return (year >= MIN_YEAR && year <= MAX_YEAR);
     }
 
-    public boolean isLeapYear()
+    private boolean isLeapYear()
     {
         return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
     }
@@ -166,17 +166,17 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
         return date1.compareTo(date2);
     }
 
-    public int compareYear(Date date)
+    private int compareYear(Date date)
     {
         return this.getYear() - date.getYear();
     }
 
-    public int compareMonth(Date date)
+    private int compareMonth(Date date)
     {
         return this.getMonth() - date.getMonth();
     }
 
-    public int compareDay(Date date)
+    int compareDay(Date date)
     {
         return this.getDay() - date.getDay();
     }
