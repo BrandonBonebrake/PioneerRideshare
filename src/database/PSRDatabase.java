@@ -32,36 +32,17 @@ public class PSRDatabase
     private ArrayList<Exception> exceptions;
 
     private static final String CORRECT_EMAIL_DOMAIN = "uwplatt.edu";
-    private Path WRIFilepath; // holds current ride info
-    private Path PRIFilepath; // holds past ride info
-    private Path SRIFilepath; // holds Student Info
-    private Path CRIFilepath; // holds passwords
     private static final String dbms = "mysql";
+    private static final String MySQLup = "PRS";
+    private
+    Connection conn = null;
 
     public PSRDatabase() throws IOException {
-        assert WRIFilepath != null;
-        List<String> rawStudentInfo = Files.readAllLines(SRIFilepath);
-        for (String studentInfo : rawStudentInfo)
-        {
-            try {
-                String[] studentDetails = studentInfo.split(",");
-                Student s = new Student(studentDetails[0], studentDetails[1], studentDetails[2], studentDetails[3]);
-                addStudent(s);
-            }
-            catch (InvalidStudentException e)
-            {
-                exceptions.add(e);
-                e.printStackTrace();
-            }
-        }
-        List<String> rawCurrentRideInfo = Files.readAllLines(CRIFilepath);
-        for (String currentRideInfo : rawCurrentRideInfo) {
-            String rideDetails[] = currentRideInfo.split(",");
-            try {
-                Location depLoc = new Location(rideDetails[0], rideDetails[1], rideDetails[2], rideDetails[3]);
-            } catch (InvalidLocationException e) {
-                e.printStackTrace();
-            }
+        try {
+            conn = getConnection(MySQLup, MySQLup);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -82,12 +63,24 @@ public class PSRDatabase
         return conn;
     }
 
-    public static void createTable(Connection conn, String dbName, String tableName)
-            throws SQLException
-    {
+    public static void tableInsert(Connection con, String tableName, String values) throws SQLException {
         Statement stmt = null;
-        String query = "";
+        String query = "INSERT INTO " + "prsrideshare." + tableName + "(" + values + ")";
+        try
+        {
+            stmt = con.createStatement();
+            int rowsAffected = stmt.executeUpdate(query);
+            System.out.println("Query Ok \n" + rowsAffected + " Rows Affected.");
 
+        } catch (SQLException e)
+        {
+            System.out.println("Query Unsuccessful");
+            e.printStackTrace();
+        } finally
+        {
+            if (stmt != null) {stmt.close();};
+
+        }
     }
 
     public static void viewTable(Connection con, String dbName)
@@ -95,20 +88,22 @@ public class PSRDatabase
 
         Statement stmt = null;
         String query = "select F_NAME, L_NAME, EMAIL, PASSWORD, " +
-                "ACCT_CREATION_DATE, ACCT_NUMBER" +
+                "ACCT_CREATION_DATE" +
                 "from " + dbName + ".STUDENTS";
         try {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                String coffeeName = rs.getString("COF_NAME");
-                int supplierID = rs.getInt("SUP_ID");
-                float price = rs.getFloat("PRICE");
-                int sales = rs.getInt("SALES");
-                int total = rs.getInt("TOTAL");
-                System.out.println(coffeeName + "\t" + supplierID +
-                        "\t" + price + "\t" + sales +
-                        "\t" + total);
+                String firstName = rs.getString("F_NAME");
+                String lastName = rs.getString("L_NAME");
+                String email = rs.getString("EMAIL");
+                String ENCpassword = rs.getString("PASSWORD");
+                String acctCreateDate = rs.getString("ACCT_CREATION_DATE");
+
+
+                System.out.println(firstName + "\t" + lastName +
+                        "\t" + email + "\t" + ENCpassword +
+                        "\t" + acctCreateDate);
             }
         } catch (SQLException e ) {
             //JDBCTutorialUtilities.printSQLException(e);
