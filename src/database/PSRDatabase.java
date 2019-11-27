@@ -1,27 +1,17 @@
 package database;
 
-import location.InvalidLocationException;
-import location.Location;
-import socketCommunication.Server;
+import ride.Ride;
 import student.InvalidStudentException;
 import student.Student;
-import ride.Ride;
 
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.PatternSyntaxException;
-import java.nio.file.Files;
-import java.sql.*;
-import javax.sql.*;
-import javax.naming.*;
+import java.lang.Class;
+//import oracle.sql.*;
+
 
 public class PSRDatabase
 {
@@ -34,14 +24,18 @@ public class PSRDatabase
     private static final String CORRECT_EMAIL_DOMAIN = "uwplatt.edu";
     private static final String dbms = "mysql";
     private static final String MySQLup = "PRS";
-    private
     Connection conn = null;
 
     public PSRDatabase() throws IOException {
         try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = getConnection(MySQLup, MySQLup);
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         }
     }
