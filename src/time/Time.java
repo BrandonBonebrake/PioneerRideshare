@@ -79,7 +79,7 @@ public class Time implements Serializable, Comparable<Time>, Comparator<Time>
     public int getMinutes() { return this.minutes; }
 
     /**
-     *   Return the time in string format.
+     *   Return the time in string format. XX:XX
      *
      *   @return String of time stored in object
      *

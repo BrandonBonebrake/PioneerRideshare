@@ -202,6 +202,10 @@ public final class Location implements Serializable
         }
     }
 
+    /***
+     * Returns the City and State, Delimited by a space
+     * @return String
+     */
     public String toString()
     {
         return this.getCity() + " " + this.getState();

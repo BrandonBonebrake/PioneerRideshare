@@ -68,25 +68,16 @@ public class PSRDatabase
     // Make connection to Server
     public Connection getConnection(String user, String pass) throws SQLException {
 
-        Connection conn = null;
         Properties connectionProps = new Properties();
         connectionProps.put("user", user);
         connectionProps.put("password", pass);
 
-        if (this.dbms.equals("mysql")) {
+        Connection conn = DriverManager.getConnection(
+                "jdbc:" + this.dbms + "://" +
+                        "localhost" +
+                        ":" + "3306" + "/",
+                    connectionProps);
 
-            conn = DriverManager.getConnection(
-                    "jdbc:" + this.dbms + "://" +
-                            "localhost" +
-                            ":" + Server.getPort() + "/",
-                    connectionProps);
-        } else if (this.dbms.equals("derby")) {
-            conn = DriverManager.getConnection(
-                    "jdbc:" + this.dbms + ":" +
-                            //this.dbName +
-                            ";create=true",
-                    connectionProps);
-        }
         System.out.println("Connected to database");
         return conn;
     }
@@ -95,6 +86,7 @@ public class PSRDatabase
             throws SQLException
     {
         Statement stmt = null;
+        String query = "";
 
     }
 
@@ -103,6 +95,7 @@ public class PSRDatabase
 
         Statement stmt = null;
         String query = "select F_NAME, L_NAME, EMAIL, PASSWORD, " +
+                "ACCT_CREATION_DATE, ACCT_NUMBER" +
                 "from " + dbName + ".STUDENTS";
         try {
             stmt = con.createStatement();
