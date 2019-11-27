@@ -66,7 +66,18 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
 
     public String getDate()
     {
-        return this.getMonth() + "/" + this.getDay() + "/" + this.getYear();
+        String month = String.valueOf(this.getMonth());
+        String day   = String.valueOf(this.getDay());
+
+        if(month.length() == 1)
+        {
+            month = "0" + month;
+        }
+        if(day.length() == 1)
+        {
+            day = "0" + day;
+        }
+        return month + "/" + day + "/" + this.getYear();
     }
 
     /*** Setter Methods ***/
