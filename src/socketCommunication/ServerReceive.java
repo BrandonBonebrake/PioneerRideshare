@@ -29,14 +29,32 @@ public class ServerReceive implements Runnable
         {
             Object objReceive = (new ObjectInputStream(client.getInputStream())).readObject();
 
-            // Check if object class is a StringBuilder and display if it is
+            // Find the type of Object the class is
             if(objReceive != null && objReceive.getClass() == ride.RideOffer.class)
             {
-                System.out.println("Client: " + (objReceive).toString());
+                System.out.println("Client Ride Offer: " + objReceive.toString());
+            }
+            else if(objReceive != null && objReceive.getClass() == ride.RideRequest.class)
+            {
+                System.out.println("Client Ride Request: " + objReceive.toString());
+            }
+            else if(objReceive != null && objReceive.getClass() == student.Student.class)
+            {
+                System.out.println("Client Student: " + ((Student) objReceive).getFirstName() + " " +
+                        ((Student) objReceive).getLastName() + ", " + objReceive.toString() + ", " +
+                        ((Student) objReceive).getAccountNumber());
+            }
+            else if(objReceive != null && objReceive.getClass() == student.InvalidStudentException.class)
+            {
+                System.out.println("Client Student Exception: " + ((Exception) objReceive).getMessage());
+            }
+            else if(objReceive != null)
+            {
+                System.out.println("Uncaught Client Class: " + objReceive.toString());
             }
             else
             {
-                System.out.println("null class");
+                System.out.println("Null Class");
             }
         }
         catch (Exception e)

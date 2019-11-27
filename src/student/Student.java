@@ -167,14 +167,16 @@ public final class Student implements Serializable
      **/
     public void setEmail(String email) throws InvalidStudentException
     {
-        if(email.contains("@uwplatt.edu"))
+        if(email == null || email.equals(""))
         {
-            this.email = email;
+            throw new InvalidStudentException("Invalid Email: Nothing entered");
         }
-        else
+        if(!email.contains("@uwplatt.edu"))
         {
-            throw new InvalidStudentException("Invalid Email: " + email);
+            throw new InvalidStudentException("Invalid Email: " + "\"" + email + "\"");
+
         }
+        this.email = email;
     }
 
     /**

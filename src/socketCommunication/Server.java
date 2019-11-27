@@ -13,14 +13,18 @@ public class Server
 
     public Server(int port, PSRDatabase database)
     {
+        ServerSocket sSocket;
+
         try
         {
-            final ServerSocket sSocket = new ServerSocket(port);
+            sSocket = new ServerSocket(port);
             System.out.println("Server Started\n---------------------------------------------------------------------------------------------------------");
 
+            Socket cSocket;
             while (true)
             {
-                Socket cSocket = sSocket.accept();
+                cSocket = sSocket.accept();
+
                 new ServerReceive(cSocket, database);
                 new ServerSend(cSocket, null);
                 //cSocket.close();
@@ -32,10 +36,13 @@ public class Server
         }
     }
 
+    public static int getPort()
+    {
+        return port;
+    }
+
     public static void main(String[] args) throws IOException, InvalidStudentException {
         new Server(port, null);
     }
-    public static int getPort() {
-        return port;
-    }
+
 }

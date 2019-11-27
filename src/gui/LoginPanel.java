@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import socketCommunication.Client;
+import student.InvalidStudentException;
+import student.Student;
 
 final class LoginPanel extends DefaultView
 {
@@ -128,8 +131,18 @@ final class LoginPanel extends DefaultView
 
     private void buttonLoginClicked()
     {
-        PopUpPanel.display("Login Successful");
-        super.returnView();
+        try
+        {
+            Student student = new Student("John", "Smith", emailTextbox.getText(), passwordTextbox.getText());
+            new Client(student);
+
+            PopUpPanel.display("Login Successful");
+            super.returnView();
+        }
+        catch (InvalidStudentException e)
+        {
+            new Client(e);
+        }
     }
 
     private void signupButtonClicked()
