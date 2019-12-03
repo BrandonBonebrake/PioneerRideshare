@@ -1,6 +1,7 @@
 package database;
 
 import ride.Ride;
+import ride.RideOffer;
 import student.InvalidStudentException;
 import student.Student;
 
@@ -125,10 +126,18 @@ public class PSRDatabase
 
             while (myRS.next())
             {
-                   list.add(myRS.getString("D_LOC") + ", " + myRS.getString("R_LOC") + ", " +
-                           myRS.getString("D_DATE") + ", " + myRS.getString("R_DATE") + ", " +
-                           myRS.getString("D_TIME") + ", " + myRS.getString("R_TIME") + ", " +
-                           myRS.getBoolean("IS_OFFER") + ", " + myRS.getString("STUDENT_EMAIL"));
+                   String dloc = myRS.getString("D_LOC");
+                   String rloc = myRS.getString("R_LOC");
+                   String ddate = myRS.getString("D_DATE");
+                   String rdate = myRS.getString("R_DATE");
+                   String dtime = myRS.getString("D_TIME");
+                   String rtime = myRS.getString("R_TIME");
+                   boolean isOffer = myRS.getBoolean("IS_OFFER");
+                   String sEmail = myRS.getString("STUDENT_EMAIL");
+                   if(isOffer)
+                   {
+                       //RideOffer r = new RideOffer()
+                   }
             }
         } catch (SQLException e)
         {
