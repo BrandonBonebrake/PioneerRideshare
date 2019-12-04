@@ -7,5 +7,12 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/prsrideshare</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="HSQLDB (Local) - jdbc:hsqldb:file:C:/ProgramData/MySQL/MySQL Server 8.0/Data//" uuid="cbb164c9-c83c-43ee-af0d-69859b85e8bc">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:C:/ProgramData/MySQL/MySQL Server 8.0/Data//</jdbc-url>
+    </data-source>
   </component>
 </project>

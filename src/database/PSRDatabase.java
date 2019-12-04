@@ -1,9 +1,15 @@
 package database;
 
+import date.InvalidDateException;
+import date.PioneerDate;
+import location.InvalidLocationException;
+import location.Location;
 import ride.Ride;
 import ride.RideOffer;
 import student.InvalidStudentException;
 import student.Student;
+import time.InvalidTimeException;
+import time.PioneerTime;
 
 import java.io.IOException;
 import java.sql.*;
@@ -19,7 +25,7 @@ public class PSRDatabase
 {
 
     private ArrayList<Student> studentList;
-    private ArrayList<Ride> currentRides;
+    private static ArrayList<Ride> currentRides;
     private ArrayList<Ride> pastRides;
     private ArrayList<Exception> exceptions;
 
@@ -111,9 +117,9 @@ public class PSRDatabase
         }
     }
 
-    public static List<String> getCurrentRides(Connection con)
+    public static List<Ride> getCurrentRides(Connection con)
     {
-        List<String> list = null;
+        List<Ride> list = null;
         Statement stmt = null;
         try
         {
@@ -121,30 +127,39 @@ public class PSRDatabase
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet myRS = null;
-            //myRS = stmt.executeQuery(
-                    //"SELECT * FROM " + "prsrideshare.current_rides");
+            myRS = stmt.executeQuery(
+                    "SELECT * FROM " + "prsrideshare.current_rides");
 
             while (myRS.next())
             {
-                   String dloc = myRS.getString("D_LOC");
-                   String rloc = myRS.getString("R_LOC");
-                   String ddate = myRS.getString("D_DATE");
-                   String rdate = myRS.getString("R_DATE");
-                   String dtime = myRS.getString("D_TIME");
-                   String rtime = myRS.getString("R_TIME");
-                   boolean isOffer = myRS.getBoolean("IS_OFFER");
-                   String sEmail = myRS.getString("STUDENT_EMAIL");
-                   if(isOffer)
-                   {
-                       //RideOffer r = new RideOffer()
-                   }
+                String s[] = myRS.getString("D_LOC").split(",");
+                Location dloc = new Location("empty", s[0], s[1], 11111);
+                String u[] = myRS.getString("R_LOC").split(",");
+                Location rloc = new Location("empty", u[0], u[1], 11111);
+                PioneerDate ddate = new PioneerDate(myRS.getString("D_DATE"));
+                PioneerDate rdate = new PioneerDate(myRS.getString("R_DATE"));
+                PioneerTime dtime = new PioneerTime(myRS.getString("D_TIME"));
+                PioneerTime rtime = new PioneerTime(myRS.getString("R_TIME"));
+                boolean isOffer = myRS.getBoolean("IS_OFFER");
+                String sEmail = myRS.getString("STUDENT_EMAIL");
+                Student st = getStudent(sEmail);
+                if(isOffer)
+                {
+                    RideOffer r = new RideOffer(dloc,rloc,ddate,rdate,dtime,rtime,st);
+                    list.add(r);
+                }
             }
-        } catch (SQLException e)
+        } catch (SQLException | InvalidLocationException | InvalidDateException | InvalidTimeException e)
         {
             System.out.println("Query Unsuccessful");
             e.printStackTrace();
         }
         return list;
+    }
+
+    private static Student getStudent(String sEmail) {
+
+        return null;
     }
     /*
     D_LOC	      VARCHAR(30),
