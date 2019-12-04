@@ -74,7 +74,7 @@ public class PSRDatabase
      */
     public static void tableInsert(Connection con, String tableName, String values) throws SQLException {
         Statement stmt = null;
-        String query = "INSERT INTO " + "prsrideshare." + tableName + "(" + values + ")";
+        String query = "INSERT INTO " + "prsrideshare." + tableName + "(" + values + ");";
         try
         {
             stmt = con.createStatement();
@@ -87,7 +87,7 @@ public class PSRDatabase
             e.printStackTrace();
         } finally
         {
-            if (stmt != null) {stmt.close();};
+            if (stmt != null) {stmt.close();}
 
         }
     }
@@ -117,9 +117,8 @@ public class PSRDatabase
         }
     }
 
-    public static List<Ride> getCurrentRides(Connection con)
-    {
-        List<Ride> list = null;
+    public static void updateCurrentRides(Connection con) throws SQLException {
+        currentRides.clear();
         Statement stmt = null;
         try
         {
@@ -142,37 +141,110 @@ public class PSRDatabase
                 PioneerTime rtime = new PioneerTime(myRS.getString("R_TIME"));
                 boolean isOffer = myRS.getBoolean("IS_OFFER");
                 String sEmail = myRS.getString("STUDENT_EMAIL");
-                Student st = getStudent(sEmail);
+                Student st = getStudent(sEmail, con);
                 if(isOffer)
                 {
                     RideOffer r = new RideOffer(dloc,rloc,ddate,rdate,dtime,rtime,st);
-                    list.add(r);
+                    currentRides.add(r);
                 }
             }
+
         } catch (SQLException | InvalidLocationException | InvalidDateException | InvalidTimeException e)
         {
             System.out.println("Query Unsuccessful");
             e.printStackTrace();
+
+        } finally {
+            if (stmt != null) {stmt.close();}
         }
-        return list;
+
     }
 
-    private static Student getStudent(String sEmail) {
+    public static void addPastRide(Ride r, Connection con) throws SQLException {
+        Statement stmt = null;
+        try
+        {
+            stmt = con.createStatement();
+            int rowsaff = stmt.executeUpdate("INSERT INTO prsrideshare.past_rides " + "VALUES (" +
+                    r.getDepartLocation() + ", " + r.getReturnLocation() + ", " +
+                    r.getLeaveDate() + ", " + r.getReturnDate() + ", " +
+                    r.getLeaveTime() + ", " + r.getReturnTime() + ", " +
+                    r.getIsOffer() + ", " + r.getStudentEmail() +
+                    ")");
 
-        return null;
+            System.out.println("Query OK \n" + rowsaff + " Rows Affected");
+        } catch (SQLException e) {
+            System.out.println("Query Unsuccessful");
+        } finally {
+            if (stmt != null) {stmt.close();}
+        }
+
     }
-    /*
-    D_LOC	      VARCHAR(30),
-	R_LOC	      VARCHAR(30),
-	D_DATE        CHAR(10),
-	R_DATE        CHAR(10),
-	D_TIME        CHAR(5),
-	R_TIME        CHAR(5),
-	IS_OFFER      BOOLEAN,
-	STUDENT_EMAIL VARCHAR(30) PRIMARY KEY
 
-     */
+    public static void addCurrentRide(Ride r, Connection con) throws SQLException {
+        Statement stmt = null;
+        try
+        {
+            stmt = con.createStatement();
+            int rowsaff = stmt.executeUpdate("INSERT INTO prsrideshare.current_rides VALUES (" +
+                            r.getDepartLocation() + ", " + r.getReturnLocation() + ", " +
+                            r.getLeaveDate() + ", " + r.getReturnDate() + ", " +
+                            r.getLeaveTime() + ", " + r.getReturnTime() + ", " +
+                            r.getIsOffer() + ", " + r.getStudentEmail()+ ")");
 
+            System.out.println("Query OK \n" + rowsaff + " Rows Affected");
+        } catch (SQLException e) {
+            System.out.println("Query Unsuccessful");
+        } finally {
+            if (stmt != null) {stmt.close();};
+        }
+
+    }
+
+    public static void addStudent(Student s, Connection con) throws SQLException {
+        Statement stmt = null;
+        try
+        {
+            stmt = con.createStatement();
+            int rowsaff = stmt.executeUpdate("INSERT INTO prsrideshare.students VALUES (" +
+                    s.getFirstName() + ", " + s.getLastName() + ", " + s.getEmail() + ", " +
+                    s.getPassword() + ", " + s.getAccountCreationDate() + ")");
+
+            System.out.println("Query OK \n" + rowsaff + " Rows Affected");
+        } catch (SQLException e) {
+            System.out.println("Query Unsuccessful");
+        } finally {
+            if (stmt != null) {stmt.close();};
+        }
+
+    }
+
+
+
+    private static Student getStudent(String sEmail, Connection con) throws SQLException {
+        Statement stmt = null;
+        try {
+            stmt = con.createStatement();
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet myRS = null;
+            myRS = stmt.executeQuery(
+                    "SELECT * FROM " + "prsrideshare.students" +
+                            " WHERE EMAIL IS " + sEmail );
+            Student st = new Student(myRS.getString("F_NAME"),
+                                     myRS.getString("L_NAME"),
+                                     myRS.getString("EMAIL"),
+                                     myRS.getString("PASSWORD"));
+            return st;
+        } catch (SQLException | InvalidStudentException e)
+        {
+            System.out.println("Query Unsuccessful");
+            return null;
+        } finally
+        {
+            if (stmt != null) {stmt.close();};
+        }
+    }
 
     /**
      * Print out the tables in a specific database
@@ -216,6 +288,45 @@ public class PSRDatabase
 
     }
 
+    public void updateStudentList(Connection con) throws SQLException {
+        Statement stmt = null;
+        studentList.clear();
+        try
+        {
+            stmt = con.createStatement();
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet myRS = null;
+            myRS = stmt.executeQuery(
+                    "SELECT * FROM " + "prsrideshare.students");
+
+            while (myRS.next())
+            {
+                Student st = new Student(myRS.getString("F_NAME"),
+                        myRS.getString("L_NAME"),
+                        myRS.getString("EMAIL"),
+                        myRS.getString("PASSWORD"));
+                studentList.add(st);
+            }
+
+        } catch (SQLException | InvalidStudentException e)
+        {
+            System.out.println("Query Unsuccessful");
+            e.printStackTrace();
+
+        } finally {
+            if (stmt != null) {stmt.close();};
+        }
+
+    }
+
+
+    public static ArrayList<Ride> getCurrentRides()
+    {
+        return currentRides;
+    }
+
+
     //verifies if a student's email is a uwplatt email,
     // or if the email has been taken already.
     public boolean isValidStudentInfo(String email)
@@ -248,13 +359,6 @@ public class PSRDatabase
             return isValid;
         }
         return true;
-
-    }
-
-    public void copyMemoryToFile(String filepath)
-    {
-
-        // call on close
 
     }
 
