@@ -11,7 +11,6 @@ public class ClientReceive implements Runnable
     ClientReceive(int portInput)
     {
         this.port = portInput;
-
         Thread tReceive = new Thread(this);
         tReceive.start();
     }
@@ -22,10 +21,11 @@ public class ClientReceive implements Runnable
         try
         {
             Socket client = new Socket(InetAddress.getLocalHost(), port);
+            ObjectInputStream objInStream;
 
             while (true)
             {
-                ObjectInputStream objInStream = new ObjectInputStream(client.getInputStream());
+                objInStream = new ObjectInputStream(client.getInputStream());
                 Object objReceive = objInStream.readObject();
 
                 // Display the Objects class
@@ -37,13 +37,14 @@ public class ClientReceive implements Runnable
                 {
                     System.out.println("null Object");
                 }
-                // Check if object class is a StringBuilder and display if it is
-                if(objReceive != null && objReceive.getClass() == java.lang.StringBuilder.class)
+                if(objReceive != null)
                 {
-                    System.out.println(((StringBuilder) objReceive).toString());
+                    System.out.println(objReceive.toString());
+                    break;
                 }
-                objInStream.close();
+                System.out.println(objReceive.toString());
             }
+            objInStream.close();
         }
         catch (Exception e)
         {

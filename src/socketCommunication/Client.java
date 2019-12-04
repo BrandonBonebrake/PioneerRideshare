@@ -4,6 +4,8 @@ import student.InvalidStudentException;
 import student.Student;
 
 import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Client implements Serializable
 {
@@ -15,8 +17,9 @@ public class Client implements Serializable
 
         try
         {
-            new ClientSend(obj,  port);
-            //new ClientReceive(port);
+            ClientSend cSend = new ClientSend(obj,  port);
+            //ClientReceive cReceive = new ClientReceive(port);
+            //ServerReceive cReceive = new ServerReceive(new Socket(), null);
         }
         catch(Exception e)
         {
