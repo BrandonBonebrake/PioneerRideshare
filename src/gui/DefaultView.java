@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * instead change within the same stage.
  *
  * @author Brandon Bonebrake
- **/
+ */
 abstract class DefaultView
 {
     // Global Variables
