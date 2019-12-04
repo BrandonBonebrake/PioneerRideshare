@@ -111,11 +111,17 @@ final class RideListingPanel extends DefaultView
         TableColumn dateTime                           = new TableColumn("Date/Time");
         TableColumn<String, Ride> offerRequest         = new TableColumn<>("Offer/Request");
         TableColumn<String, Ride> leaveCityState       = new TableColumn<>("Leaving");
+        leaveCityState.setSortable(false);
         TableColumn<String, Ride> destinationCityState = new TableColumn<>("Destination");
+        destinationCityState.setSortable(false);
         TableColumn<String, Ride> leaveDateTime        = new TableColumn<>("Leaving");
+        leaveDateTime.setSortable(false);
         TableColumn<String, Ride> returnDateTime       = new TableColumn<>("Returning");
+        returnDateTime.setSortable(false);
         TableColumn<String, Ride> email                = new TableColumn<>("Email @uwplatt.edu");
+        email.setSortable(false);
         TableColumn<Ride, Button> request              = new TableColumn<>("Request to Join/Offer to Drive");
+        request.setSortable(false);
 
         // Set the column widths
         offerRequest.setPrefWidth(105);

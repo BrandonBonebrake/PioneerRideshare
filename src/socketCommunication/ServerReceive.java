@@ -6,6 +6,7 @@ import student.Student;
 import database.PSRDatabase;
 
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ServerReceive implements Runnable
@@ -27,7 +28,8 @@ public class ServerReceive implements Runnable
     {
         try
         {
-            Object objReceive = (new ObjectInputStream(client.getInputStream())).readObject();
+            ObjectInputStream objIN = new ObjectInputStream(client.getInputStream());
+            Object objReceive = objIN.readObject();
 
             // Find the type of Object the class is
             if(objReceive != null && objReceive.getClass() == ride.RideOffer.class)
@@ -43,6 +45,7 @@ public class ServerReceive implements Runnable
                 System.out.println("Client Student: " + ((Student) objReceive).getFirstName() + " " +
                         ((Student) objReceive).getLastName() + ", " + objReceive.toString() + ", " +
                         ((Student) objReceive).getAccountNumber());
+
             }
             else if(objReceive != null && objReceive.getClass() == student.InvalidStudentException.class)
             {
@@ -56,6 +59,8 @@ public class ServerReceive implements Runnable
             {
                 System.out.println("Null Class");
             }
+            objIN.close();
+            new ServerSend(this.client ,objReceive);
         }
         catch (Exception e)
         {

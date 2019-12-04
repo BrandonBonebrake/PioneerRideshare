@@ -36,7 +36,7 @@ final class LoginPanel extends DefaultView
 
     private final int EMAIL_LABEL_X = DEFAULT_X_COMP - 150;
 
-    final static String SIGNUP_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
+    private final static String SIGNUP_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
             "linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
             "-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 12px;" +
             "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
@@ -160,5 +160,4 @@ final class LoginPanel extends DefaultView
 
         super.changeScene(forgotPasswordPanel.getPane());
     }
-
 }

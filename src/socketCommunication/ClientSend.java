@@ -29,7 +29,7 @@ public class ClientSend implements Runnable
             // Sends an object through the output stream
             objOutStream.writeObject(this.object);
             objOutStream.flush();
-            objOutStream.close();
+            //objOutStream.close();
         }
         catch (Exception e)
         {

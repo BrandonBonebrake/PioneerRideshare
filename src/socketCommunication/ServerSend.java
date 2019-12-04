@@ -20,16 +20,14 @@ public class ServerSend implements Runnable
     @Override
     public void run()
     {
-        //InputStreamReader inStreamRead = new InputStreamReader(System.in);
-        //BufferedReader buffRead = new BufferedReader(inStreamRead);
-
         try
         {
             if(this.object != null)
             {
                 ObjectOutputStream objOutStream = new ObjectOutputStream(client.getOutputStream());
-
+                System.out.println(object.toString());
                 objOutStream.writeObject(this.object);
+                objOutStream.flush();
                 objOutStream.flush();
                 objOutStream.close();
             }

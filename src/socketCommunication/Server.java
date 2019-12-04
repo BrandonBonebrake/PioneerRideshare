@@ -25,8 +25,8 @@ public class Server
             {
                 cSocket = sSocket.accept();
 
-                new ServerReceive(cSocket, database);
-                new ServerSend(cSocket, null);
+                ServerReceive sReceive = new ServerReceive(cSocket, database);
+                //ServerSend sSend = new ServerSend(cSocket, null);
                 //cSocket.close();
             }
         }
