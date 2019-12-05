@@ -20,10 +20,8 @@ import java.util.regex.PatternSyntaxException;
 import java.lang.Class;
 //import oracle.sql.*;
 
-
 public class PSRDatabase
 {
-
     private ArrayList<Student> studentList;
     private static ArrayList<Ride> currentRides;
     private ArrayList<Ride> pastRides;
@@ -48,7 +46,14 @@ public class PSRDatabase
         }
     }
 
-    // Make connection to Server
+    /**
+     *    Method used to make a connection.
+     *
+     *    @param user
+     *    @param pass
+     *    @return
+     *    @throws SQLException
+     */
     public Connection getConnection(String user, String pass) throws SQLException {
 
         Properties connectionProps = new Properties();
@@ -66,11 +71,12 @@ public class PSRDatabase
     }
 
     /**
-     * Insert an item with the properties of "values" into "tableName"
-     * @param con
-     * @param tableName
-     * @param values
-     * @throws SQLException
+     *    Insert an item with the properties of "values" into "tableName"
+     *
+     *    @param con
+     *    @param tableName
+     *    @param values
+     *    @throws SQLException
      */
     public static void tableInsert(Connection con, String tableName, String values) throws SQLException {
         Statement stmt = null;
@@ -93,12 +99,13 @@ public class PSRDatabase
     }
 
     /**
-     * Remove an element from the table. "condition" needs to be a data value
-     * in the specific table, eg. F_NAME = Larry
-     * @param con
-     * @param tableName
-     * @param condition
-     * @throws SQLException
+     *    Remove an element from the table. "condition" needs to be a data value
+     *    in the specific table, eg. F_NAME = Larry
+     *
+     *    @param con
+     *    @param tableName
+     *    @param condition
+     *    @throws SQLException
      */
     public static void tableRemove(Connection con, String tableName, String condition) throws SQLException {
         Statement stmt = null;
@@ -247,10 +254,11 @@ public class PSRDatabase
     }
 
     /**
-     * Print out the tables in a specific database
-     * @param con
-     * @param dbName
-     * @throws SQLException
+     *    Print out the tables in a specific database
+     *
+     *    @param con
+     *    @param dbName
+     *    @throws SQLException
      */
     public static void viewTable(Connection con, String dbName)
             throws SQLException {
