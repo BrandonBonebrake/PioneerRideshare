@@ -10,8 +10,7 @@ public class PioneerTime extends Time implements Serializable
 
     /**
      *    Default constructor for the PioneerTime class.
-     *
-     **/
+     */
     public PioneerTime()
     {
         super();
@@ -20,10 +19,10 @@ public class PioneerTime extends Time implements Serializable
     /**
      *    Constructor for the PioneerTime class.
      *
-     * @param strTime   String containing the time
-     * @throws InvalidTimeException Thrown if string has an invalid format
+     *    @param strTime   String containing the time
+     *    @throws InvalidTimeException Thrown if string has an invalid format
      *
-     **/
+     */
     public PioneerTime(String strTime) throws InvalidTimeException
     {
         super(strTime);
@@ -36,7 +35,7 @@ public class PioneerTime extends Time implements Serializable
      *    @param minutes   int containing minutes
      *
      *    @throws InvalidTimeException Thrown if hours are outside of range
-     **/
+     */
     public PioneerTime(int hours, int minutes)  throws InvalidTimeException
     {
         super(hours, minutes);
@@ -48,7 +47,7 @@ public class PioneerTime extends Time implements Serializable
      *    @param hour valid only if between 4-22
      *
      *    @throws InvalidTimeException Thrown if hour is outside of range
-     **/
+     */
     @Override
     public void setHours(int hour) throws InvalidTimeException
     {
@@ -70,7 +69,7 @@ public class PioneerTime extends Time implements Serializable
      *
      *    @return true if hour in valid range 6 - 22
      *            false if hour not in valid range
-     **/
+     */
     @Override
     public boolean isValidHour(int hour)
     {

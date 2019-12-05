@@ -1,4 +1,6 @@
 package database;
 
-public class EmailHandler {
+public class EmailHandler
+{
+
 }

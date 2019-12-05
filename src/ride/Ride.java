@@ -16,11 +16,11 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- This class is utilized to create Ride objects which
- hold all pertinent ride information for the program.
-
- @author Bryce Bierman
- **/
+ *    This class is utilized to create Ride objects which
+ *    hold all pertinent ride information for the program.
+ *
+ *    @author Bryce Bierman
+ */
 
 public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serializable
 {
@@ -37,17 +37,17 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     private Student student;                    // Student that submitted Ride
 
     /**
-     Constructor for the Ride class. Holds all pertinent ride information.
-
-     @param departLoc   Depart Location for Ride
-     @param destination Destination for Ride
-     @param leaveDate   Leave date for Ride
-     @param returnDate  Return date for Ride
-     @param leaveTime   Leave time for Ride
-     @param returnTime  Return time for Ride
-     @param isOffer     Whether the Ride is an Offer/Request
-     @param student     Student that created Ride
-     **/
+     *    Constructor for the Ride class. Holds all pertinent ride information.
+     *
+     *    @param departLoc   Depart Location for Ride
+     *    @param destination Destination for Ride
+     *    @param leaveDate   Leave date for Ride
+     *    @param returnDate  Return date for Ride
+     *    @param leaveTime   Leave time for Ride
+     *    @param returnTime  Return time for Ride
+     *    @param isOffer     Whether the Ride is an Offer/Request
+     *    @param student     Student that created Ride
+     */
     public Ride(Location departLoc, Location destination, PioneerDate leaveDate, PioneerDate returnDate,
                 PioneerTime leaveTime, PioneerTime returnTime, boolean isOffer, Student student)
     {
@@ -101,245 +101,246 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     }
 
     /**
-     Return the departure location of the Ride.
-
-     @return departLocation
-     **/
+     *    Return the departure location of the Ride.
+     *
+     *    @return departLocation
+     */
     public String getDepartLocation()
     {
         return departLocation.getCity() + ",\n" + departLocation.getState();
     }
 
     /**
-     Set the departure location of the Ride.
-
-     @param departLocation What departLocation will be set to
-     **/
+     *    Set the departure location of the Ride.
+     *
+     *    @param departLocation What departLocation will be set to
+     */
     public void setDepartLocation(Location departLocation)
     {
         this.departLocation = departLocation;
     }
 
     /**
-     Return the returning location of the Ride.
-
-     @return returnLocation
-     **/
+     *    Return the returning location of the Ride.
+     *
+     *    @return returnLocation
+     */
     public String getReturnLocation()
     {
         return returnLocation.getCity() + ",\n" + returnLocation.getState();
     }
 
     /**
-     Set the return location of the Ride.
-
-     @param returnLocation  What returnLocation will be set to
-     **/
+     *    Set the return location of the Ride.
+     *
+     *    @param returnLocation  What returnLocation will be set to
+     */
     public void setReturnLocation(Location returnLocation)
     {
         this.returnLocation = returnLocation;
     }
 
     /**
-     Return the leaving date of the Ride.
-
-     @return leaveDate
-     **/
+     *    Return the leaving date of the Ride.
+     *
+     *    @return leaveDate
+     */
     public String getLeaveDate()
     {
         return leaveDate.getDate();
     }
 
     /**
-     Set the leaving date of the Ride.
-
-     @param leaveDate What leaveDate will be set to
-     **/
+     *    Set the leaving date of the Ride.
+     *
+     *    @param leaveDate What leaveDate will be set to
+     *
+     */
     public void setLeaveDate(Date leaveDate)
     {
         this.leaveDate = leaveDate;
     }
 
     /**
-     Return the returning date of the Ride.
-
-     @return returnDate
-     **/
+     *    Return the returning date of the Ride.
+     *
+     *    @return returnDate
+     */
     public String getReturnDate()
     {
         return returnDate.getDate();
     }
 
     /**
-     Set the returning date of the Ride.
-
-     @param returnDate What returnDate will be set to
-     **/
+     *    Set the returning date of the Ride.
+     *
+     *    @param returnDate What returnDate will be set to
+     */
     public void setReturnDate(Date returnDate)
     {
         this.returnDate = returnDate;
     }
 
     /**
-     Return the leaving time of the Ride.
-
-     @return leaveTime
-     **/
+     *    Return the leaving time of the Ride.
+     *
+     *    @return leaveTime
+     */
     public String getLeaveTime()
     {
         return leaveTime.getTime();
     }
 
     /**
-     Set the leaving time of the Ride.
-
-     @param leaveTime What leaveTime will be set to
-     **/
+     *    Set the leaving time of the Ride.
+     *
+     *    @param leaveTime What leaveTime will be set to
+     */
     public void setLeaveTime(Time leaveTime)
     {
         this.leaveTime = leaveTime;
     }
 
     /**
-     Return the returning time of the Ride.
-
-     @return returnTime
-     **/
+     *    Return the returning time of the Ride.
+     *
+     *    @return returnTime
+     */
     public String getReturnTime()
     {
         return returnTime.getTime();
     }
 
     /**
-     Set the returning time of the Ride.
-
-     @param returnTime What returnTime will be set to
-     **/
+     *    Set the returning time of the Ride.
+     *
+     *    @param returnTime What returnTime will be set to
+     */
     public void setReturnTime(Time returnTime)
     {
         this.returnTime = returnTime;
     }
 
     /**
-     Return the return date and return time for the ride.
-
-     @return String     Contains return date and return time
-     **/
+     *    Return the return date and return time for the ride.
+     *
+     *    @return String     Contains return date and return time
+     */
     public String getReturnDateTime()
     {
         return this.getReturnDate() + "\n" + this.getReturnTime();
     }
 
     /**
-     Return the leave date and leave time for the ride.
-
-     @return String     Contains Leave date and Leave time
-     **/
+     *    Return the leave date and leave time for the ride.
+     *
+     *    @return String     Contains Leave date and Leave time
+     */
     public String getLeaveDateTime()
     {
         return this.getLeaveDate() + "\n" + this.getLeaveTime();
     }
 
     /**
-     Returns true if Ride is an offer and false is not an offer.
-
-     @return isOffer
-     **/
+     *    Returns true if Ride is an offer and false is not an offer.
+     *
+     *    @return isOffer
+     */
     public boolean getIsOffer()
     {
         return isOffer;
     }
 
     /**
-     Set whether the Ride is an offer or not an offer.
-
-     @param isOffer What isOffer will be set to
-     **/
+     *    Set whether the Ride is an offer or not an offer.
+     *
+     *    @param isOffer What isOffer will be set to
+     */
     private void setIsOffer(boolean isOffer)
     {
         this.isOffer = isOffer;
     }
 
     /**
-     Returns the coordinates of the Ride.
-
-     @return coordinates
-     **/
+     *    Returns the coordinates of the Ride.
+     *
+     *    @return coordinates
+     */
     public Map getCoordinates()
     {
         return coordinates;
     }
 
     /**
-     Set the coordinates of the Ride.
-
-     @param coordinates Map object that holds the coordinates of the location
-     **/
+     *    Set the coordinates of the Ride.
+     *
+     *    @param coordinates Map object that holds the coordinates of the location
+     */
     public void setCoordinates(Map coordinates)
     {
         this.coordinates = coordinates;
     }
 
     /**
-     Returns the ride identification number of the Ride.
-
-     @return rideIdentificationNumber
-     **/
+     *    Returns the ride identification number of the Ride.
+     *
+     *    @return rideIdentificationNumber
+     */
     public String getRideIdentificationNumber()
     {
         return rideIdentificationNumber;
     }
 
     /**
-     Set the ride identification number of the Ride.
-
-     @param rideIdentificationNumber What the rideIdentificationNumber will be set to
-     **/
+     *    Set the ride identification number of the Ride.
+     *
+     *    @param rideIdentificationNumber What the rideIdentificationNumber will be set to
+     */
     private void setRideIdentificationNumber(String rideIdentificationNumber)
     {
         this.rideIdentificationNumber = rideIdentificationNumber;
     }
 
     /**
-     Returns the student that created the Ride.
-
-     @return student
-     **/
+     *    Returns the student that created the Ride.
+     *
+     *    @return student
+     */
     public Student getStudent()
     {
         return student;
     }
 
     /**
-     Set the student that created the Ride.
-
-     @param student What student will be set to
-     **/
+     *    Set the student that created the Ride.
+     *
+     *    @param student What student will be set to
+     */
     public void setStudent(Student student)
     {
         this.student = student;
     }
 
     /**
-     Return the email of the student that created the ride.
-
-     @return String     Email of Student
-     **/
+     *    Return the email of the student that created the ride.
+     *
+     *    @return String     Email of Student
+     */
     public String getStudentEmail()
     {
         return student.getEmail();
     }
 
     /**
-     Overridden compare method that compares the ride
-     identification numbers of one ride to another.
-
-     @param ride1 Ride1 to be compared
-     @param ride2 Ride2 to be compared
-     @return int  negative if ride1 less than ride2
-                  zero if ride1 equal to ride2
-                  positive if ride1 greater than ride2
-     **/
+     *    Overridden compare method that compares the ride
+     *    identification numbers of one ride to another.
+     *
+     *    @param ride1 Ride1 to be compared
+     *    @param ride2 Ride2 to be compared
+     *    @return int  negative if ride1 less than ride2
+     *            zero if ride1 equal to ride2
+     *            positive if ride1 greater than ride2
+     */
     @Override
     public int compare(Ride ride1, Ride ride2)
     {
@@ -348,15 +349,15 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     }
 
     /**
-     Overridden compareTo method that compares this
-     identification number to another ride's
-     identification number.
-
-     @param ride Ride to be compared
-     @return int negative if this less than ride2
-                 zero if this equal to ride2
-                 positive if this larger than ride2
-     **/
+     *    Overridden compareTo method that compares this
+     *    identification number to another ride's
+     *    identification number.
+     *
+     *    @param ride Ride to be compared
+     *    @return int negative if this less than ride2
+     *                zero if this equal to ride2
+     *                positive if this larger than ride2
+     */
     @Override
     public int compareTo(Ride ride)
     {
@@ -364,13 +365,13 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     }
 
     /**
-     Overridden equals method that returns
-     whether this and another ride are equal.
-
-     @param obj         Object to check is equal
-     @return boolean    false if they are not equal
-                        true if they are equal
-     **/
+     *    Overridden equals method that returns
+     *    whether this and another ride are equal.
+     *
+     *    @param obj         Object to check is equal
+     *    @return boolean    false if they are not equal
+     *                       true if they are equal
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -378,11 +379,11 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     }
 
     /**
-     Overridden toString method that returns a String
-     will all pertinent information on the Ride.
-
-     @return String     All information on Ride
-     **/
+     *    Overridden toString method that returns a String
+     *    will all pertinent information on the Ride.
+     *
+     *    @return String     All information on Ride
+     */
     @Override
     public String toString()
     {

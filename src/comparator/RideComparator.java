@@ -6,11 +6,23 @@ import java.util.Comparator;
 
 public class RideComparator<T> implements Comparator<T>
 {
+    /**
+     *     Constructor for the RideComparator class.
+     */
     public RideComparator()
     {
         super();
     }
 
+    /**
+     *     Overridden compare method that compares two rides to one another.
+     *
+     *     @param o1 Ride to be compared
+     *     @param o2 Ride to compare to
+     *     @return negative integer if o1 is less than o2
+     *             0 if o1 is equal to o2
+     *             positive integer if o1 is greater than o2
+     */
     @Override
     public int compare(T o1, T o2)
     {

@@ -17,11 +17,22 @@ public final class PioneerDate extends Date implements Serializable
 
     private static final long serialVersionUID = 4099097738532790603L;
 
+    /**
+     *     Constructor for the PioneerDate class.
+     */
     public PioneerDate()
     {
         super();
     }
 
+    /**
+     *    Constructor for the PioneerDate class.
+     *
+     *    @param year int year for the PioneerDate
+     *    @param month int month for the PioneerDate
+     *    @param day int day for the PioneerDate
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     public PioneerDate(int year, int month, int day) throws InvalidDateException
     {
         super();
@@ -29,11 +40,23 @@ public final class PioneerDate extends Date implements Serializable
         this.changeDate(day, month, year);
     }
 
+    /**
+     *    Constructor for the PioneerDate class.
+     *
+     *    @param date String that contains a date.
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     public PioneerDate(String date) throws InvalidDateException
     {
         this.setDate(date);
     }
 
+    /**
+     *    Method to set the date for a PioneerDate using a String.
+     *
+     *    @param date String that the date will be set to
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     public void setDate(String date) throws InvalidDateException
     {
         String[] dateArr;
@@ -81,6 +104,13 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
+    /**
+     *    Overridden setDay method that sets the day and checks if it
+     *    is valid or not under different restrictions.
+     *
+     *    @param day int the day of the Date
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     @Override
     public void setDay(int day) throws InvalidDateException
     {
@@ -90,6 +120,13 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
+    /**
+     *    Overridden setMonth method that sets the month and checks if it
+     *    is valid or not under different restrictions.
+     *
+     *    @param month int the month of the Date
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     @Override
     public void setMonth(int month) throws InvalidDateException
     {
@@ -99,6 +136,13 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
+    /**
+     *    Overridden setYear method that sets the year and checks if it
+     *    is valid or not under different restrictions.
+     *
+     *    @param year int the year of the Date
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     @Override
     public void setYear(int year) throws InvalidDateException
     {
@@ -108,12 +152,28 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
+    /**
+     *    Overridden compareDay method to compare two dates to one another.
+     *
+     *    @param date to compare to
+     *    @return 0 if the dates are equal
+     *            negative integer if this date is before the other date
+     *            positive integer if this date if after the other date
+     */
     @Override
     public int compareDay(Date date)
     {
         return super.compareDay(date);
     }
 
+    /**
+     *    Method used to change the date.
+     *
+     *    @param day int day to change to
+     *    @param month int month to change to
+     *    @param year int year to change to
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     private void changeDate(int day, int month, int year) throws InvalidDateException
     {
         if(this.isValidDate(year, month, day))
@@ -124,6 +184,16 @@ public final class PioneerDate extends Date implements Serializable
         }
     }
 
+    /**
+     *    Method used to check if a date is valid or not.
+     *
+     *    @param year int year of the date
+     *    @param month int month of the date
+     *    @param day int day of the date
+     *    @return true if the date is valid
+     *            false if the date is invalid
+     *    @throws InvalidDateException thrown if the date is invalid
+     */
     private boolean isValidDate(int year, int month, int day) throws InvalidDateException
     {
         Date today = new Date(); // Object with the current date
