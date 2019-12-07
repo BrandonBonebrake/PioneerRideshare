@@ -58,6 +58,25 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     }
 
     /**
+     * Constructor for the Date class.
+     *
+     * @param date Date class that already exists
+     */
+    public Date(Date date)
+    {
+        super();
+
+        try
+        {
+            this.setYear(date.getYear());
+            this.setMonth(date.getMonth());
+            this.setDay(date.getDay());
+        } catch (InvalidDateException e) { }
+
+
+    }
+
+    /**
      *    Method that returns the day.
      *
      *    @return int day stored in date

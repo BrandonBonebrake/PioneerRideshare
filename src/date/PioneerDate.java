@@ -13,8 +13,6 @@ import java.io.Serializable;
  **/
 public final class PioneerDate extends Date implements Serializable
 {
-    private final int MAX_MONTHS_IN_FUTURE = 2;
-
     private static final long serialVersionUID = 4099097738532790603L;
 
     /**
@@ -196,8 +194,9 @@ public final class PioneerDate extends Date implements Serializable
      */
     private boolean isValidDate(int year, int month, int day) throws InvalidDateException
     {
-        Date today = new Date(); // Object with the current date
+        int MAX_MONTHS_IN_FUTURE = 2;
         int relativeMonth = month;
+        Date today = new Date(); // Object with the current date
 
         // Catch any fundamental errors with the date
         new Date(year, month, day);
