@@ -58,6 +58,9 @@ public final class PioneerDate extends Date implements Serializable
     public void setDate(String date) throws InvalidDateException
     {
         String[] dateArr;
+        int newYear;
+        int newMonth;
+        int newDay;
 
         if(date == null)
         {
@@ -75,7 +78,7 @@ public final class PioneerDate extends Date implements Serializable
         // Set the year value
         try
         {
-            this.setYear(Integer.parseInt(dateArr[2]));
+            newYear = Integer.parseInt(dateArr[2]);
         }
         catch (NumberFormatException e)
         {
@@ -85,7 +88,7 @@ public final class PioneerDate extends Date implements Serializable
         // Set the month value
         try
         {
-            this.setMonth(Integer.parseInt(dateArr[0]));
+            newMonth = Integer.parseInt(dateArr[0]);
         }
         catch (NumberFormatException e)
         {
@@ -94,12 +97,13 @@ public final class PioneerDate extends Date implements Serializable
 
         try
         {
-            this.setDay(Integer.parseInt(dateArr[1]));
+            newDay = Integer.parseInt(dateArr[1]);
         }
         catch (NumberFormatException e)
         {
             throw new InvalidDateException("Invalid Day: " + dateArr[1]);
         }
+        this.changeDate(newDay, newMonth, newYear);
     }
 
     /**

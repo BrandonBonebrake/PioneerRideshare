@@ -1,31 +1,33 @@
 package date;
 
+import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
 
 class DateTest
 {
     Date date = new Date();
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getDay()
     {
         assert date.getDay() == LocalDateTime.now().getDayOfMonth();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getMonth()
     {
         assert date.getMonth() == LocalDateTime.now().getMonthValue();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getYear()
     {
         assert date.getYear() == LocalDateTime.now().getYear();
     }
 
-    @org.junit.jupiter.api.Test
-    void getDate()
+    @Test
+    void getDate() throws InvalidDateException
     {
         String month = String.valueOf(LocalDateTime.now().getMonthValue());
         String day   = String.valueOf(LocalDateTime.now().getDayOfMonth());
@@ -38,24 +40,33 @@ class DateTest
         {
             day = "0" + day;
         }
+        assert date.getDate().equals(month + "/" + day + "/" + LocalDateTime.now().getYear());
 
+        date.setMonth(1);
+        month = "01";
         assert date.getDate().equals(month + "/" + day + "/" + LocalDateTime.now().getYear());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setDay()
     {
         try
         {
             date.setDay(32);
             assert false;
-        } catch (InvalidDateException e){}
+        } catch (InvalidDateException e)
+        {
+            assert true;
+        }
 
         try
         {
             date.setDay(0);
             assert false;
-        } catch (InvalidDateException e){}
+        } catch (InvalidDateException e)
+        {
+            assert true;
+        }
 
         try
         {
@@ -83,22 +94,61 @@ class DateTest
         {
             assert false;
         }
+
+        // Try to set 10,000 different days
+        for (int i = 0; i < 10000; i++)
+        {
+            try
+            {
+                date.setDay(date.getDay() + 1);
+
+                if(!date.isValidDay(date.getDay()) ||
+                    date.getDay() > 31)
+                {
+                    assert false;
+                }
+            } catch (InvalidDateException e)
+            {
+                try
+                {
+                    date.setDay(1);
+                    date.setMonth(date.getMonth() + 1);
+                } catch (InvalidDateException ex)
+                {
+                    try
+                    {
+                        date.setMonth(1);
+                        date.setDay(1);
+                        date.setYear(date.getYear() + 1);
+                    } catch (InvalidDateException exc)
+                    {
+                        assert false;
+                    }
+                }
+            }
+        }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setMonth()
     {
         try
         {
             date.setMonth(0);
             assert false;
-        } catch (InvalidDateException e) { }
+        } catch (InvalidDateException e)
+        {
+            assert true;
+        }
 
         try
         {
             date.setMonth(13);
             assert false;
-        } catch (InvalidDateException e) { }
+        } catch (InvalidDateException e)
+        {
+            assert true;
+        }
 
         try
         {
@@ -126,52 +176,69 @@ class DateTest
         {
             assert false;
         }
+
+        for (int i = 0; i < 96; i++)
+        {
+            try
+            {
+                date.setMonth(date.getMonth() + 1);
+
+                if(date.getMonth() > 12)
+                {
+                    assert false;
+                }
+            } catch (InvalidDateException e)
+            {
+                try
+                {
+                    date.setMonth(1);
+                    date.setYear(date.getYear() + 1);
+                } catch (InvalidDateException ex)
+                {
+                    assert false;
+                }
+            }
+        }
+
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setYear()
     {
         try
         {
             date.setYear(-1);
             assert false;
-        } catch (InvalidDateException e) { }
+        } catch (InvalidDateException e)
+        {
+            assert true;
+        }
 
         try
         {
             date.setYear(2201);
             assert false;
-        } catch (InvalidDateException e) { }
+        } catch (InvalidDateException e)
+        {
+            assert true;
+        }
 
+        // Attempt every possible valid day
         try
         {
             date.setYear(0);
-            assert true;
-        } catch (InvalidDateException e)
-        {
-            assert false;
-        }
 
-        try
-        {
-            date.setYear(2200);
-            assert true;
-        } catch (InvalidDateException e)
-        {
-            assert false;
-        }
-
-        try
-        {
-            date.setYear(LocalDateTime.now().getYear());
-            assert true;
+            for (int i = 1; i < 2200; i++)
+            {
+                date.setYear(i);
+            }
         } catch (InvalidDateException e)
         {
             assert false;
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isValidDay()
     {
         assert !date.isValidDay(-1);
@@ -180,9 +247,31 @@ class DateTest
         assert date.isValidDay(1);
         assert date.isValidDay(15);
         assert date.isValidDay(28);
+
+        try
+        {
+            date.setMonth(12);
+        } catch (InvalidDateException e)
+        {
+            assert false;
+        }
+
+        for (int i = -1; i < LocalDateTime.MAX.getDayOfMonth() + 2; i++)
+        {
+            try
+            {
+                date.setDay(i);
+            } catch (InvalidDateException e)
+            {
+                if(i > 0 && i <= LocalDateTime.MAX.getDayOfMonth())
+                {
+                    assert false;
+                }
+            }
+        }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testEquals() throws InvalidDateException
     {
         Date date1 = new Date(date);
@@ -193,7 +282,7 @@ class DateTest
         assert !date.equals(new Date(1, 1, 1));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testToString()
     {
         Date date1 = new Date(date);
@@ -202,7 +291,7 @@ class DateTest
         assert !date.toString().equals(date1.toString() + " ");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void compareTo() throws InvalidDateException
     {
         Date date1 = new Date(date);
@@ -212,7 +301,7 @@ class DateTest
         assert date1.compareTo(date2) != 0;
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void compare() throws InvalidDateException
     {
         Date date1 = new Date(date);
@@ -223,7 +312,7 @@ class DateTest
         assert date.compare(date1, date2) != 0;
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void compareDay() throws InvalidDateException
     {
         Date date1 = new Date(1, 1, 1);

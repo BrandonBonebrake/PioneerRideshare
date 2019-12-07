@@ -20,11 +20,6 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     private final int DEFAULT_MONTH = LocalDate.now().getMonthValue();
     private final int DEFAULT_DAY   = LocalDate.now().getDayOfMonth();
 
-    private final int MIN_YEAR  = 0;
-    private final int MAX_YEAR  = 2200;
-    private final int MIN_MONTH = 1;
-    private final int MAX_MONTH = 12;
-
     // Class Variables
     private int year  = DEFAULT_YEAR;
     private int month = DEFAULT_MONTH;
@@ -66,14 +61,9 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     {
         super();
 
-        try
-        {
-            this.setYear(date.getYear());
-            this.setMonth(date.getMonth());
-            this.setDay(date.getDay());
-        } catch (InvalidDateException e) { }
-
-
+        this.day = date.day;
+        this.month = date.month;
+        this.year = date.year;
     }
 
     /**
@@ -200,6 +190,9 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
      */
     private boolean isValidMonth(int month)
     {
+        int MIN_MONTH = 1;
+        int MAX_MONTH = 12;
+
         return (month >= MIN_MONTH && month <= MAX_MONTH);
     }
 
@@ -212,6 +205,9 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
      */
     private boolean isValidYear(int year)
     {
+        int MIN_YEAR = 0;
+        int MAX_YEAR = 2200;
+
         return (year >= MIN_YEAR && year <= MAX_YEAR);
     }
 
@@ -237,7 +233,7 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
     @Override
     public boolean equals(Object obj)
     {
-        return (obj != null && obj instanceof Date && this.compareTo((Date)obj) == 0);
+        return (obj instanceof Date && this.compareTo((Date) obj) == 0);
     }
 
     /**
