@@ -107,7 +107,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
      */
     public String getDepartLocation()
     {
-        return departLocation.getCity() + ",\n" + departLocation.getState();
+        return departLocation.getCity() + ", " + departLocation.getState();
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
      */
     public String getReturnLocation()
     {
-        return returnLocation.getCity() + ",\n" + returnLocation.getState();
+        return returnLocation.getCity() + ", " + returnLocation.getState();
     }
 
     /**

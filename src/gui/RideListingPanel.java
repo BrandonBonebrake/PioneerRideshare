@@ -2,14 +2,13 @@ package gui;
 
 import date.InvalidDateException;
 import date.PioneerDate;
+import gui.additionalFeatures.Search;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
@@ -36,6 +35,12 @@ final class RideListingPanel extends DefaultView
     private Location loc = new Location("street", "Platteville", "WI", 53818);
 
     private Ride ride = new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,12,21), new PioneerDate(2019, 12, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a"));
+
+    private TextField searchTextbox;
+    private final int DEFAULT_COMP_HEIGHT = 40;
+    private final int DEFAULT_COMP_WIDTH = 220;
+    private final int DEFAULT_X_COMP = 350;
+    private final int DEFAULT_Y_COMP = 20;
 
     // Dummy rides used to test the table
     private ObservableList<Ride> data = FXCollections.observableArrayList(
@@ -75,6 +80,7 @@ final class RideListingPanel extends DefaultView
     void createComponents()
     {
         this.createBackButton();
+        this.createSearchTextbox();
         this.createTable();
     }
 
@@ -86,6 +92,12 @@ final class RideListingPanel extends DefaultView
         Button backBtn = super.createButton("Back", 200, 75,
                 0, 0, PioneerApplication.EXIT_STYLE);
         backBtn.setOnAction(e -> this.buttonBackClicked());
+    }
+
+    private void createSearchTextbox()
+    {
+        searchTextbox = super.createTextField("Search", DEFAULT_COMP_WIDTH, DEFAULT_COMP_HEIGHT,
+                DEFAULT_X_COMP, DEFAULT_Y_COMP);
     }
 
     /**
@@ -101,7 +113,6 @@ final class RideListingPanel extends DefaultView
      */
     private void createTable()
     {
-        SortedList<Ride> sortedList = new SortedList<>(data);
         double CELL_WIDTH = super.getWidth() / 9.0;
         TableView table = new TableView();
         table.setEditable(false);
@@ -110,17 +121,31 @@ final class RideListingPanel extends DefaultView
         TableColumn location                           = new TableColumn("City/State");
         TableColumn dateTime                           = new TableColumn("Date/Time");
         TableColumn<String, Ride> offerRequest         = new TableColumn<>("Offer/Request");
+        offerRequest.impl_setReorderable(false);
+        offerRequest.setResizable(false);
         TableColumn<String, Ride> leaveCityState       = new TableColumn<>("Leaving");
+        leaveCityState.impl_setReorderable(false);
         leaveCityState.setSortable(false);
+        leaveCityState.setResizable(false);
         TableColumn<String, Ride> destinationCityState = new TableColumn<>("Destination");
+        destinationCityState.impl_setReorderable(false);
         destinationCityState.setSortable(false);
+        destinationCityState.setResizable(false);
         TableColumn<String, Ride> leaveDateTime        = new TableColumn<>("Leaving");
+        leaveDateTime.impl_setReorderable(false);
         leaveDateTime.setSortable(false);
+        leaveDateTime.setResizable(false);
         TableColumn<String, Ride> returnDateTime       = new TableColumn<>("Returning");
+        returnDateTime.impl_setReorderable(false);
         returnDateTime.setSortable(false);
+        returnDateTime.setResizable(false);
         TableColumn<String, Ride> email                = new TableColumn<>("Email @uwplatt.edu");
+        email.impl_setReorderable(false);
+        email.setResizable(false);
         email.setSortable(false);
         TableColumn<Ride, Button> request              = new TableColumn<>("Request to Join/Offer to Drive");
+        request.impl_setReorderable(false);
+        request.setResizable(false);
         request.setSortable(false);
 
         // Set the column widths
@@ -145,6 +170,17 @@ final class RideListingPanel extends DefaultView
         email.setCellValueFactory(new PropertyValueFactory<>("student"));
         request.setCellValueFactory(new PropertyValueFactory<>("button"));
 
+        FilteredList<Ride> filteredList = new FilteredList<>(data, p -> true);
+        searchTextbox.textProperty().addListener((observable, oldValue, newValue) ->
+                {
+                    filteredList.setPredicate(ride1 ->
+                    {
+                        return Search.search(ride1, newValue.toLowerCase());
+                    });
+                }
+                );
+
+        SortedList<Ride> sortedList = new SortedList<Ride>(filteredList);
         sortedList.comparatorProperty().bind(table.comparatorProperty());
 
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);
