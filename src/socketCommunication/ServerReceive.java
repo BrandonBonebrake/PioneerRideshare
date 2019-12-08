@@ -1,20 +1,17 @@
 package socketCommunication;
 
-import ride.Ride;
-import ride.RideOffer;
 import student.Student;
-import database.PSRDatabase;
+import database.PRSDatabase;
 
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ServerReceive implements Runnable
 {
     private Socket client;
-    private PSRDatabase database = null;
+    private PRSDatabase database = null;
 
-    ServerReceive(Socket c, PSRDatabase database)
+    ServerReceive(Socket c, PRSDatabase database)
     {
         this.client = c;
         this.database = database;

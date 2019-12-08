@@ -1,6 +1,6 @@
 package socketCommunication;
 
-import database.PSRDatabase;
+import database.PRSDatabase;
 import student.InvalidStudentException;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class Server
 {
     private static final int port = 63341;
 
-    public Server(int port, PSRDatabase database)
+    public Server(int port, PRSDatabase database)
     {
         ServerSocket sSocket;
 

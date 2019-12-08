@@ -20,7 +20,7 @@ import java.util.regex.PatternSyntaxException;
 import java.lang.Class;
 //import oracle.sql.*;
 
-public class PSRDatabase
+public class PRSDatabase
 {
     private ArrayList<Student> studentList;
     private static ArrayList<Ride> currentRides;
@@ -32,7 +32,7 @@ public class PSRDatabase
     private static final String MySQLup = "PRS";
     Connection conn = null;
 
-    public PSRDatabase() throws IOException {
+    public PRSDatabase() throws IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = getConnection(MySQLup, MySQLup);
