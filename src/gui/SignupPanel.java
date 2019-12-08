@@ -27,6 +27,9 @@ final class SignupPanel extends DefaultView
     private final int EMAIL_LABEL_X = DEFAULT_X_COMP - 150;
     private final int REENTER_PASSWORD_LABEL_X = EMAIL_LABEL_X - 70;
 
+    private final String VALID_FIELD = "-fx-control-inner-background: white; -fx-font-weight: bold;";
+    private final String INVALID_FIELD = "-fx-control-inner-background: red; -fx-font-weight: bold;";
+
     /**
      *
      *
@@ -49,10 +52,10 @@ final class SignupPanel extends DefaultView
         this.createEmailTextbox();
         this.createPasswordTextbox();
         this.createPasswordTextbox2();
-        this.createSubmitButton();
         this.createEmailLabel();
         this.createPasswordLabel();
         this.createPasswordLabel2();
+        this.createSubmitButton();
     }
 
     private void createBackButton()
@@ -84,7 +87,7 @@ final class SignupPanel extends DefaultView
 
     private void createPasswordTextbox2()
     {
-        passwordTextbox = super.createTextField("Password", INPUT_TEXTBOX_WIDTH, INPUT_TEXTBOX_HEIGHT,
+        passwordTextbox2 = super.createTextField("Password", INPUT_TEXTBOX_WIDTH, INPUT_TEXTBOX_HEIGHT,
                 DEFAULT_X_COMP, DEFAULT_Y_COMP + (2 * DIST_Y_BETWEEN_COMPONENTS));
     }
 
@@ -92,6 +95,7 @@ final class SignupPanel extends DefaultView
     {
         Button submitButton = super.createButton("Submit", INPUT_TEXTBOX_WIDTH, INPUT_TEXTBOX_HEIGHT,
                 DEFAULT_X_COMP, DEFAULT_Y_COMP + (3 * DIST_Y_BETWEEN_COMPONENTS), PioneerApplication.EXIT_STYLE);
+        submitButton.setOnAction(event -> submitButtonClicked());
     }
 
     private void createEmailLabel()
@@ -117,5 +121,35 @@ final class SignupPanel extends DefaultView
     private void buttonBackClicked()
     {
         super.returnView();
+    }
+
+    private void submitButtonClicked()
+    {
+        if(emailTextbox.getText().toLowerCase().contains("@uwplatt.edu") &&
+           passwordTextbox.getText().equals(passwordTextbox2.getText()))
+        {
+            this.emailTextbox.setStyle(VALID_FIELD);
+            this.passwordTextbox.setStyle(VALID_FIELD);
+            this.passwordTextbox2.setStyle(VALID_FIELD);
+            PopUpPanel.display("Success");
+            super.returnView();
+        }
+        else if(!(emailTextbox.getText().toLowerCase().contains("@uwplatt.edu")) &&
+                passwordTextbox.getText().equals(passwordTextbox2.getText()))
+        {
+            this.emailTextbox.setStyle(INVALID_FIELD);
+        }
+        else if(emailTextbox.getText().toLowerCase().contains("@uwplatt.edu") &&
+                !(passwordTextbox.getText().equals(passwordTextbox2.getText())))
+        {
+            this.passwordTextbox.setStyle(INVALID_FIELD);
+            this.passwordTextbox2.setStyle(INVALID_FIELD);
+        }
+        else
+        {
+            this.emailTextbox.setStyle(INVALID_FIELD);
+            this.passwordTextbox.setStyle(INVALID_FIELD);
+            this.passwordTextbox2.setStyle(INVALID_FIELD);
+        }
     }
 }
