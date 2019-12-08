@@ -172,13 +172,8 @@ final class RideListingPanel extends DefaultView
 
         FilteredList<Ride> filteredList = new FilteredList<>(data, p -> true);
         searchTextbox.textProperty().addListener((observable, oldValue, newValue) ->
-                {
-                    filteredList.setPredicate(ride1 ->
-                    {
-                        return Search.search(ride1, newValue.toLowerCase());
-                    });
-                }
-                );
+                filteredList.setPredicate(ride1 ->
+                        Search.searchFor(ride1, newValue.toLowerCase().trim())));
 
         SortedList<Ride> sortedList = new SortedList<Ride>(filteredList);
         sortedList.comparatorProperty().bind(table.comparatorProperty());
