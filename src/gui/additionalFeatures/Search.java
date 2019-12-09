@@ -89,6 +89,10 @@ public class Search
         {
             return rideType(ride, str);
         }
+        else if(str.contains("id="))
+        {
+            return rideID(ride, str);
+        }
         else
         {
             return false;
@@ -102,17 +106,28 @@ public class Search
             String[] strArr = str.split(";");
             boolean isValid = true;
 
-            for(int i = 0; i < strArr.length; i++)
+            for (String s : strArr)
             {
-                isValid = searchFor(ride, strArr[i]);
+                isValid = searchFor(ride, s);
 
-                if(!isValid)
+                if (!isValid)
                 {
                     break;
                 }
             }
             return isValid;
         } catch (ArrayIndexOutOfBoundsException e)
+        {
+            return true;
+        }
+    }
+
+    private static boolean rideID(Ride ride, String str)
+    {
+        try
+        {
+            return ride.getRideIdentificationNumber().toLowerCase().contains(str.split("id=")[1]);
+        }catch (ArrayIndexOutOfBoundsException e)
         {
             return true;
         }

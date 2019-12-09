@@ -9,8 +9,12 @@ import student.InvalidStudentException;
 import student.Student;
 import time.InvalidTimeException;
 import time.PioneerTime;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class FileHandler
@@ -63,12 +67,18 @@ public class FileHandler
         return result;
     }
 
-    public static void writeObject(String fileName, Object obj)
+    /**
+     * Writes an Object to the directory that stores the files
+     *
+     * @param pathName Name of the folder that the file will be stored in
+     * @param obj Object that will be serialized and written to a file
+     */
+    public static void writeObject(String pathName, Object obj)
     {
         File file;
         FileOutputStream fOut;
         ObjectOutputStream oos;
-        String path = generateFile(fileName);
+        String path = generateFile(pathName);
 
         if(path != null)
         {
@@ -88,6 +98,12 @@ public class FileHandler
         }
     }
 
+    /**
+     * Returns array list of Objects that were written to a series of files
+     *
+     * @param pathName Name of the folder where files were stored
+     * @return ArrayList of Objects that were serialized to a file
+     */
     public static ArrayList<Object> readObject(String pathName)
     {
         ArrayList<Object> list = new ArrayList<>();
