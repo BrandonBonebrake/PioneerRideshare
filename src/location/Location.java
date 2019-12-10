@@ -9,7 +9,6 @@ import java.io.Serializable;
  *    Object used to hold an address to a location.
  *
  *    @author  Brandon Bonebrake
- *
  */
 
 public final class Location implements Serializable

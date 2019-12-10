@@ -226,8 +226,6 @@ public class PRSDatabase
 
     }
 
-
-
     private static Student getStudent(String sEmail, Connection con) throws SQLException {
         Statement stmt = null;
         try {
@@ -293,7 +291,6 @@ public class PRSDatabase
     public void addStudent(Student aStudent)
     {
         studentList.add(aStudent);
-
     }
 
     public void updateStudentList(Connection con) throws SQLException {
@@ -328,12 +325,10 @@ public class PRSDatabase
 
     }
 
-
     public static ArrayList<Ride> getCurrentRides()
     {
         return currentRides;
     }
-
 
     //verifies if a student's email is a uwplatt email,
     // or if the email has been taken already.
@@ -342,9 +337,7 @@ public class PRSDatabase
         boolean isValid = true;
         try
         {
-            String[] emailDomain = email.split("@");
-
-            if(emailDomain[1] != CORRECT_EMAIL_DOMAIN)
+            if(!(email.contains("@uwplatt.edu")))
             {
                 isValid = false;
                 throw new InvalidStudentException("Email does not have correct domain");
@@ -377,7 +370,6 @@ public class PRSDatabase
                 return true;
             }
         }
-
         return false;
     }
 }

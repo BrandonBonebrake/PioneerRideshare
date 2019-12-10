@@ -108,7 +108,7 @@ public class Search
 
             for (String s : strArr)
             {
-                isValid = searchFor(ride, s);
+                isValid = searchFor(ride, s.trim());
 
                 if (!isValid)
                 {
