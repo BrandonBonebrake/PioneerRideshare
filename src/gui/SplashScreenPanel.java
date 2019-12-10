@@ -1,11 +1,7 @@
 package gui;
 
-import date.InvalidDateException;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import location.InvalidLocationException;
-import student.InvalidStudentException;
-import time.InvalidTimeException;
 
 /**
  * This class creates the splash screen and the components
@@ -79,17 +75,9 @@ final class SplashScreenPanel extends DefaultView
 
     private void buttonViewRidesClicked()
     {
-        RideListingPanel ridePanel;
-        try
-        {
-            ridePanel = new RideListingPanel(super.getStage(), super.getStage().getScene(),
+        RideListingPanel ridePanel = new RideListingPanel(super.getStage(), super.getStage().getScene(),
                                              super.getWidth(), super.getHeight());
-            super.changeScene(ridePanel.getPane());
-        }
-        catch (InvalidLocationException | InvalidTimeException | InvalidDateException | InvalidStudentException e)
-        {
-            System.err.println("Splash Screen Panel: (View Rides Panel Clicked) " + e.getMessage());
-        }
+        super.changeScene(ridePanel.getPane());
     }
 
     private void buttonLoginSignupClicked()

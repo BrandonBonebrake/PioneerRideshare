@@ -71,41 +71,52 @@ public class Server
      */
     private void interpretObject() throws IOException
     {
-        if(objReceive != null && objReceive.getClass() == ride.RideOffer.class)
+        if(objReceive.getClass() == ride.RideOffer.class ||
+                objReceive.getClass() == ride.RideRequest.class)
         {
             System.out.println("Client Ride Offer: " + objReceive.toString());
             FileHandler.writeObject("rides", objReceive);
             currentRides.add((Ride)objReceive);
             objOutStream.writeObject(objReceive);
         }
-        else if(objReceive != null && objReceive.getClass() == ride.RideRequest.class)
-        {
-            System.out.println("Client Ride Request: " + objReceive.toString());
-            FileHandler.writeObject("rides", objReceive);
-            currentRides.add((Ride)objReceive);
-            objOutStream.writeObject(objReceive);
-        }
-        else if(objReceive != null && objReceive.getClass() == student.Student.class)
+        else if(objReceive.getClass() == Student.class)
         {
             System.out.println("Client Student: " + ((Student) objReceive).getFirstName() + " " +
                     ((Student) objReceive).getLastName() + ", " + objReceive.toString() + ", " +
                     ((Student) objReceive).getAccountNumber());
 
         }
-        else if(objReceive != null && objReceive.getClass() == student.InvalidStudentException.class)
+        else if(objReceive.getClass() == student.InvalidStudentException.class)
         {
             System.out.println("Client Student Exception: " + ((Exception) objReceive).getMessage());
         }
-        else if(objReceive != null && objReceive.getClass() == String.class)
+        else if(objReceive.getClass() == String.class)
         {
+            System.out.print("Client " + client.getInetAddress());
             if(objReceive.toString().equals("currentRides"))
             {
-                System.out.print("Client " + client.getInetAddress() + " requesting current rides. Sending "
-                        + currentRides.size() + " rides to the client...");
+                System.out.print(" requesting current rides. Sending " + currentRides.size() + " rides to the client...");
 
                 objOutStream.writeObject(currentRides);
 
                 System.out.println(" Rides Sent");
+            }
+            else if(objReceive.toString().contains("Ride: "))
+            {
+                String received = objReceive.toString().split(" ")[1];
+                Ride ride = findRide(received);
+                System.out.print(" requesting to fill ride " + received + "... ");
+
+                if(ride == null)
+                {
+                    System.out.print("Could Not Find Ride");
+                }
+                else
+                {
+                    System.out.print("Ride Found");
+                }
+                System.out.println("... Informing Client");
+                objOutStream.writeObject(ride);
             }
             else
             {
@@ -123,6 +134,21 @@ public class Server
         }
     }
 
+    private Ride findRide(String rideID)
+    {
+        Ride ride = null;
+
+        for (int i = 0; i < currentRides.size(); i++)
+        {
+            if(rideID.equals(currentRides.get(i).getRideIdentificationNumber()))
+            {
+                ride = currentRides.get(i);
+                break;
+            }
+        }
+        return ride;
+    }
+    
     public static void main(String[] args)
     {
         new Server();

@@ -1,7 +1,5 @@
 package gui;
 
-import date.InvalidDateException;
-import date.PioneerDate;
 import gui.additionalFeatures.Search;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,15 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import location.InvalidLocationException;
-import location.Location;
 import ride.Ride;
-import ride.RideOffer;
 import socketCommunication.Client;
-import student.InvalidStudentException;
-import student.Student;
-import time.InvalidTimeException;
-import time.PioneerTime;
 
 import java.util.ArrayList;
 
@@ -33,11 +24,6 @@ import java.util.ArrayList;
  */
 final class RideListingPanel extends DefaultView
 {
-
-    private Location loc = new Location("street", "Platteville", "WI", 53818);
-
-    private Ride ride = new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,12,21), new PioneerDate(2019, 12, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a"));
-
     private TextField searchTextbox;
     private final int DEFAULT_COMP_HEIGHT = 40;
     private final int DEFAULT_COMP_WIDTH = 220;
@@ -55,12 +41,8 @@ final class RideListingPanel extends DefaultView
      * @param prevScene The scene of the previous view
      * @param width     Width of the scene
      * @param height    Height of the scene
-     * @throws InvalidLocationException Thrown if Location is invalid
-     * @throws InvalidStudentException  Thrown if student is invalid
-     * @throws InvalidDateException     Thrown if PioneerDate is invalid
-     * @throws InvalidTimeException     Thrown if PioneerTime is invalid
      */
-    RideListingPanel(Stage stage, Scene prevScene, int width, int height) throws InvalidLocationException, InvalidStudentException, InvalidDateException, InvalidTimeException
+    RideListingPanel(Stage stage, Scene prevScene, int width, int height)
     {
         super(stage, prevScene, width, height);
 
@@ -184,14 +166,6 @@ final class RideListingPanel extends DefaultView
 
     private void populatedTableFromServer()
     {
-        Client client = new Client("currentRides");
-        ArrayList<Ride> currentRides = (ArrayList<Ride>) client.receiveObject();
-
-        data.clear(); // Empty any files in the observable list
-        for (int i = 0; i < currentRides.size(); i++)
-        {
-            data.add(currentRides.get(i));
-        }
-        client.close();
+        data.addAll((ArrayList<Ride>) (new Client("currentRides").receiveObject()));
     }
 }

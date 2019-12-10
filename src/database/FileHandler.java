@@ -150,21 +150,20 @@ public class FileHandler
         Time now = new Time();
         Time rideTime = new Time();
 
-        for (int i = 0; i < rides.size(); i++)
+        for (Object ride : rides)
         {
             try
             {
-                rideDate.setDate(((Ride)rides.get(i)).getLeaveDate());
-                rideTime.setTime(((Ride)rides.get(i)).getLeaveTime());
+                rideDate.setDate(((Ride) ride).getLeaveDate());
+                rideTime.setTime(((Ride) ride).getLeaveTime());
 
                 // Future Ride
-                if(rideDate.compareTo(today) > 1 ||
-                        rideDate.compareTo(today) == 1 && rideTime.compareTo(now) > 1)
+                if (rideDate.compareTo(today) > 0 ||
+                        rideDate.compareTo(today) == 0 && rideTime.compareTo(now) > 0)
                 {
-                    currentRides.add((Ride)rides.get(i));
+                    currentRides.add((Ride) ride);
                 }
-            } catch (InvalidDateException | InvalidTimeException e)
-            {}
+            } catch (InvalidDateException | InvalidTimeException ignored) { }
         }
         return currentRides;
     }

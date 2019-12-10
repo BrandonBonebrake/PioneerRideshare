@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import location.Location;
 import location.Map;
+import socketCommunication.Client;
 import student.Student;
 import time.PioneerTime;
 import time.Time;
@@ -60,7 +61,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         this.isOffer = isOffer;
         this.student = student;
 
-        this.rideIdentificationNumber = "12345";
+        this.setRideIdentificationNumber();
     }
 
     /**
@@ -74,7 +75,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         Button button = new Button();
 
         button.setStyle(PioneerApplication.RIDE_STYLE);
-        button.setOnAction(e -> System.out.println(this.student.getFirstName()));
+        button.setOnAction(e -> new Client("Ride: " + this.getRideIdentificationNumber()));
 
         if(isOffer)
             button.setText("Request To Join");
@@ -294,6 +295,17 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     /**
      *    Set the ride identification number of the Ride.
      *
+     */
+    private void setRideIdentificationNumber()
+    {
+        this.rideIdentificationNumber = this.getLeaveDate();
+        this.rideIdentificationNumber += this.getLeaveTime();
+        this.rideIdentificationNumber += this.getReturnTime();
+    }
+
+    /**
+     *    Set the ride identification number of the Ride.
+     *
      *    @param rideIdentificationNumber What the rideIdentificationNumber will be set to
      */
     private void setRideIdentificationNumber(String rideIdentificationNumber)
@@ -387,10 +399,6 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
     @Override
     public String toString()
     {
-        //return (departLocation.toString() + " " + returnLocation.toString() + " " + leaveDate.toString()
-        //        + " " + returnDate.toString() + " " + leaveTime.toString() + " " + returnTime.toString()
-        //        + " " + isOffer + " " + coordinates.toString() + " " + rideIdentificationNumber
-        //        + " " + student.toString());
         return departLocation.toString() + " " + returnLocation.toString() + " " + leaveDate.toString() + " " +
                 returnDate.toString() + " " + leaveTime.toString() + " " + returnTime.toString() + " " + isOffer +
                 " " + rideIdentificationNumber + " " + student.toString();
