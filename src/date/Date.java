@@ -162,6 +162,53 @@ public class Date implements Comparable<Date>, Comparator<Date>, Serializable
         this.year = year;
     }
 
+    public void setDate(String date) throws InvalidDateException
+    {
+        String[] dateArr;
+
+        if(date == null)
+        {
+            throw new InvalidDateException("Empty date");
+        }
+
+        dateArr = date.split("/");
+
+        // Check that the date is the proper length
+        if(dateArr.length != 3)
+        {
+            throw new InvalidDateException("Invalid Date Format (mm/dd/yyyy): " + date);
+        }
+
+        // Set the year value
+        try
+        {
+            this.setYear(Integer.parseInt(dateArr[2]));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new InvalidDateException("Invalid Year: " + dateArr[2]);
+        }
+
+        // Set the month value
+        try
+        {
+            this.setMonth(Integer.parseInt(dateArr[0]));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new InvalidDateException("Invalid Month: " + dateArr[0]);
+        }
+
+        try
+        {
+            this.setDay(Integer.parseInt(dateArr[1]));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new InvalidDateException("Invalid Day: " + dateArr[1]);
+        }
+    }
+
     /**
      *    Method used to check if a day is valid.
      *

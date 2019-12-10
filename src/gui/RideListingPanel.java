@@ -15,11 +15,13 @@ import location.InvalidLocationException;
 import location.Location;
 import ride.Ride;
 import ride.RideOffer;
-import ride.RideRequest;
+import socketCommunication.Client;
 import student.InvalidStudentException;
 import student.Student;
 import time.InvalidTimeException;
 import time.PioneerTime;
+
+import java.util.ArrayList;
 
 /**
  * This class creates the ride listing Pane and the components
@@ -43,15 +45,7 @@ final class RideListingPanel extends DefaultView
     private final int DEFAULT_Y_COMP = 20;
 
     // Dummy rides used to test the table
-    private ObservableList<Ride> data = FXCollections.observableArrayList(
-            new RideOffer(loc, new Location("street", "Madison", "WI", 53818), new PioneerDate(2019,12,21), new PioneerDate(2019, 12, 30), new PioneerTime(), new PioneerTime(), new Student("John", "Smith", "dummy@uwplatt.edu", "123456789!a")),
-            new RideRequest(loc, new Location("street", "Green Bay", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Smith", "dummy2@uwplatt.edu", "123456789!a")),
-            new RideOffer(loc, new Location("street", "Eau Claire", "WI", 53818), new PioneerDate(), new PioneerDate(), new PioneerTime(), new PioneerTime(), new Student("Kay", "Doe", "dummy2@uwplatt.edu", "123456789!a")),
-            new RideRequest(loc, loc, new PioneerDate(), new PioneerDate(), new PioneerTime("16:07"), new PioneerTime(), new Student("Jane", "Doe", "dummy01@uwplatt.edu", "123456789!a")),
-            ride,
-            ride,
-            ride
-    );
+    private ObservableList<Ride> data = FXCollections.observableArrayList();
 
     /**
      * Creates the ride listing pane that shows all the current ride
@@ -70,6 +64,7 @@ final class RideListingPanel extends DefaultView
     {
         super(stage, prevScene, width, height);
 
+        this.populatedTableFromServer();
         this.createComponents();
     }
 
@@ -185,5 +180,18 @@ final class RideListingPanel extends DefaultView
         table.setItems(sortedList);
 
         super.addComponent(table);
+    }
+
+    private void populatedTableFromServer()
+    {
+        Client client = new Client("currentRides");
+        ArrayList<Ride> currentRides = (ArrayList<Ride>) client.receiveObject();
+
+        data.clear(); // Empty any files in the observable list
+        for (int i = 0; i < currentRides.size(); i++)
+        {
+            data.add(currentRides.get(i));
+        }
+        client.close();
     }
 }

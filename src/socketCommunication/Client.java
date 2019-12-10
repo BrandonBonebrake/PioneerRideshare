@@ -1,29 +1,88 @@
 package socketCommunication;
 
-import student.InvalidStudentException;
-import student.Student;
-
-import java.io.Serializable;
-import java.net.ServerSocket;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
-public class Client implements Serializable
+public class Client
 {
-    private static final long serialVersionUID = 4099097738532790605L;
+
+    Socket client;
+
+    ObjectOutputStream objOutStream;
+    ObjectInputStream objInStream;
 
     public Client(Object obj)
     {
-        final int port = 63341;
+        super();
 
         try
         {
-            ClientSend cSend = new ClientSend(obj,  port);
-            //ClientReceive cReceive = new ClientReceive(port);
-            //ServerReceive cReceive = new ServerReceive(new Socket(), null);
+            client = new Socket(InetAddress.getLocalHost(), 63341);
         }
-        catch(Exception e)
+        catch (IOException e)
         {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+        this.sendObject(obj);
+    }
+    public void sendObject(Object obj)
+    {
+        try
+        {
+
+            if(objOutStream == null)
+            {
+                objOutStream = new ObjectOutputStream(client.getOutputStream());
+            }
+            objOutStream.writeObject(obj);
+            objOutStream.flush();
+        }
+        catch (IOException ignored)
+        {
+
+        }
+
+    }
+
+    public Object receiveObject()
+    {
+        Object objReceive = null;
+        try
+        {
+            if(objInStream == null)
+            {
+                objInStream = new ObjectInputStream(client.getInputStream());
+            }
+            objReceive = objInStream.readObject();
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return objReceive;
+    }
+
+    public void close()
+    {
+        try
+        {
+            objInStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            objOutStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 }

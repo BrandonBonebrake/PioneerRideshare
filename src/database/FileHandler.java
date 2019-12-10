@@ -1,14 +1,18 @@
 package database;
 
+import date.Date;
 import date.InvalidDateException;
 import date.PioneerDate;
 import location.InvalidLocationException;
 import location.Location;
+import ride.Ride;
 import ride.RideOffer;
 import student.InvalidStudentException;
 import student.Student;
 import time.InvalidTimeException;
 import time.PioneerTime;
+import time.Time;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +23,8 @@ import java.util.ArrayList;
 
 public class FileHandler
 {
+    private static String basePath = "files/";
+
     /**
      * Creates a new file. The name of the file is the largest number found
      * plus one.
@@ -29,7 +35,7 @@ public class FileHandler
     private static String generateFile(String pathName)
     {
         String result = null;
-        File folder = new File("src/database/files/" + pathName);
+        File folder = new File(basePath + pathName);
         File file;
         File[] fileArr;
         int maxFileNumber = 0;
@@ -62,7 +68,7 @@ public class FileHandler
             }
         } catch (IOException e)
         {
-            System.err.println("Couldn't Create File");
+            System.err.println(e.getMessage());
         }
         return result;
     }
@@ -107,11 +113,12 @@ public class FileHandler
     public static ArrayList<Object> readObject(String pathName)
     {
         ArrayList<Object> list = new ArrayList<>();
-        File folder = new File("src/database/files/" + pathName);
+        File folder = new File(basePath + pathName);
         File[] fileArr = folder.listFiles();
         FileInputStream fIn;
         ObjectInputStream ois;
 
+        System.out.println(folder.getAbsolutePath());
         if(fileArr != null && fileArr.length > 0)
         {
             for (File value : fileArr)
@@ -134,9 +141,37 @@ public class FileHandler
         return list;
     }
 
+    public static ArrayList<Ride> getCurrentRides()
+    {
+        ArrayList<Object> rides = readObject("rides");
+        ArrayList<Ride> currentRides = new ArrayList<>();
+        Date today = new Date();
+        Date rideDate = new Date();
+        Time now = new Time();
+        Time rideTime = new Time();
+
+        for (int i = 0; i < rides.size(); i++)
+        {
+            try
+            {
+                rideDate.setDate(((Ride)rides.get(i)).getLeaveDate());
+                rideTime.setTime(((Ride)rides.get(i)).getLeaveTime());
+
+                // Future Ride
+                if(rideDate.compareTo(today) > 1 ||
+                        rideDate.compareTo(today) == 1 && rideTime.compareTo(now) > 1)
+                {
+                    currentRides.add((Ride)rides.get(i));
+                }
+            } catch (InvalidDateException | InvalidTimeException e)
+            {}
+        }
+        return currentRides;
+    }
+
     public static void main(String[] args) throws InvalidLocationException, InvalidDateException, InvalidTimeException, InvalidStudentException
     {
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < 10; i++)
         {
             writeObject("rides", new RideOffer(new Location("","Platteville","WI","11111"),
                     new Location("","Milwaukee","WI","11111"), new PioneerDate("12/31/2019"),
@@ -144,7 +179,7 @@ public class FileHandler
                     new Student("John","Smith","jSmith@uwplatt.edu","12345678&")));
         }
 
-        ArrayList<Object> currentRides = readObject("rides");
+        ArrayList<Ride> currentRides = getCurrentRides();
 
         for (int i = 0; i <currentRides.size(); i++)
         {

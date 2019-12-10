@@ -369,6 +369,7 @@ final class OfferRequestRidePanel extends DefaultView
      */
     private void buttonSubmitClicked()
     {
+        Object objReceived;
         Ride ride;
 
         this.colorizeBasedOnInput();
@@ -410,9 +411,14 @@ final class OfferRequestRidePanel extends DefaultView
             }
 
             // Send the ride information to the server
-            new Client(ride);
-            PopUpPanel.display("Success");
-            this.buttonBackClicked();
+            Client client = new Client(ride);
+            objReceived = client.receiveObject();
+
+            if(objReceived instanceof Ride)
+            {
+                PopUpPanel.display("Success");
+                this.buttonBackClicked();
+            }
         }
     }
 
