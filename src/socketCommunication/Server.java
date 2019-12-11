@@ -1,5 +1,6 @@
 package socketCommunication;
 
+import database.EmailHandler;
 import database.FileHandler;
 import date.PioneerDate;
 import ride.Ride;
@@ -7,7 +8,6 @@ import student.InvalidStudentException;
 import student.Student;
 import time.Time;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -54,6 +54,7 @@ public class Server
 
             while (true)
             {
+                Thread thread = new Thread();
                 client = sSocket.accept(); // Wait for the client to connect
 
                 objOutStream = new ObjectOutputStream(client.getOutputStream());
@@ -81,11 +82,13 @@ public class Server
     private void interpretObject() throws IOException
     {
         System.out.print((new Time()).getTime() + " | ");
+        System.out.print("Client " + client.getInetAddress() + " | ");
 
         if(objReceive.getClass() == ride.RideOffer.class ||
                 objReceive.getClass() == ride.RideRequest.class)
         {
-            System.out.print("Client " + client.getInetAddress() + " | Creating New Ride...       | ");
+            System.out.print("Creating New Ride...       | ");
+
             FileHandler.writeObject("rides", objReceive);
             currentRides.add((Ride)objReceive);
 
@@ -97,7 +100,7 @@ public class Server
         }
         else if(objReceive.getClass() == Student.class)
         {
-            System.out.print("Client " + client.getInetAddress() + " | Login...                   | ");
+            System.out.print("Login...                   | ");
             Student student = getStudent(((Student)objReceive).getEmail(), ((Student)objReceive).getPassword());
 
             if(student == null)
@@ -116,11 +119,10 @@ public class Server
         }
         else if(objReceive.getClass() == String.class)
         {
-            System.out.print("Client " + client.getInetAddress() + " | ");
             if(objReceive.toString().contains("currentRides"))
             {
-                System.out.print("Requesting current rides   | Sending " + currentRides.size()
-                        + " rides to the client...");
+                System.out.print("Requesting Current Rides   | Sending " + currentRides.size()
+                        + " Rides...");
 
                 this.updateRideLists(); // Remove past rides
                 objOutStream.writeObject(currentRides);
@@ -129,8 +131,8 @@ public class Server
             }
             else if(objReceive.toString().contains("Ride: "))
             {
-                String received = objReceive.toString().split(" ")[1];
-                Ride ride = findRide(received);
+                String[] received = objReceive.toString().split(" ");
+                Ride ride = findRide(received[1]);
                 System.out.print("Requesting to fill ride    | ");
 
                 if(ride == null)
@@ -140,6 +142,14 @@ public class Server
                 else
                 {
                     System.out.print("Ride Found... ");
+                    try
+                    {
+                        students.get(0).setEmail("bonebrakebr@uwplatt.edu");
+                    } catch (InvalidStudentException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    EmailHandler.rideFilled(ride, students.get(0));
                 }
                 objOutStream.writeObject(ride);
                 System.out.println("Client Informed");
@@ -153,13 +163,14 @@ public class Server
                 if(clientInfo.length == 4 && !emailTaken(clientInfo[2]))
                 {
                     objOutStream.writeObject(createStudent(clientInfo[2], clientInfo[3]));
-                    System.out.println("Success");
+                    System.out.print("Successful... ");
                 }
                 else
                 {
                     objOutStream.writeObject(null);
-                    System.out.println("Failed");
+                    System.out.print("Failed...     ");
                 }
+                System.out.println("Response Sent");
             }
             else
             {
@@ -169,7 +180,7 @@ public class Server
         }
         else
         {
-            System.out.println("Uncaught Client Class: " + objReceive.toString());
+            System.out.println("Uncaught Class: " + objReceive.toString());
         }
     }
 

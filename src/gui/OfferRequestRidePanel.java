@@ -6,11 +6,7 @@ import date.PioneerDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
@@ -19,8 +15,6 @@ import ride.Ride;
 import ride.RideOffer;
 import ride.RideRequest;
 import socketCommunication.Client;
-import student.InvalidStudentException;
-import student.Student;
 import time.InvalidTimeException;
 import time.PioneerTime;
 import time.Time;
@@ -64,8 +58,8 @@ final class OfferRequestRidePanel extends DefaultView
     private boolean isValidRide;  // Boolean that determines if a ride will be submitted to the server
     private boolean isOffer;      // Boolean that determines if a RideOffer or RideRequest Object will be created
 
-    private ChoiceBox destState;  // Destination state
-    private ChoiceBox leaveState; // Leave state
+    private ChoiceBox<String> destState;  // Destination state
+    private ChoiceBox<String> leaveState; // Leave state
 
     private TextField leaveCity;  // Leave city
     private TextField destCity;   // Destination city
@@ -85,7 +79,6 @@ final class OfferRequestRidePanel extends DefaultView
     private Date dateReturning;           // Return date object
     private Time timeLeaving;             // Leave time object
     private Time timeReturning;           // Return time object
-    private Student student;              // Student that is creating the ride
 
     /**
      * Creates the Offer/Request Pane that will allow students
@@ -103,7 +96,6 @@ final class OfferRequestRidePanel extends DefaultView
 
         this.title = title;
         this.isOffer = this.getIsOffer();
-        this.createTestStudent();
         this.createComponents();
     }
 
@@ -144,21 +136,6 @@ final class OfferRequestRidePanel extends DefaultView
         this.createReturnTimePicker();
 
         this.createErrorLabel();
-    }
-
-    /**
-     * Dummy method to test while accounts are not implemented
-     */
-    private void createTestStudent()
-    {
-        try
-        {
-            student = new Student("John", "Smith", "dummy@uwplatt.edu", "1234567qQ!");
-        }
-        catch (InvalidStudentException e)
-        {
-            System.err.println(e.getMessage());
-        }
     }
 
     /**
@@ -378,8 +355,8 @@ final class OfferRequestRidePanel extends DefaultView
         {
             try
             {
-                leaveLocation = new Location(null, this.leaveCity.getText(), leaveState.getSelectionModel().getSelectedItem().toString(), 11111);
-                destinationLocation = new Location(null, this.destCity.getText(), destState.getSelectionModel().getSelectedItem().toString(), 11111);
+                leaveLocation = new Location(null, this.leaveCity.getText(), leaveState.getSelectionModel().getSelectedItem(), 11111);
+                destinationLocation = new Location(null, this.destCity.getText(), destState.getSelectionModel().getSelectedItem(), 11111);
             }
             catch (InvalidLocationException e)
             {
@@ -402,14 +379,15 @@ final class OfferRequestRidePanel extends DefaultView
             if(isOffer)
             {
                 ride = new RideOffer(leaveLocation, destinationLocation, (PioneerDate) dateLeaving,
-                        (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning, student);
+                        (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning,
+                        PioneerApplication.studentLoggedIn);
             }
             else
             {
                 ride = new RideRequest(leaveLocation, destinationLocation, (PioneerDate) dateLeaving,
-                        (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning, student);
+                        (PioneerDate) dateReturning, (PioneerTime) timeLeaving, (PioneerTime) timeReturning,
+                        PioneerApplication.studentLoggedIn);
             }
-
             // Send the ride information to the server
             Client client = new Client(ride);
             objReceived = client.receiveObject();
@@ -568,7 +546,7 @@ final class OfferRequestRidePanel extends DefaultView
         try
         {
             new Location(null, this.destCity.getText(),
-                    this.destState.getSelectionModel().getSelectedItem().toString(), 11111);
+                    this.destState.getSelectionModel().getSelectedItem(), 11111);
             this.destCity.setStyle(VALID_FIELD);
         }
         catch (InvalidLocationException e)
@@ -582,7 +560,7 @@ final class OfferRequestRidePanel extends DefaultView
         try
         {
             new Location(null, this.leaveCity.getText(),
-                    this.destState.getSelectionModel().getSelectedItem().toString(), 11111);
+                    this.destState.getSelectionModel().getSelectedItem(), 11111);
             this.leaveCity.setStyle(VALID_FIELD);
         }
         catch (InvalidLocationException e)

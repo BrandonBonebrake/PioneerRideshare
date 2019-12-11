@@ -139,6 +139,7 @@ final class LoginPanel extends DefaultView
 
             if(objRec instanceof Student)
             {
+                PioneerApplication.studentLoggedIn = (Student) objRec;
                 PopUpPanel.display("Login Successful");
                 super.returnView();
             }

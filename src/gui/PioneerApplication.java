@@ -3,6 +3,7 @@ package gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import student.Student;
 
 /**
  This class is the starting point for the GUI.
@@ -38,8 +39,8 @@ public class PioneerApplication extends Application
             "-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 18px;" +
             "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
 
-    // Global Constants
-
+    // Global Variables
+    static Student studentLoggedIn;
 
     @Override
     public void start(Stage primaryStage)

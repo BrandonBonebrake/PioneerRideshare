@@ -76,6 +76,16 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="commons-email-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="commons-email-1" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/commons-email-1.5/commons-email-1.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
