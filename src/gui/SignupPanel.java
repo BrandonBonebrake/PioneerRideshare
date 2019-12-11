@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import socketCommunication.Client;
+import student.Student;
 
 final class SignupPanel extends DefaultView
 {
@@ -125,14 +127,26 @@ final class SignupPanel extends DefaultView
 
     private void submitButtonClicked()
     {
+        Client client;
+        Student student;
+
         if(emailTextbox.getText().toLowerCase().contains("@uwplatt.edu") &&
            passwordTextbox.getText().equals(passwordTextbox2.getText()))
         {
             this.emailTextbox.setStyle(VALID_FIELD);
             this.passwordTextbox.setStyle(VALID_FIELD);
             this.passwordTextbox2.setStyle(VALID_FIELD);
-            PopUpPanel.display("Success");
-            super.returnView();
+
+            // Open communication with server
+            client = new Client("New User: " + this.emailTextbox.getText().trim() + " "
+                    + this.passwordTextbox.getText().trim());
+            student = (Student) client.receiveObject();
+            client.close();
+            if(student != null)
+            {
+                PopUpPanel.display("Success");
+                //super.returnView();
+            }
         }
         else if(!(emailTextbox.getText().toLowerCase().contains("@uwplatt.edu")) &&
                 passwordTextbox.getText().equals(passwordTextbox2.getText()))

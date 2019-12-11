@@ -118,7 +118,6 @@ public class FileHandler
         FileInputStream fIn;
         ObjectInputStream ois;
 
-        System.out.println(folder.getAbsolutePath());
         if(fileArr != null && fileArr.length > 0)
         {
             for (File value : fileArr)
@@ -168,7 +167,24 @@ public class FileHandler
         return currentRides;
     }
 
-    public static void main(String[] args) throws InvalidLocationException, InvalidDateException, InvalidTimeException, InvalidStudentException
+    public static ArrayList<Student> getStudents()
+    {
+        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Object>  objects  = readObject("students");
+
+        for (Object object : objects)
+        {
+            students.add((Student) object);
+        }
+        return students;
+    }
+
+    private static void createStudent() throws InvalidStudentException
+    {
+        writeObject("students", new Student("Redacted", "Redacted", "Redacted@uwplatt.edu", "123456%f"));
+    }
+
+    private static void createRides() throws InvalidLocationException, InvalidDateException, InvalidStudentException, InvalidTimeException
     {
         for (int i = 0; i < 10; i++)
         {
@@ -184,5 +200,10 @@ public class FileHandler
         {
             System.out.println(i + 1 + ") " + currentRides.get(i));
         }
+    }
+
+    public static void main(String[] args) throws InvalidLocationException, InvalidDateException, InvalidTimeException, InvalidStudentException
+    {
+        createStudent();
     }
 }

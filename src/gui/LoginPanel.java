@@ -143,10 +143,7 @@ final class LoginPanel extends DefaultView
                 super.returnView();
             }
         }
-        catch (InvalidStudentException e)
-        {
-            new Client(e);
-        }
+        catch (InvalidStudentException ignored) {}
     }
 
     private void signupButtonClicked()
