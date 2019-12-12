@@ -1,11 +1,9 @@
 package ride;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import date.Date;
 import date.PioneerDate;
 import gui.PioneerApplication;
 import javafx.scene.control.Button;
-import javafx.scene.text.Font;
 import location.Location;
 import location.Map;
 import socketCommunication.Client;
@@ -70,6 +68,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
      *
      *    @return button Button added to the table
      */
+    @Deprecated
     public Button getButton()
     {
         Button button = new Button();

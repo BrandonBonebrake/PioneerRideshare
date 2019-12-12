@@ -28,11 +28,11 @@ public class EmailHandler
         catch (Exception ignored) {}
     }
 
-    public static void rideFilled(Ride ride, Student student)
+    public static void rideFilled(Ride ride, Student studentRec, Student studentSent)
     {
         String subject = "Your Ride ";
-        String content = student.getFirstName() + " " + student.getLastName() + ",\n\n"
-                + " would like to ";
+        String content = studentRec.getFirstName() + " " + studentRec.getLastName() + ",\n\n"
+                + studentSent.getFirstName() + " " + studentSent.getLastName() + " would like to ";
 
         if(ride.getIsOffer())
         {
@@ -48,6 +48,7 @@ public class EmailHandler
         content += " you from " + ride.getDepartLocation() + " on " + ride.getLeaveDate() + " at " + ride.getLeaveTime() + ".\n\n";
         content += "The destination location is " + ride.getReturnLocation() + ".\n";
         content += "If you wish to travel back together, they will be returning on " + ride.getReturnDate() + " at " + ride.getReturnTime() + ".\n\n";
+        content += "Contact them by their campus email: " + studentSent.getEmail() + " ASAP\n\n";
         content += "Thank you for using Pioneer Rideshare! Have a wonderful drive!";
 
         send(ride.getStudentEmail(),

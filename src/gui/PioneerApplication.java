@@ -40,7 +40,7 @@ public class PioneerApplication extends Application
             "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
 
     // Global Variables
-    static Student studentLoggedIn;
+    static Student studentLoggedIn = null;
 
     @Override
     public void start(Stage primaryStage)

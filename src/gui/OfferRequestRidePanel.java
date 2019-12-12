@@ -330,6 +330,11 @@ final class OfferRequestRidePanel extends DefaultView
                 super.getHeight() - 95, PioneerApplication.EXIT_STYLE);
 
         submitBtn.setOnAction(e -> buttonSubmitClicked());
+
+        if(PioneerApplication.studentLoggedIn == null)
+        {
+            submitBtn.setVisible(false);
+        }
     }
 
     /**

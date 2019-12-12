@@ -54,7 +54,6 @@ public class Server
 
             while (true)
             {
-                Thread thread = new Thread();
                 client = sSocket.accept(); // Wait for the client to connect
 
                 objOutStream = new ObjectOutputStream(client.getOutputStream());
@@ -121,10 +120,10 @@ public class Server
         {
             if(objReceive.toString().contains("currentRides"))
             {
+                this.updateRideLists(); // Remove past rides
                 System.out.print("Requesting Current Rides   | Sending " + currentRides.size()
                         + " Rides...");
 
-                this.updateRideLists(); // Remove past rides
                 objOutStream.writeObject(currentRides);
 
                 System.out.println(" Rides Sent");
@@ -133,6 +132,8 @@ public class Server
             {
                 String[] received = objReceive.toString().split(" ");
                 Ride ride = findRide(received[1]);
+                Student student;
+
                 System.out.print("Requesting to fill ride    | ");
 
                 if(ride == null)
@@ -142,14 +143,10 @@ public class Server
                 else
                 {
                     System.out.print("Ride Found... ");
-                    try
-                    {
-                        students.get(0).setEmail("bonebrakebr@uwplatt.edu");
-                    } catch (InvalidStudentException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    EmailHandler.rideFilled(ride, students.get(0));
+
+                    student = getStudent(received[2]);
+
+                    EmailHandler.rideFilled(ride, ride.getStudent(), student);
                 }
                 objOutStream.writeObject(ride);
                 System.out.println("Client Informed");
@@ -214,6 +211,23 @@ public class Server
             FileHandler.writeObject("exceptions", e);
             objOutStream.writeObject(null);
             System.out.println("Failed");
+        }
+        return student;
+    }
+
+    private Student getStudent(String email)
+    {
+        Student student = null;
+
+        // Look to make certain student exists, else return null
+        for (Student value : students)
+        {
+            // Check that emails match
+            if (email.equals(value.getEmail()))
+            {
+                student = value;
+                break;
+            }
         }
         return student;
     }

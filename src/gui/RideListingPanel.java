@@ -6,9 +6,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import ride.Ride;
 import socketCommunication.Client;
 
@@ -32,6 +38,7 @@ final class RideListingPanel extends DefaultView
 
     // Dummy rides used to test the table
     private ObservableList<Ride> data = FXCollections.observableArrayList();
+    FilteredList<Ride> filteredList;
 
     /**
      * Creates the ride listing pane that shows all the current ride
@@ -46,7 +53,14 @@ final class RideListingPanel extends DefaultView
     {
         super(stage, prevScene, width, height);
 
-        this.populatedTableFromServer();
+        if(PioneerApplication.studentLoggedIn == null)
+        {
+            super.returnView();
+        }
+        else
+        {
+            this.populatedTableFromServer();
+        }
         this.createComponents();
     }
 
@@ -85,6 +99,18 @@ final class RideListingPanel extends DefaultView
         super.returnView();
     }
 
+    private TableColumn<String, Ride> createColumn(String methodName, int width)
+    {
+        TableColumn<String, Ride> tColumn = new TableColumn<>(methodName);
+
+        tColumn.impl_setReorderable(false);
+        tColumn.setResizable(false);
+        tColumn.setSortable(false);
+        tColumn.setPrefWidth(width);
+
+        return tColumn;
+    }
+
     /**
      * Creates the table that all the current ride offers/requests are a part of
      */
@@ -95,44 +121,17 @@ final class RideListingPanel extends DefaultView
         table.setEditable(false);
 
         // Create all the columns that will represent the different data points we will display to the user
-        TableColumn location                           = new TableColumn("City/State");
-        TableColumn dateTime                           = new TableColumn("Date/Time");
-        TableColumn<String, Ride> offerRequest         = new TableColumn<>("Offer/Request");
-        offerRequest.impl_setReorderable(false);
-        offerRequest.setResizable(false);
-        TableColumn<String, Ride> leaveCityState       = new TableColumn<>("Leaving");
-        leaveCityState.impl_setReorderable(false);
-        leaveCityState.setSortable(false);
-        leaveCityState.setResizable(false);
-        TableColumn<String, Ride> destinationCityState = new TableColumn<>("Destination");
-        destinationCityState.impl_setReorderable(false);
-        destinationCityState.setSortable(false);
-        destinationCityState.setResizable(false);
-        TableColumn<String, Ride> leaveDateTime        = new TableColumn<>("Leaving");
-        leaveDateTime.impl_setReorderable(false);
-        leaveDateTime.setSortable(false);
-        leaveDateTime.setResizable(false);
-        TableColumn<String, Ride> returnDateTime       = new TableColumn<>("Returning");
-        returnDateTime.impl_setReorderable(false);
-        returnDateTime.setSortable(false);
-        returnDateTime.setResizable(false);
-        TableColumn<String, Ride> email                = new TableColumn<>("Email @uwplatt.edu");
-        email.impl_setReorderable(false);
-        email.setResizable(false);
-        email.setSortable(false);
-        TableColumn<Ride, Button> request              = new TableColumn<>("Request to Join/Offer to Drive");
-        request.impl_setReorderable(false);
-        request.setResizable(false);
-        request.setSortable(false);
+        TableColumn<String, Ride> location             = createColumn("City/State", 0);
+        TableColumn<String, Ride> dateTime             = createColumn("Date/Time", 0);
+        TableColumn<String, Ride> offerRequest         = createColumn("Offer/Request", 105);
+        TableColumn<String, Ride> leaveCityState       = createColumn("Leaving", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> destinationCityState = createColumn("Destination", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> leaveDateTime        = createColumn("Leaving", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> returnDateTime       = createColumn("Returning", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> email                = createColumn("Email @uwplatt.edu", (int) (super.getWidth() / 5.0 + 5));
+        TableColumn<String, Ride> request              = createColumn("Request to Join/Offer to Drive", (int) (super.getWidth() / 5.0 + 15));
 
-        // Set the column widths
-        offerRequest.setPrefWidth(105);
-        leaveCityState.setPrefWidth(CELL_WIDTH);
-        destinationCityState.setPrefWidth(CELL_WIDTH);
-        leaveDateTime.setPrefWidth(CELL_WIDTH);
-        returnDateTime.setPrefWidth(CELL_WIDTH);
-        email.setPrefWidth(super.getWidth() / 5.0);
-        request.setPrefWidth(super.getWidth() / 5.0 + 15);
+        offerRequest.setSortable(true);
 
         // Add the sub-columns to the columns
         location.getColumns().addAll(leaveCityState, destinationCityState);
@@ -145,14 +144,47 @@ final class RideListingPanel extends DefaultView
         leaveDateTime.setCellValueFactory(new PropertyValueFactory<>("leaveDateTime"));
         returnDateTime.setCellValueFactory(new PropertyValueFactory<>("returnDateTime"));
         email.setCellValueFactory(new PropertyValueFactory<>("student"));
-        request.setCellValueFactory(new PropertyValueFactory<>("button"));
+        request.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 
-        FilteredList<Ride> filteredList = new FilteredList<>(data, p -> true);
+        // Allow the TableColumn to have a button on the view
+        Callback<TableColumn<String, Ride>, TableCell<String, Ride>> cellFactory =
+                new Callback<TableColumn<String, Ride>, TableCell<String, Ride>>()
+                {
+                    @Override
+                    public TableCell<String, Ride> call(TableColumn<String, Ride> param)
+                    {
+                        return new TableCell<String, Ride>()
+                        {
+                            Button btn = new Button("Join/Drive");
+
+                            @Override
+                            public void updateItem(Ride item, boolean empty)
+                            {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                {
+                                    setGraphic(null);
+                                }
+                                else
+                                {
+                                    btn.setStyle(PioneerApplication.RIDE_STYLE);
+                                    btn.setOnAction(event ->
+                                            buttonJoinDriveClicked(table.getSelectionModel().getSelectedIndex()));
+                                    setGraphic(btn);
+                                }
+                                setText(null);
+                            }
+                        };
+                    }
+                };
+        request.setCellFactory(cellFactory);{}
+
+        filteredList = new FilteredList<>(data, p -> true);
         searchTextbox.textProperty().addListener((observable, oldValue, newValue) ->
                 filteredList.setPredicate(ride1 ->
                         Search.searchFor(ride1, newValue.toLowerCase().trim())));
 
-        SortedList<Ride> sortedList = new SortedList<Ride>(filteredList);
+        SortedList<Ride> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(table.comparatorProperty());
 
         table.getColumns().addAll(offerRequest, location, dateTime, email, request);
@@ -162,6 +194,33 @@ final class RideListingPanel extends DefaultView
         table.setItems(sortedList);
 
         super.addComponent(table);
+    }
+
+    private void buttonJoinDriveClicked(int selectedIndex)
+    {
+        if(selectedIndex >= 0)
+        {
+            Client client = new Client("Ride: " + data.get(selectedIndex).getRideIdentificationNumber() + " "
+                    + PioneerApplication.studentLoggedIn.getEmail());
+            Object objReceived = client.receiveObject();
+
+            removeRide((Ride) objReceived);
+            client.close();
+
+            PopUpPanel.display("Student has\nbeen notified");
+        }
+    }
+
+    private void removeRide(Ride ride)
+    {
+        for (int i = 0; i < data.size(); i++)
+        {
+            if(ride.getRideIdentificationNumber().equals(data.get(i).getRideIdentificationNumber()))
+            {
+                data.remove(i);
+                break;
+            }
+        }
     }
 
     private void populatedTableFromServer()

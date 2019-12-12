@@ -41,10 +41,7 @@ public class Client
             objOutStream.flush();
         }
         catch (IOException ignored)
-        {
-
-        }
-
+        { }
     }
 
     public Object receiveObject()

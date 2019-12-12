@@ -136,7 +136,7 @@ final class LoginPanel extends DefaultView
             Student student = new Student("Place", "Holder", emailTextbox.getText(), passwordTextbox.getText());
             Client client = new Client(student);
             Object objRec = client.receiveObject(); // Returned Student Object. Use to validate rides
-
+            client.close();
             if(objRec instanceof Student)
             {
                 PioneerApplication.studentLoggedIn = (Student) objRec;

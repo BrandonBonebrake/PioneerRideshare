@@ -145,7 +145,7 @@ final class SignupPanel extends DefaultView
             if(student != null)
             {
                 PopUpPanel.display("Success");
-                //super.returnView();
+                super.returnView();
             }
         }
         else if(!(emailTextbox.getText().toLowerCase().contains("@uwplatt.edu")) &&
