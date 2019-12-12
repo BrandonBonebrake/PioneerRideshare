@@ -17,6 +17,7 @@ public final class Student implements Serializable
     private int numCurrentRideRequests = 0;
     private int numCurrentRideOffers   = 0;
     private String accountNumber;
+    private boolean isStudentBanned = false;
 
     private static final long serialVersionUID = 4099097738532790605L;
 
@@ -355,6 +356,29 @@ public final class Student implements Serializable
             throw new InvalidStudentException("Invalid Number Ride Offers. Min of 0");
         }
         this.numCurrentRideOffers--;
+    }
+
+    public boolean getIsBanned()
+    {
+        return this.isStudentBanned;
+    }
+
+    /**
+     * This will ban the student. It is used to decide if a student can or cannot use the
+     * application.
+     */
+    public void banStudent()
+    {
+        this.isStudentBanned = true;
+    }
+
+    /**
+     * This will unban the student. It is used to decide if a student can or cannot use the
+     * application.
+     */
+    public void unBanStudent()
+    {
+        this.isStudentBanned = false;
     }
 
     /**
