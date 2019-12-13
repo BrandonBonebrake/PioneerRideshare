@@ -20,6 +20,7 @@ import java.util.regex.PatternSyntaxException;
 import java.lang.Class;
 //import oracle.sql.*;
 
+@Deprecated
 public class PRSDatabase
 {
     private ArrayList<Student> studentList;

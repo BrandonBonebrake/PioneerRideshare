@@ -28,7 +28,7 @@ public class Server
     private ArrayList<Ride>    pastRides    = new ArrayList<>();
     private ArrayList<Student> students     = null;
 
-    public Server()
+    public Server() throws IOException
     {
         super();
 
@@ -36,22 +36,28 @@ public class Server
         this.createStreams();
     }
 
-    private void serverStart()
+    private void serverStart() throws IOException
     {
+        System.out.println("\nStarting Server Processes");
+        System.out.print("Reading Files From Disk... ");
+
         currentRides = FileHandler.getCurrentRides();
         students     = FileHandler.getStudents();
+
+        System.out.println("Done");
+        System.out.println("Creating Object I/O Streams");
+
+        sSocket = new ServerSocket(port);
+        System.out.println("Server Started");
+        System.out.println("-----------------------------------------------------------------------------------------------------------");
+        System.out.println("Time  | Client Information      | Request                    | Status");
+        System.out.println("-----------------------------------------------------------------------------------------------------------");
     }
 
     private void createStreams()
     {
         try
         {
-            sSocket = new ServerSocket(port);
-            System.out.println("Server Started");
-            System.out.println("-----------------------------------------------------------------------------------------------------------");
-            System.out.println("Time  | Client Information      | Request                    | Status");
-            System.out.println("-----------------------------------------------------------------------------------------------------------");
-
             while (true)
             {
                 client = sSocket.accept(); // Wait for the client to connect
@@ -108,7 +114,14 @@ public class Server
             }
             else
             {
-                System.out.println("Successful");
+                if(!((Student)objReceive).getIsBanned())
+                {
+                    System.out.println("Successful...");
+                }
+                else
+                {
+                    System.out.println("Failed... Student is Banned: " + ((Student)objReceive).getEmail());
+                }
             }
             objOutStream.writeObject(student);
         }
@@ -287,7 +300,7 @@ public class Server
         }
     }
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         new Server();
     }

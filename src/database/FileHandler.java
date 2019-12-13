@@ -2,23 +2,12 @@ package database;
 
 import date.Date;
 import date.InvalidDateException;
-import date.PioneerDate;
-import location.InvalidLocationException;
-import location.Location;
 import ride.Ride;
-import ride.RideOffer;
-import student.InvalidStudentException;
 import student.Student;
 import time.InvalidTimeException;
-import time.PioneerTime;
 import time.Time;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class FileHandler
@@ -177,33 +166,5 @@ public class FileHandler
             students.add((Student) object);
         }
         return students;
-    }
-
-    private static void createStudent() throws InvalidStudentException
-    {
-        writeObject("students", new Student("Redacted", "Redacted", "Redacted@uwplatt.edu", "123456%f"));
-    }
-
-    private static void createRides() throws InvalidLocationException, InvalidDateException, InvalidStudentException, InvalidTimeException
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            writeObject("rides", new RideOffer(new Location("","Platteville","WI","11111"),
-                    new Location("","Milwaukee","WI","11111"), new PioneerDate("12/31/2019"),
-                    new PioneerDate("2/1/2020"), new PioneerTime("10:00"), new PioneerTime("10:01"),
-                    new Student("John","Smith","jSmith@uwplatt.edu","12345678&")));
-        }
-
-        ArrayList<Ride> currentRides = getCurrentRides();
-
-        for (int i = 0; i <currentRides.size(); i++)
-        {
-            System.out.println(i + 1 + ") " + currentRides.get(i));
-        }
-    }
-
-    public static void main(String[] args) throws InvalidLocationException, InvalidDateException, InvalidTimeException, InvalidStudentException
-    {
-        createStudent();
     }
 }
