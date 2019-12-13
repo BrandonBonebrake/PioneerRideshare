@@ -176,6 +176,21 @@ abstract class DefaultView
         return textField;
     }
 
+    PasswordField createPasswordField(String prompt, int sizeX, int sizeY, int transX, int transY)
+    {
+        PasswordField textField = new PasswordField();
+
+        textField.setPromptText(prompt);
+        textField.setPrefSize(sizeX, sizeY);
+        textField.setTranslateX(transX);
+        textField.setTranslateY(transY);
+        textField.setStyle("-fx-font-weight: bold;");
+
+        this.addComponent(textField);
+
+        return textField;
+    }
+
     /**
      * General method to create and add DatePickers to the Pane without
      * needing to instantiate the DatePicker in the calling Object. Returns

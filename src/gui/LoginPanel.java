@@ -3,6 +3,7 @@ package gui;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -15,7 +16,7 @@ final class LoginPanel extends DefaultView
     // Global Variables
 
     private TextField emailTextbox;
-    private TextField passwordTextbox;
+    private PasswordField passwordTextbox;
 
     private final int DEFAULT_X_COMP = 300;  // Sets components distance from x-axis
     private final int DEFAULT_Y_COMP = 300; // Sets components distance from y-axis
@@ -76,7 +77,7 @@ final class LoginPanel extends DefaultView
 
     private void createPasswordTextbox()
     {
-        passwordTextbox = super.createTextField("Password", DEFAULT_COMP_WIDTH, DEFAULT_COMP_HEIGHT,
+        passwordTextbox = super.createPasswordField("Password", DEFAULT_COMP_WIDTH, DEFAULT_COMP_HEIGHT,
                 DEFAULT_X_COMP, DEFAULT_Y_COMP + DIST_Y_BETWEEN_COMPONENTS);
     }
 
