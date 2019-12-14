@@ -18,14 +18,11 @@ import java.util.ArrayList;
 public class Server
 {
     private ObjectOutputStream objOutStream;
-    private ObjectInputStream  objInStream;
     private ServerSocket sSocket;
     private Socket client;
     private Object objReceive;
-    private int port = 63341;
 
     private ArrayList<Ride>    currentRides = null;
-    private ArrayList<Ride>    pastRides    = new ArrayList<>();
     private ArrayList<Student> students     = null;
 
     public Server() throws IOException
@@ -47,7 +44,7 @@ public class Server
         System.out.println("Done");
         System.out.println("Creating Object I/O Streams");
 
-        sSocket = new ServerSocket(port);
+        sSocket = new ServerSocket(63341);
         System.out.println("Server Started");
         System.out.println("-----------------------------------------------------------------------------------------------------------");
         System.out.println("Time  | Client Information      | Request                    | Status");
@@ -63,7 +60,7 @@ public class Server
                 client = sSocket.accept(); // Wait for the client to connect
 
                 objOutStream = new ObjectOutputStream(client.getOutputStream());
-                objInStream  = new ObjectInputStream(client.getInputStream());
+                ObjectInputStream objInStream = new ObjectInputStream(client.getInputStream());
 
                 objReceive = objInStream.readObject();
                 this.interpretObject();
@@ -170,9 +167,10 @@ public class Server
 
                 System.out.print("New User Signup...         | ");
 
-                if(clientInfo.length == 4 && !emailTaken(clientInfo[2]))
+                if(clientInfo.length == 6 && !emailTaken(clientInfo[2]))
                 {
-                    objOutStream.writeObject(createStudent(clientInfo[2], clientInfo[3]));
+                    objOutStream.writeObject(createStudent(clientInfo[2], clientInfo[3], clientInfo[4], clientInfo[5]));
+
                     System.out.print("Successful... ");
                 }
                 else
@@ -209,12 +207,12 @@ public class Server
         return ride;
     }
 
-    private Student createStudent(String email, String password) throws IOException
+    private Student createStudent(String email, String password, String firstName, String lastName) throws IOException
     {
         Student student = null;
         try
         {
-            student = new Student("First", "Last", email, password);
+            student = new Student(firstName, lastName, email, password);
             objOutStream.writeObject(student);
             FileHandler.writeObject("students", student);
             students.add(student);
@@ -223,7 +221,7 @@ public class Server
         {
             FileHandler.writeObject("exceptions", e);
             objOutStream.writeObject(null);
-            System.out.println("Failed");
+            System.out.println("Failed...");
         }
         return student;
     }
@@ -293,7 +291,6 @@ public class Server
             if(currentRides.get(i).getLeaveDate().compareTo(today.getDate()) <= 0
             && currentRides.get(i).getLeaveTime().compareTo(now.getTime()) <= 0)
             {
-                pastRides.add(currentRides.get(i));
                 currentRides.remove(i);
                 i--;
             }

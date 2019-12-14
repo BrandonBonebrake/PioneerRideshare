@@ -9,7 +9,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import socketCommunication.Client;
 import student.Student;
-import sun.security.util.Password;
 
 final class SignupPanel extends DefaultView
 {
@@ -174,7 +173,8 @@ final class SignupPanel extends DefaultView
 
             // Open communication with server
             client = new Client("New User: " + this.emailTextbox.getText().trim() + " "
-                    + this.passwordTextbox.getText().trim());
+                    + this.passwordTextbox.getText().trim() + " " + this.firstNameTextbox.getText() + " "
+                    + this.lastNameTextbox.getText());
             student = (Student) client.receiveObject();
             client.close();
             if(student != null)

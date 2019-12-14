@@ -47,7 +47,7 @@ public class EmailHandler
         subject += " Has Been Accepted";
         content += " you from " + ride.getDepartLocation() + " on " + ride.getLeaveDate() + " at " + ride.getLeaveTime() + ".\n\n";
         content += "The destination location is " + ride.getReturnLocation() + ".\n";
-        content += "If you wish to travel back together, they will be returning on " + ride.getReturnDate() + " at " + ride.getReturnTime() + ".\n\n";
+        content += "If you wish to travel back together, you are scheduled to return on " + ride.getReturnDate() + " at " + ride.getReturnTime() + ".\n\n";
         content += "Contact them by their campus email: " + studentSent.getEmail() + " ASAP\n\n";
         content += "Thank you for using Pioneer Rideshare! Have a wonderful drive!";
 
