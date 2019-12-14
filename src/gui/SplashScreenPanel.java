@@ -13,6 +13,11 @@ import javafx.stage.Stage;
  */
 final class SplashScreenPanel extends DefaultView
 {
+    static Button loginSignupButton;
+    static Button offerBtn;
+    static Button requestBtn;
+    static Button viewRidesBtn;
+
     // Global Constants
     private final int DEFAULT_X_TRANS = 400;
     private final int DEFAULT_Y_TRANS = 300;
@@ -35,15 +40,16 @@ final class SplashScreenPanel extends DefaultView
 
     private void createViewRidesButton()
     {
-        Button viewRidesBtn = super.createButton("View Rides", 650, 150,
+        viewRidesBtn = super.createButton("View Rides", 650, 150,
                 DEFAULT_X_TRANS - 650 / 2, DEFAULT_Y_TRANS + 125,
                 PioneerApplication.VIEW_RIDES_STYLE);
+        viewRidesBtn.setDisable(true);
         viewRidesBtn.setOnAction(e -> this.buttonViewRidesClicked());
     }
 
     private void createLoginSignupButton()
     {
-        Button loginSignupButton = super.createButton("Login/Signup", 100, 25,
+        loginSignupButton = super.createButton("Login/Signup", 100, 25,
                 super.getWidth() - 100, 0,
                 PioneerApplication.LOGIN_SIGNUP_STYLE);
         loginSignupButton.setOnAction(e -> this.buttonLoginSignupClicked());
@@ -51,17 +57,19 @@ final class SplashScreenPanel extends DefaultView
 
     private void createOfferButton()
     {
-        Button offerBtn = super.createButton("Offer\n Ride", 300, 300,
+        offerBtn = super.createButton("Offer\n Ride", 300, 300,
                 DEFAULT_X_TRANS - 325, DEFAULT_Y_TRANS - 200,
                 PioneerApplication.OFFER_REQUEST_STYLE);
+        offerBtn.setDisable(true);
         offerBtn.setOnAction(event -> buttonOfferClicked());
     }
 
     private void createRequestButton()
     {
-        Button requestBtn = super.createButton("Request\n   Ride", 300, 300,
+        requestBtn = super.createButton("Request\n   Ride", 300, 300,
                 DEFAULT_X_TRANS + 25, DEFAULT_Y_TRANS - 200,
                 PioneerApplication.OFFER_REQUEST_STYLE);
+        requestBtn.setDisable(true);
         requestBtn.setOnAction(e -> buttonRequestClicked());
     }
 
@@ -82,10 +90,20 @@ final class SplashScreenPanel extends DefaultView
 
     private void buttonLoginSignupClicked()
     {
-        LoginPanel loginPanel = new LoginPanel(super.getStage(), super.getStage().getScene(),
-                super.getWidth(), super.getHeight());
+        if(loginSignupButton.getText().equals("Login/Signup")) {
+            LoginPanel loginPanel = new LoginPanel(super.getStage(), super.getStage().getScene(),
+                    super.getWidth(), super.getHeight());
 
-        super.changeScene(loginPanel.getPane());
+            super.changeScene(loginPanel.getPane());
+        }
+        else
+        {
+            PioneerApplication.studentLoggedIn = null;
+            loginSignupButton.setText("Login/Signup");
+            viewRidesBtn.setDisable(true);
+            requestBtn.setDisable(true);
+            offerBtn.setDisable(true);
+        }
     }
 
     private void buttonRequestClicked()

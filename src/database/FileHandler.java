@@ -23,13 +23,11 @@ public class FileHandler
      */
     private static String generateFile(String pathName)
     {
-        String result = null;
-        File folder = new File(basePath + pathName);
-        File file;
         File[] fileArr;
         int maxFileNumber = 0;
         boolean fileCreated;
 
+        File folder = new File(basePath + pathName);
         fileArr = folder.listFiles();
 
         if (fileArr != null && fileArr.length > 0)
@@ -45,13 +43,14 @@ public class FileHandler
             maxFileNumber++;
         }
         // Create the file name
-        file = new File(folder.getAbsolutePath() + "/" + maxFileNumber);
+        File file = new File(folder.getAbsolutePath() + "/" + maxFileNumber);
 
         // Create the new file
+        String result = null;
         try
         {
             fileCreated = file.createNewFile();
-            if(fileCreated)
+            if (fileCreated)
             {
                 result = file.getAbsolutePath();
             }
@@ -75,7 +74,7 @@ public class FileHandler
         ObjectOutputStream oos;
         String path = generateFile(pathName);
 
-        if(path != null)
+        if (path != null)
         {
             file = new File(path);
             try

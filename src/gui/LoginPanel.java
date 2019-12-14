@@ -141,6 +141,10 @@ final class LoginPanel extends DefaultView
             if(objRec instanceof Student)
             {
                 PioneerApplication.studentLoggedIn = (Student) objRec;
+                SplashScreenPanel.loginSignupButton.setText("Sign out");
+                SplashScreenPanel.viewRidesBtn.setDisable(false);
+                SplashScreenPanel.requestBtn.setDisable(false);
+                SplashScreenPanel.offerBtn.setDisable(false);
                 PopUpPanel.display("Login Successful");
                 super.returnView();
             }
