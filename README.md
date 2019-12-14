@@ -3,7 +3,7 @@ Digitizing the Pioneer Ridesharing program on the UW-Platteville campus. This is
 
 This is a semester project at the University of Wisconsin.
 
-Running the program
+Compiling/Running the program
 -----------------------------------------------------------------------------------------------------------------------------------
 Compile the server, located in PioneerRideshare/src/socketCommunication/server.java
 into a jar file. The server needs folders in the format that are located in files/.
