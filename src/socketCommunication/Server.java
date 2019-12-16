@@ -84,7 +84,11 @@ public class Server
     private void interpretObject() throws IOException
     {
         System.out.print((new Time()).getTime() + " | ");
-        System.out.print("Client " + client.getInetAddress() + " | ");
+        String clientAddress = "Client " + client.getInetAddress();
+        while (clientAddress.length() < 23)
+            clientAddress += " ";
+        clientAddress += " | ";
+        System.out.print(clientAddress);
 
         if(objReceive.getClass() == ride.RideOffer.class ||
                 objReceive.getClass() == ride.RideRequest.class)
