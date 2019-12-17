@@ -84,29 +84,29 @@ public class Server
     private void interpretObject() throws IOException
     {
         System.out.print((new Time()).getTime() + " | ");
-        String clientAddress = "Client " + client.getInetAddress();
+        StringBuilder clientAddress = new StringBuilder("Client " + client.getInetAddress());
         while (clientAddress.length() < 23)
-            clientAddress += " ";
-        clientAddress += " | ";
+            clientAddress.append(" ");
+        clientAddress.append(" | ");
         System.out.print(clientAddress);
 
         if(objReceive.getClass() == ride.RideOffer.class ||
                 objReceive.getClass() == ride.RideRequest.class)
         {
-            System.out.print("Creating New Ride...       | ");
+            System.out.print("Creating New Ride          | ");
 
             FileHandler.writeObject("rides", objReceive);
             currentRides.add((Ride)objReceive);
 
-            System.out.print("Ride Created... ");
+            System.out.print("Ride Created");
 
             objOutStream.writeObject(objReceive);
 
-            System.out.println("Ride Saved... Response Sent");
+            System.out.println(", Ride Saved, Response Sent");
         }
         else if(objReceive.getClass() == Student.class)
         {
-            System.out.print("Login...                   | ");
+            System.out.print("Login                      | ");
             Student student = getStudent(((Student)objReceive).getEmail(), ((Student)objReceive).getPassword());
 
             if(student == null)
@@ -117,11 +117,11 @@ public class Server
             {
                 if(!((Student)objReceive).getIsBanned())
                 {
-                    System.out.println("Successful...");
+                    System.out.println("Successful");
                 }
                 else
                 {
-                    System.out.println("Failed... Student is Banned: " + ((Student)objReceive).getEmail());
+                    System.out.println("Failed, Student is Banned: " + ((Student)objReceive).getEmail());
                 }
             }
             objOutStream.writeObject(student);
@@ -136,11 +136,11 @@ public class Server
             {
                 this.updateRideLists(); // Remove past rides
                 System.out.print("Requesting Current Rides   | Sending " + currentRides.size()
-                        + " Rides...");
+                        + " Rides");
 
                 objOutStream.writeObject(currentRides);
 
-                System.out.println(" Rides Sent");
+                System.out.println(", Rides Sent");
             }
             else if(objReceive.toString().contains("Ride: "))
             {
@@ -152,37 +152,52 @@ public class Server
 
                 if(ride == null)
                 {
-                    System.out.print("Could Not Find Ride... ");
+                    System.out.print("Could Not Find Ride");
                 }
                 else
                 {
-                    System.out.print("Ride Found... ");
+                    System.out.print("Ride Found");
 
                     student = getStudent(received[2]);
 
                     EmailHandler.rideFilled(ride, ride.getStudent(), student);
                 }
                 objOutStream.writeObject(ride);
-                System.out.println("Client Informed");
+                System.out.println(", Client Informed");
+            }
+            else if(objReceive.toString().contains("Remove: "))
+            {
+                String[] received = objReceive.toString().split(" ");
+
+                System.out.print("Filling Ride               | ");
+
+                if(removeRide(received[1]))
+                {
+                    System.out.println("Successful, Removed");
+                }
+                else
+                {
+                    System.out.println("Failed, Not Found");
+                }
             }
             else if(objReceive.toString().contains("New User: "))
             {
                 String[] clientInfo = objReceive.toString().split(" ");
 
-                System.out.print("New User Signup...         | ");
+                System.out.print("New User Signup            | ");
 
                 if(clientInfo.length == 6 && !emailTaken(clientInfo[2]))
                 {
                     objOutStream.writeObject(createStudent(clientInfo[2], clientInfo[3], clientInfo[4], clientInfo[5]));
 
-                    System.out.print("Successful... ");
+                    System.out.print("Successful");
                 }
                 else
                 {
                     objOutStream.writeObject(null);
-                    System.out.print("Failed...     ");
+                    System.out.print("Failed");
                 }
-                System.out.println("Response Sent");
+                System.out.println(", Response Sent");
             }
             else
             {
@@ -211,6 +226,22 @@ public class Server
         return ride;
     }
 
+    private boolean removeRide(String rideID)
+    {
+        boolean removed = false;
+
+        for (int i = 0; i < currentRides.size(); i++)
+        {
+            if(rideID.equals(currentRides.get(i).getRideIdentificationNumber()))
+            {
+                currentRides.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        return removed;
+    }
+
     private Student createStudent(String email, String password, String firstName, String lastName) throws IOException
     {
         Student student = null;
@@ -225,7 +256,7 @@ public class Server
         {
             FileHandler.writeObject("exceptions", e);
             objOutStream.writeObject(null);
-            System.out.println("Failed...");
+            System.out.println("Failed");
         }
         return student;
     }

@@ -16,7 +16,7 @@ import student.Student;
 public class PioneerApplication extends Application
 {
     // Global static constants
-    final static String BACKGROUND_STYLE = "-fx-background-color: radial-gradient(center 50% 50%, radius 75%, blue, #000080); " +
+    final static String BACKGROUND_STYLE = "-fx-background-color: radial-gradient(center 50% 50%, radius 75%, #0000e6, #000066); " +
             "-fx-background-radius: 0;";
     final static String EXIT_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
             "linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
@@ -39,7 +39,7 @@ public class PioneerApplication extends Application
             "-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 18px;" +
             "-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
 
-    // Global Variables
+    // Static Global Variables
     static Student studentLoggedIn = null;
 
     @Override
@@ -47,10 +47,9 @@ public class PioneerApplication extends Application
     {
         final int WIDTH  = 800;
         final int HEIGHT = 620;
-        final String NAME = "Pioneer Rideshare";
         SplashScreenPanel splash = new SplashScreenPanel(primaryStage, WIDTH, HEIGHT);
 
-        primaryStage.setTitle(NAME);
+        primaryStage.setTitle("Pioneer Rideshare");
         primaryStage.setScene(new Scene(splash.getPane(), WIDTH, HEIGHT));
         primaryStage.show();
     }

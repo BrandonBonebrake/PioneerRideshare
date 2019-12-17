@@ -217,6 +217,7 @@ final class RideListingPanel extends DefaultView
         {
             if(ride.getRideIdentificationNumber().equals(data.get(i).getRideIdentificationNumber()))
             {
+                new Client("Remove: " + ride.getRideIdentificationNumber());
                 data.remove(i);
                 break;
             }
