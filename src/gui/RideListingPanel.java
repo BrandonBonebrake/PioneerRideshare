@@ -6,17 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import ride.Ride;
 import socketCommunication.Client;
+import socketCommunication.Packet;
 
 import java.util.ArrayList;
 
@@ -53,11 +49,10 @@ final class RideListingPanel extends DefaultView
     {
         super(stage, prevScene, width, height);
 
-        if(PioneerApplication.studentLoggedIn == null)
+        if (PioneerApplication.studentLoggedIn == null)
         {
             super.returnView();
-        }
-        else
+        } else
         {
             this.populatedTableFromServer();
         }
@@ -121,15 +116,15 @@ final class RideListingPanel extends DefaultView
         table.setEditable(false);
 
         // Create all the columns that will represent the different data points we will display to the user
-        TableColumn<String, Ride> location             = createColumn("City/State", 0);
-        TableColumn<String, Ride> dateTime             = createColumn("Date/Time", 0);
-        TableColumn<String, Ride> offerRequest         = createColumn("Offer/Request", 105);
-        TableColumn<String, Ride> leaveCityState       = createColumn("Leaving", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> location = createColumn("City/State", 0);
+        TableColumn<String, Ride> dateTime = createColumn("Date/Time", 0);
+        TableColumn<String, Ride> offerRequest = createColumn("Offer/Request", 105);
+        TableColumn<String, Ride> leaveCityState = createColumn("Leaving", (int) (super.getWidth() / 9.0));
         TableColumn<String, Ride> destinationCityState = createColumn("Destination", (int) (super.getWidth() / 9.0));
-        TableColumn<String, Ride> leaveDateTime        = createColumn("Leaving", (int) (super.getWidth() / 9.0));
-        TableColumn<String, Ride> returnDateTime       = createColumn("Returning", (int) (super.getWidth() / 9.0));
-        TableColumn<String, Ride> email                = createColumn("Email @uwplatt.edu", (int) (super.getWidth() / 5.0 + 5));
-        TableColumn<String, Ride> request              = createColumn("Request to Join/Offer to Drive", (int) (super.getWidth() / 5.0 + 15));
+        TableColumn<String, Ride> leaveDateTime = createColumn("Leaving", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> returnDateTime = createColumn("Returning", (int) (super.getWidth() / 9.0));
+        TableColumn<String, Ride> email = createColumn("Email @uwplatt.edu", (int) (super.getWidth() / 5.0 + 5));
+        TableColumn<String, Ride> request = createColumn("Request to Join/Offer to Drive", (int) (super.getWidth() / 5.0 + 15));
 
         offerRequest.setSortable(true);
 
@@ -164,8 +159,7 @@ final class RideListingPanel extends DefaultView
                                 if (empty)
                                 {
                                     setGraphic(null);
-                                }
-                                else
+                                } else
                                 {
                                     btn.setStyle(PioneerApplication.RIDE_STYLE);
                                     btn.setOnAction(event ->
@@ -177,7 +171,9 @@ final class RideListingPanel extends DefaultView
                         };
                     }
                 };
-        request.setCellFactory(cellFactory);{}
+        request.setCellFactory(cellFactory);
+        {
+        }
 
         filteredList = new FilteredList<>(data, p -> true);
         searchTextbox.textProperty().addListener((observable, oldValue, newValue) ->
@@ -198,10 +194,10 @@ final class RideListingPanel extends DefaultView
 
     private void buttonJoinDriveClicked(int selectedIndex)
     {
-        if(selectedIndex >= 0)
+        if (selectedIndex >= 0)
         {
-            Client client = new Client("Ride: " + data.get(selectedIndex).getRideIdentificationNumber() + " "
-                    + PioneerApplication.studentLoggedIn.getEmail());
+            Client client = new Client(new Packet<>("Ride: " + data.get(selectedIndex).getRideIdentificationNumber() + " "
+                    + PioneerApplication.studentLoggedIn.getEmail()));
             Object objReceived = client.receiveObject();
 
             removeRide((Ride) objReceived);
@@ -215,9 +211,9 @@ final class RideListingPanel extends DefaultView
     {
         for (int i = 0; i < data.size(); i++)
         {
-            if(ride.getRideIdentificationNumber().equals(data.get(i).getRideIdentificationNumber()))
+            if (ride.getRideIdentificationNumber().equals(data.get(i).getRideIdentificationNumber()))
             {
-                new Client("Remove: " + ride.getRideIdentificationNumber());
+                new Client(new Packet<>("Remove: " + ride.getRideIdentificationNumber()));
                 data.remove(i);
                 break;
             }
@@ -226,6 +222,7 @@ final class RideListingPanel extends DefaultView
 
     private void populatedTableFromServer()
     {
-        data.addAll((ArrayList<Ride>) (new Client("currentRides").receiveObject()));
+        data.addAll((ArrayList<Ride>) (new Client(new Packet<>("currentRides")).receiveObject().getObject()));
     }
+
 }

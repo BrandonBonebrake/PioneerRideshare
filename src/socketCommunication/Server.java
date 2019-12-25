@@ -4,6 +4,8 @@ import database.EmailHandler;
 import database.FileHandler;
 import date.PioneerDate;
 import ride.Ride;
+import ride.RideOffer;
+import ride.RideRequest;
 import student.InvalidStudentException;
 import student.Student;
 import time.Time;
@@ -17,12 +19,11 @@ import java.util.ArrayList;
 
 public class Server
 {
-    private ObjectOutputStream objOutStream;
     private ServerSocket sSocket;
+    ObjectOutputStream objOutStream;
     private Socket client;
-    private Object objReceive;
 
-    private ArrayList<Ride>    currentRides = null;
+    private ArrayList<Ride> currentRides = null;
     private ArrayList<Student> students     = null;
 
     public Server() throws IOException
@@ -55,159 +56,170 @@ public class Server
     {
         try
         {
-            while (true)
+            do
             {
                 client = sSocket.accept(); // Wait for the client to connect
 
                 objOutStream = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream objInStream = new ObjectInputStream(client.getInputStream());
 
-                objReceive = objInStream.readObject();
-                this.interpretObject();
+                try
+                {
+                    Packet<?> objReceive = (Packet<?>) objInStream.readObject();
+                    this.interpretPacket(objReceive);
+                }
+                catch (ClassCastException e)
+                {
 
+                    System.out.println("Invalid Object Received - Recommend Banning User");
+                }
                 objOutStream.close();
                 objInStream.close();
                 client.close();
             }
+            while (!client.getInetAddress().toString().equals("0.0.0.0"));
         }
         catch (IOException | ClassNotFoundException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            this.createStreams();
         }
     }
 
-    /**
-     * Interprets the Objects that the server receives form the client
-     *
-     * @throws IOException Thrown if file or folder could not be found. Should not occur
-     */
-    private void interpretObject() throws IOException
+    private void interpretPacket(Packet<?> packet)
     {
-        System.out.print((new Time()).getTime() + " | ");
-        StringBuilder clientAddress = new StringBuilder("Client " + client.getInetAddress());
-        while (clientAddress.length() < 23)
-            clientAddress.append(" ");
-        clientAddress.append(" | ");
-        System.out.print(clientAddress);
+        Object object = packet.getObject();
 
-        if(objReceive.getClass() == ride.RideOffer.class ||
-                objReceive.getClass() == ride.RideRequest.class)
+        try
         {
-            System.out.print("Creating New Ride          | ");
+            this.lineHeader();
 
-            FileHandler.writeObject("rides", objReceive);
-            currentRides.add((Ride)objReceive);
-
-            System.out.print("Ride Created");
-
-            objOutStream.writeObject(objReceive);
-
-            System.out.println(", Ride Saved, Response Sent");
-        }
-        else if(objReceive.getClass() == Student.class)
-        {
-            System.out.print("Login                      | ");
-            Student student = getStudent(((Student)objReceive).getEmail(), ((Student)objReceive).getPassword());
-
-            if(student == null)
+            if (object instanceof String)
             {
-                System.out.println("Failed");
+                this.interpretString(object);
+            }
+            else if (object instanceof RideOffer || object instanceof RideRequest)
+            {
+                this.interpretRide(object);
+            }
+            else if (object instanceof Student)
+            {
+                this.interpretStudent(object);
+            }
+        }
+        catch (IOException e)
+        {
+            System.out.println("Could not send Object to client!");
+        }
+    }
+
+    private void interpretStudent(Object object) throws IOException
+    {
+        System.out.print("Login                      | ");
+        Student student = getStudent(((Student)object).getEmail(), ((Student)object).getPassword());
+
+        if(student == null)
+        {
+            System.out.println("Failed");
+        }
+        else
+        {
+            if(!((Student)object).getIsBanned())
+            {
+                System.out.println("Successful");
             }
             else
             {
-                if(!((Student)objReceive).getIsBanned())
-                {
-                    System.out.println("Successful");
-                }
-                else
-                {
-                    System.out.println("Failed, Student is Banned: " + ((Student)objReceive).getEmail());
-                }
+                System.out.println("Failed, Student is Banned: " + ((Student)object).getEmail());
             }
-            objOutStream.writeObject(student);
         }
-        else if(objReceive.getClass() == student.InvalidStudentException.class)
+        objOutStream.writeObject(student);
+    }
+
+    private void interpretRide(Object object) throws IOException
+    {
+        System.out.print("Creating New Ride          | ");
+
+        FileHandler.writeObject("rides", object);
+        currentRides.add((Ride)object);
+
+        System.out.print("Ride Created");
+
+        objOutStream.writeObject(object);
+
+        System.out.println(", Ride Saved, Response Sent");
+    }
+
+    private void interpretString(Object object) throws IOException
+    {
+        if (object.toString().contains("currentRides"))
         {
-            System.out.println("Client Student Exception: " + ((Exception) objReceive).getMessage());
+            this.updateRideList();
+            System.out.print("Requesting Current Rides   | Sending " + currentRides.size() + " Rides");
+            objOutStream.writeObject(currentRides);
+            System.out.println(", Rides Sent");
         }
-        else if(objReceive.getClass() == String.class)
+        else if (object.toString().contains("Ride: "))
         {
-            if(objReceive.toString().contains("currentRides"))
+            String[] received = object.toString().split(" ");
+            Ride ride = findRide(received[1]);
+            Student student;
+
+            System.out.print("Requesting to fill ride    | ");
+
+            if (ride == null)
             {
-                this.updateRideLists(); // Remove past rides
-                System.out.print("Requesting Current Rides   | Sending " + currentRides.size()
-                        + " Rides");
-
-                objOutStream.writeObject(currentRides);
-
-                System.out.println(", Rides Sent");
+                System.out.print("Could Not Find Ride");
             }
-            else if(objReceive.toString().contains("Ride: "))
+            else
             {
-                String[] received = objReceive.toString().split(" ");
-                Ride ride = findRide(received[1]);
-                Student student;
+                System.out.print("Ride Found");
 
-                System.out.print("Requesting to fill ride    | ");
+                student = getStudent(received[2]);
 
-                if(ride == null)
-                {
-                    System.out.print("Could Not Find Ride");
-                }
-                else
-                {
-                    System.out.print("Ride Found");
-
-                    student = getStudent(received[2]);
-
-                    EmailHandler.rideFilled(ride, ride.getStudent(), student);
-                }
-                objOutStream.writeObject(ride);
-                System.out.println(", Client Informed");
+                EmailHandler.rideFilled(ride, ride.getStudent(), student);
             }
-            else if(objReceive.toString().contains("Remove: "))
+            objOutStream.writeObject(ride);
+            this.removeRide(received[1]);
+            System.out.println(", Client Informed, Ride Fulfilled");
+        }
+        else if (object.toString().contains("Remove: "))
+        {
+            String[] received = object.toString().split(" ");
+
+            System.out.print("Filling Ride               | ");
+
+            if (removeRide(received[1]))
             {
-                String[] received = objReceive.toString().split(" ");
-
-                System.out.print("Filling Ride               | ");
-
-                if(removeRide(received[1]))
-                {
-                    System.out.println("Successful, Removed");
-                }
-                else
-                {
-                    System.out.println("Failed, Not Found");
-                }
+                System.out.println("Successful, Removed");
             }
-            else if(objReceive.toString().contains("New User: "))
+            else
             {
-                String[] clientInfo = objReceive.toString().split(" ");
+                System.out.println("Failed, Not Found");
+            }
+        }
+        else if (object.toString().contains("New User: "))
+        {
+            String[] clientInfo = object.toString().split(" ");
 
-                System.out.print("New User Signup            | ");
+            System.out.print("New User Signup            | ");
 
-                if(clientInfo.length == 6 && !emailTaken(clientInfo[2]))
-                {
-                    objOutStream.writeObject(createStudent(clientInfo[2], clientInfo[3], clientInfo[4], clientInfo[5]));
+            if (clientInfo.length == 6 && !emailTaken(clientInfo[2]))
+            {
+                objOutStream.writeObject(createStudent(clientInfo[2], clientInfo[3], clientInfo[4], clientInfo[5]));
 
-                    System.out.print("Successful");
-                }
-                else
-                {
-                    objOutStream.writeObject(null);
-                    System.out.print("Failed");
-                }
-                System.out.println(", Response Sent");
+                System.out.print("Successful");
             }
             else
             {
                 objOutStream.writeObject(null);
+                System.out.print("Failed");
             }
-            objOutStream.flush();
+            System.out.println(", Response Sent");
         }
         else
         {
-            System.out.println("Uncaught Class: " + objReceive.toString());
+            objOutStream.writeObject(null);
         }
     }
 
@@ -215,9 +227,9 @@ public class Server
     {
         Ride ride = null;
 
-        for(Ride currentRide : currentRides)
+        for (Ride currentRide : currentRides)
         {
-            if(rideID.equals(currentRide.getRideIdentificationNumber()))
+            if (rideID.equals(currentRide.getRideIdentificationNumber()))
             {
                 ride = currentRide;
                 break;
@@ -232,7 +244,7 @@ public class Server
 
         for (int i = 0; i < currentRides.size(); i++)
         {
-            if(rideID.equals(currentRides.get(i).getRideIdentificationNumber()))
+            if (rideID.equals(currentRides.get(i).getRideIdentificationNumber()))
             {
                 currentRides.remove(i);
                 removed = true;
@@ -252,7 +264,8 @@ public class Server
             FileHandler.writeObject("students", student);
             students.add(student);
 
-        } catch (InvalidStudentException e)
+        }
+        catch (InvalidStudentException e)
         {
             FileHandler.writeObject("exceptions", e);
             objOutStream.writeObject(null);
@@ -303,7 +316,7 @@ public class Server
     {
         boolean emailTaken = false;
 
-        for(Student student : students)
+        for (Student student : students)
         {
             // Check that emails match
             if (student.getEmail().equals(email))
@@ -315,23 +328,37 @@ public class Server
         return emailTaken;
     }
 
-    private void updateRideLists()
+    private void updateRideList()
     {
         PioneerDate today = new PioneerDate();
         Time now = new Time();
 
-        for(int i = 0; i < currentRides.size(); i++)
+        for (int i = 0; i < currentRides.size(); i++)
         {
             // Remove ride from current listing if it is passed the leave date and time
-            if(currentRides.get(i).getLeaveDate().compareTo(today.getDate()) <= 0
-            && currentRides.get(i).getLeaveTime().compareTo(now.getTime()) <= 0)
+            if (currentRides.get(i).getLeaveDate().compareTo(today.getDate()) <= 0
+                    && currentRides.get(i).getLeaveTime().compareTo(now.getTime()) <= 0)
             {
                 currentRides.remove(i);
                 i--;
             }
         }
     }
-    
+
+    private void lineHeader()
+    {
+        System.out.print((new Time()).getTime() + " | ");
+        StringBuilder clientAddress = new StringBuilder("Client " + client.getInetAddress());
+
+        while (clientAddress.length() < 23)
+        {
+            clientAddress.append(" ");
+        }
+        clientAddress.append(" | ");
+
+        System.out.print(clientAddress);
+    }
+
     public static void main(String[] args) throws IOException
     {
         new Server();

@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import socketCommunication.Client;
+import socketCommunication.Packet;
 import student.Student;
 
 final class SignupPanel extends DefaultView
@@ -172,10 +173,10 @@ final class SignupPanel extends DefaultView
             this.passwordTextbox2.setStyle(VALID_FIELD);
 
             // Open communication with server
-            client = new Client("New User: " + this.emailTextbox.getText().trim() + " "
+            client = new Client(new Packet<String>("New User: " + this.emailTextbox.getText().trim() + " "
                     + this.passwordTextbox.getText().trim() + " " + this.firstNameTextbox.getText() + " "
-                    + this.lastNameTextbox.getText());
-            student = (Student) client.receiveObject();
+                    + this.lastNameTextbox.getText()));
+            student = (Student) client.receiveObject().getObject();
             client.close();
             if(student != null)
             {

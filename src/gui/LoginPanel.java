@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import socketCommunication.Client;
+import socketCommunication.Packet;
 import student.InvalidStudentException;
 import student.Student;
 
@@ -135,8 +136,8 @@ final class LoginPanel extends DefaultView
         try
         {
             Student student = new Student("Place", "Holder", emailTextbox.getText(), passwordTextbox.getText());
-            Client client = new Client(student);
-            Object objRec = client.receiveObject(); // Returned Student Object. Use to validate rides
+            Client client = new Client(new Packet<Student>(student));
+            Object objRec = client.receiveObject().getObject(); // Returned Student Object. Use to validate rides
             client.close();
             if(objRec instanceof Student)
             {

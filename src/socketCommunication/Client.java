@@ -8,13 +8,12 @@ import java.net.Socket;
 
 public class Client
 {
-
     Socket client;
 
     ObjectOutputStream objOutStream;
     ObjectInputStream objInStream;
 
-    public Client(Object obj)
+    public Client(Packet<?> obj)
     {
         super();
 
@@ -28,7 +27,8 @@ public class Client
         }
         this.sendObject(obj);
     }
-    public void sendObject(Object obj)
+
+    public void sendObject(Packet<?> packet)
     {
         try
         {
@@ -37,28 +37,27 @@ public class Client
             {
                 objOutStream = new ObjectOutputStream(client.getOutputStream());
             }
-            objOutStream.writeObject(obj);
+            objOutStream.writeObject(packet);
             objOutStream.flush();
         }
         catch (IOException ignored)
         { }
     }
 
-    public Object receiveObject()
+    public Packet<?> receiveObject()
     {
-        Object objReceive = null;
+        Packet<?> objReceive = null;
+
         try
         {
             if(objInStream == null)
             {
                 objInStream = new ObjectInputStream(client.getInputStream());
             }
-            objReceive = objInStream.readObject();
+            objReceive = new Packet<>(objInStream.readObject());
         }
-        catch (IOException | ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+        catch (IOException | ClassNotFoundException ignored)
+        {}
         return objReceive;
     }
 
@@ -68,18 +67,14 @@ public class Client
         {
             objInStream.close();
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        catch (IOException ignored)
+        {}
 
         try
         {
             objOutStream.close();
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        catch (IOException ignored)
+        {}
     }
 }

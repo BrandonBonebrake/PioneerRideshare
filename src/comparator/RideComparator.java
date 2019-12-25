@@ -4,6 +4,7 @@ import ride.Ride;
 
 import java.util.Comparator;
 
+@Deprecated
 public class RideComparator<T> implements Comparator<T>
 {
     /**

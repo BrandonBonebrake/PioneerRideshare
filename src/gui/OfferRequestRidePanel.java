@@ -6,11 +6,7 @@ import date.PioneerDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import location.InvalidLocationException;
@@ -19,6 +15,7 @@ import ride.Ride;
 import ride.RideOffer;
 import ride.RideRequest;
 import socketCommunication.Client;
+import socketCommunication.Packet;
 import time.InvalidTimeException;
 import time.PioneerTime;
 import time.Time;
@@ -370,7 +367,7 @@ final class OfferRequestRidePanel extends DefaultView
             catch (InvalidLocationException e)
             {
                 // Send the error to the Server as this should be unlikely
-                new Client(e);
+                new Client(new Packet<InvalidLocationException>(e));
             }
 
             try
@@ -381,7 +378,7 @@ final class OfferRequestRidePanel extends DefaultView
             catch (InvalidTimeException e)
             {
                 // Send the error to the Server as this should be unlikely
-                new Client(e);
+                new Client(new Packet<InvalidTimeException>(e));
             }
 
             // Ride object that will store all necessary ride information
@@ -398,8 +395,8 @@ final class OfferRequestRidePanel extends DefaultView
                         PioneerApplication.studentLoggedIn);
             }
             // Send the ride information to the server
-            Client client = new Client(ride);
-            objReceived = client.receiveObject();
+            Client client = new Client(new Packet<Ride>(ride));
+            objReceived = client.receiveObject().getObject();
 
             if(objReceived instanceof Ride)
             {

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import location.Location;
 import location.Map;
 import socketCommunication.Client;
+import socketCommunication.Packet;
 import student.Student;
 import time.PioneerTime;
 import time.Time;
@@ -74,7 +75,7 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
         Button button = new Button();
 
         button.setStyle(PioneerApplication.RIDE_STYLE);
-        button.setOnAction(e -> new Client("Ride: " + this.getRideIdentificationNumber()));
+        button.setOnAction(e -> new Client(new Packet("Ride: " + this.getRideIdentificationNumber())));
 
         if(isOffer)
             button.setText("Request To Join");
