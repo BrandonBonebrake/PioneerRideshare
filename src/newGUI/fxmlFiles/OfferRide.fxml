@@ -8,85 +8,69 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0"
-      prefWidth="800.0" style="-fx-background-color: radial-gradient(center 50% 50%, radius 75%, #0000e6, #000066);"
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="newGUI.OfferRideController">
-   <Button alignment="CENTER" mnemonicParsing="false" onAction="#buttonBackClicked" prefHeight="75.0" prefWidth="200.0"
-           style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;"
-           text="Back">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" style="-fx-background-color: radial-gradient(center 50% 50%, radius 75%, #0000e6, #000066);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="newGUI.OfferRideController">
+   <Button alignment="CENTER" mnemonicParsing="false" onAction="#buttonBackClicked" prefHeight="75.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;" text="Back">
       <font>
-         <Font name="System Bold" size="30.0"/>
+         <Font name="System Bold" size="30.0" />
       </font>
    </Button>
    <Label layoutX="50.0" layoutY="100.0" text="Leaving From" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="32.0"/>
+         <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <TextField fx:id="txtfieldDepartureCity" layoutX="50.0" layoutY="147.0" prefHeight="40.0" prefWidth="220.0"
-              promptText="Departure City" style="-fx-font-weight: bold;">
+   <TextField fx:id="txtfieldDepartureCity" layoutX="50.0" layoutY="147.0" prefHeight="40.0" prefWidth="220.0" promptText="Departure City" style="-fx-font-weight: bold;">
       <font>
-         <Font name="System Bold" size="14.0"/>
+         <Font name="System Bold" size="14.0" />
       </font>
    </TextField>
-   <ChoiceBox fx:id="choiceboxDepartureState" layoutX="50.0" layoutY="200.0" prefHeight="36.0" prefWidth="64.0"
-              style="-fx-font-weight: bold;"/>
+   <ChoiceBox fx:id="choiceboxDepartureState" layoutX="50.0" layoutY="200.0" prefHeight="36.0" prefWidth="64.0" style="-fx-font-weight: bold;" />
    <Label layoutX="50.0" layoutY="274.0" text="Destination" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="32.0"/>
+         <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <TextField fx:id="txtfieldDestinationCity" layoutX="50.0" layoutY="321.0" prefHeight="40.0" prefWidth="220.0"
-              promptText="Destination City" style="-fx-font-weight: bold;">
+   <TextField fx:id="txtfieldDestinationCity" layoutX="50.0" layoutY="321.0" prefHeight="40.0" prefWidth="220.0" promptText="Destination City" style="-fx-font-weight: bold;">
       <font>
-         <Font name="System Bold" size="14.0"/>
+         <Font name="System Bold" size="14.0" />
       </font>
    </TextField>
-   <ChoiceBox fx:id="choiceboxDestinationState" layoutX="50.0" layoutY="374.0" prefHeight="36.0" prefWidth="64.0"
-              style="-fx-font-weight: bold;"/>
+   <ChoiceBox fx:id="choiceboxDestinationState" layoutX="50.0" layoutY="374.0" prefHeight="36.0" prefWidth="64.0" style="-fx-font-weight: bold;" />
    <Label layoutX="360.0" layoutY="100.0" text="Leave Date" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="32.0"/>
+         <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <DatePicker fx:id="datePickerLeave" editable="false" layoutX="360.0" layoutY="150.0" prefHeight="40.0"
-               prefWidth="150.0" promptText="dd/mm/yyyy"/>
+   <DatePicker fx:id="datePickerLeave" editable="false" layoutX="360.0" layoutY="150.0" prefHeight="40.0" prefWidth="150.0" promptText="dd/mm/yyyy" />
    <Label layoutX="360.0" layoutY="225.0" text="Leave Time" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="32.0"/>
+         <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <TextField fx:id="txtfieldLeaveTime" layoutX="360.0" layoutY="275.0" prefHeight="40.0" prefWidth="100.0"
-              promptText="hh:mm" style="-fx-font-weight: bold;">
+   <TextField fx:id="txtfieldLeaveTime" layoutX="360.0" layoutY="275.0" prefHeight="40.0" prefWidth="100.0" promptText="hh:mm" style="-fx-font-weight: bold;">
       <font>
-         <Font name="System Bold" size="14.0"/>
+         <Font name="System Bold" size="14.0" />
       </font>
    </TextField>
    <Label layoutX="577.0" layoutY="100.0" text="Return Date" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="32.0"/>
+         <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <DatePicker fx:id="datePickerReturn" editable="false" layoutX="577.0" layoutY="150.0" prefHeight="40.0"
-               prefWidth="150.0" promptText="dd/mm/yyyy" style="-fx-font-weight: bold;"/>
+   <DatePicker fx:id="datePickerReturn" editable="false" layoutX="577.0" layoutY="150.0" prefHeight="40.0" prefWidth="150.0" promptText="dd/mm/yyyy" style="-fx-font-weight: bold;" />
    <Label layoutX="577.0" layoutY="225.0" text="Return Time" textFill="WHITE">
       <font>
-         <Font name="System Bold" size="32.0"/>
+         <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <TextField fx:id="txtfieldReturnTime" layoutX="577.0" layoutY="275.0" prefHeight="40.0" prefWidth="100.0"
-              promptText="hh:mm" style="-fx-font-weight: bold;">
+   <TextField fx:id="txtfieldReturnTime" layoutX="577.0" layoutY="275.0" prefHeight="40.0" prefWidth="100.0" promptText="hh:mm" style="-fx-font-weight: bold;">
       <font>
-         <Font name="System Bold" size="14.0"/>
+         <Font name="System Bold" size="14.0" />
       </font>
    </TextField>
-   <Button alignment="CENTER" layoutX="577.0" layoutY="514.0" mnemonicParsing="false" onAction="#buttonSubmitClicked"
-           prefHeight="75.0" prefWidth="200.0"
-           style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;"
-           text="Submit">
+   <Button alignment="CENTER" layoutX="577.0" layoutY="514.0" mnemonicParsing="false" onAction="#buttonSubmitClicked" prefHeight="75.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;" text="Submit">
       <font>
-         <Font name="System Bold" size="30.0"/>
+         <Font name="System Bold" size="30.0" />
       </font>
    </Button>
 </Pane>

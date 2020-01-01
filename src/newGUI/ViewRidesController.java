@@ -83,15 +83,16 @@ public class ViewRidesController implements Initializable
 								super.updateItem(item, empty);
 								if (empty)
 								{
-									setGraphic(null);
-								} else
+									super.setGraphic(null);
+								}
+								else
 								{
 									btn.setStyle(RIDE_STYLE);
 									btn.setOnAction(event ->
 											buttonJoinDriveClicked(tblRides.getSelectionModel().getSelectedIndex()));
-									setGraphic(btn);
+									super.setGraphic(btn);
 								}
-								setText(null);
+								super.setText(null);
 							}
 						};
 					}
