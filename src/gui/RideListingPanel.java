@@ -24,6 +24,7 @@ import java.util.ArrayList;
  *
  * @author Brandon Bonebrake
  */
+@Deprecated
 final class RideListingPanel extends DefaultView
 {
 	private TextField searchTextbox;
@@ -32,7 +33,6 @@ final class RideListingPanel extends DefaultView
 	private final int DEFAULT_X_COMP = 350;
 	private final int DEFAULT_Y_COMP = 20;
 	
-	// Dummy rides used to test the table
 	private ObservableList<Ride> data = FXCollections.observableArrayList();
 	FilteredList<Ride> filteredList;
 	
@@ -52,7 +52,8 @@ final class RideListingPanel extends DefaultView
 		if (PioneerApplication.studentLoggedIn == null)
 		{
 			super.returnView();
-		} else
+		}
+		else
 		{
 			this.populatedTableFromServer();
 		}

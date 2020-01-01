@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0"
+      prefWidth="800.0" style="-fx-background-color: radial-gradient(center 50% 50%, radius 75%, #0000e6, #000066);"
+      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="newGUI.ViewRidesController">
+    <Button alignment="CENTER" layoutY="1.0" mnemonicParsing="false" onAction="#buttonBackClicked" prefHeight="75.0"
+            prefWidth="200.0"
+            style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;"
+            text="Back">
+        <font>
+          <Font name="System Bold" size="30.0"/>
+        </font>
+    </Button>
+    <TableView fx:id="tblRides" layoutY="75.0" prefHeight="546.0" prefWidth="800.0">
+      <columns>
+          <TableColumn fx:id="tblColOfferRequest" editable="false" prefWidth="90.0" resizable="false"
+                       text="Offer/Request"/>
+          <TableColumn prefWidth="160.0" resizable="false" text="Location">
+              <columns>
+                  <TableColumn fx:id="tblColDepartLocation" prefWidth="112.0" text="Depart"/>
+                  <TableColumn fx:id="tblColDestinationLocation" prefWidth="112.0" text="Destination"/>
+              </columns>
+          </TableColumn>
+          <TableColumn prefWidth="200.0" resizable="false" text="Date/Time">
+              <columns>
+                  <TableColumn fx:id="tblDepartDateTime" prefWidth="100.0" text="Depart"/>
+                  <TableColumn fx:id="tblReturnDateTime" prefWidth="100.0" text="Return"/>
+              </columns>
+          </TableColumn>
+          <TableColumn fx:id="tblColEmail" prefWidth="142.0" resizable="false" text="Email"/>
+          <TableColumn fx:id="tblColJoinDrive" prefWidth="143.0" resizable="false" text="Join/Drive"/>
+      </columns>
+    </TableView>
+    <TextField fx:id="txtfieldSearch" layoutX="533.0" layoutY="18.0" prefHeight="40.0" prefWidth="253.0"
+               promptText="Search" style="-fx-font-weight: bold;">
+        <font>
+          <Font name="System Bold" size="14.0"/>
+        </font>
+    </TextField>
+</Pane>

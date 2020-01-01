@@ -28,6 +28,7 @@ import time.Time;
  *
  * @author Brandon Bonebrake
  */
+@Deprecated
 final class OfferRequestRidePanel extends DefaultView
 {
 	// Global Constants
@@ -364,10 +365,8 @@ final class OfferRequestRidePanel extends DefaultView
 				leaveLocation = new Location(null, this.leaveCity.getText(), leaveState.getSelectionModel().getSelectedItem(), 11111);
 				destinationLocation = new Location(null, this.destCity.getText(), destState.getSelectionModel().getSelectedItem(), 11111);
 			}
-			catch (InvalidLocationException e)
+			catch (InvalidLocationException ignored)
 			{
-				// Send the error to the Server as this should be unlikely
-				new Client(new Packet<>(e));
 			}
 			
 			try

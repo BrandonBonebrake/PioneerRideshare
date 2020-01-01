@@ -12,7 +12,7 @@ import student.Student;
  
  @author Brandon Bonebrake
  **/
-
+@Deprecated
 public class PioneerApplication extends Application
 {
 	// Global static constants
@@ -23,7 +23,7 @@ public class PioneerApplication extends Application
 			"-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 30px;" +
 			"-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
 	final static String OFFER_REQUEST_STYLE = "-fx-background-color: linear-gradient(darkBlue, blue)," +
-			"linear-gradient(blue, blue)," +
+			"-fx-background-color: linear-gradient(darkBlue, blue)," +
 			"linear-gradient(orange, #ffc266);" +
 			"-fx-background-radius: 50;" +
 			"-fx-font-weight: bold;" +
