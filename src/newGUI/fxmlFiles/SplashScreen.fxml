@@ -29,5 +29,5 @@
          <Font name="System Bold" size="45.0" />
       </font>
    </Button>
-   <Button layoutX="700.0" layoutY="2.0" mnemonicParsing="false" onAction="#buttonLoginSignupClicked" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Login/Signup" textAlignment="RIGHT" textFill="WHITE" />
+   <Button fx:id="btnLoginSignup" layoutX="700.0" layoutY="2.0" mnemonicParsing="false" onAction="#buttonLoginSignupClicked" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Login/Signup" textAlignment="RIGHT" textFill="WHITE" />
 </Pane>

@@ -20,19 +20,18 @@ public class Client
 		try
 		{
 			client = new Socket(InetAddress.getLocalHost(), 63341);
+			this.sendObject(obj);
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		this.sendObject(obj);
 	}
 	
 	public void sendObject(Packet<?> packet)
 	{
 		try
 		{
-			
 			if(objOutStream == null)
 			{
 				objOutStream = new ObjectOutputStream(client.getOutputStream());
@@ -50,11 +49,14 @@ public class Client
 		
 		try
 		{
-			if(objInStream == null)
+			if(client != null)
 			{
-				objInStream = new ObjectInputStream(client.getInputStream());
+				if (objInStream == null)
+				{
+					objInStream = new ObjectInputStream(client.getInputStream());
+				}
+				objReceive = new Packet<>(objInStream.readObject());
 			}
-			objReceive = new Packet<>(objInStream.readObject());
 		}
 		catch (IOException | ClassNotFoundException ignored)
 		{}

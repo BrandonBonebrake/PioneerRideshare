@@ -4,15 +4,21 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SplashScreenController extends Application
+public class SplashScreenController extends Application implements Initializable
 {
+	@FXML private Button btnLoginSignup;
+	
 	@Override
 	public void start(Stage primaryStage) throws IOException
 	{
@@ -28,33 +34,50 @@ public class SplashScreenController extends Application
 		launch(args);
 	}
 	
+	@Override
+	public void initialize(URL location, ResourceBundle resources)
+	{
+		if(HeldData.student != null)
+		{
+			btnLoginSignup.setText("Sign out");
+		}
+	}
+	
 	@FXML
-	public void buttonExitClicked()
+	private void buttonExitClicked()
 	{
 		System.exit(0);
 	}
 	
 	@FXML
-	public void buttonOfferRideClicked(ActionEvent actionEvent) throws IOException
+	private void buttonOfferRideClicked(ActionEvent actionEvent) throws IOException
 	{
 		((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(FXMLLoader.load(getClass().getResource("fxmlFiles/OfferRide.fxml"))));
 	}
 	
 	@FXML
-	public void buttonRequestRideClicked(ActionEvent actionEvent) throws IOException
+	private void buttonRequestRideClicked(ActionEvent actionEvent) throws IOException
 	{
 		((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(FXMLLoader.load(getClass().getResource("fxmlFiles/RequestRide.fxml"))));
 	}
 	
 	@FXML
-	public void buttonViewRidesClicked(ActionEvent actionEvent) throws IOException
+	private void buttonViewRidesClicked(ActionEvent actionEvent) throws IOException
 	{
 		((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(FXMLLoader.load(getClass().getResource("fxmlFiles/ViewRides.fxml"))));
 	}
 	
 	@FXML
-	public void buttonLoginSignupClicked(ActionEvent actionEvent)
+	private void buttonLoginSignupClicked(ActionEvent actionEvent) throws IOException
 	{
-	
+		if(HeldData.student == null)
+		{
+			((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(FXMLLoader.load(getClass().getResource("fxmlFiles/Login.fxml"))));
+		}
+		else
+		{
+			HeldData.student = null;
+			btnLoginSignup.setText("Login/Signup");
+		}
 	}
 }
