@@ -34,11 +34,6 @@ public class ViewRidesController implements Initializable
 	@FXML private TableColumn<String, Ride> tblColEmail;
 	@FXML private TableColumn<String, Ride> tblColJoinDrive;
 	
-	private final String RIDE_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
-			"linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
-			"-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 18px;" +
-			"-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -58,6 +53,11 @@ public class ViewRidesController implements Initializable
 	
 	private void createTableItems()
 	{
+		String RIDE_STYLE = "-fx-background-color: linear-gradient(blue, black)," +
+				"linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266);" +
+				"-fx-background-radius: 0; -fx-font-weight: bold; -fx-font-size: 18px;" +
+				"-fx-text-fill: blue; -fx-border-color: orange; -fx-border-width: 0;";
+		
 		tblColOfferRequest.setCellValueFactory(new PropertyValueFactory<>("offerRequest"));
 		tblColDepartLocation.setCellValueFactory(new PropertyValueFactory<>("departLocation"));
 		tblColDestinationLocation.setCellValueFactory(new PropertyValueFactory<>("returnLocation"));
@@ -139,6 +139,7 @@ public class ViewRidesController implements Initializable
 	@SuppressWarnings("unchecked")
 	private void populateTableFromServer()
 	{
+		HeldData.currentRides.remove(0, HeldData.currentRides.size());
 		HeldData.currentRides.addAll((ArrayList<Ride>) (new Client(new Packet<>("currentRides")).receiveObject().getObject()));
 	}
 }

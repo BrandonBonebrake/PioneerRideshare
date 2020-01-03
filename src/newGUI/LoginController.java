@@ -53,9 +53,9 @@ public class LoginController
 	}
 	
 	@FXML
-	private void buttonSignupClicked(ActionEvent actionEvent)
+	private void buttonSignupClicked(ActionEvent actionEvent) throws IOException
 	{
-	
+		((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(FXMLLoader.load(getClass().getResource("fxmlFiles/Signup.fxml"))));
 	}
 	
 	@FXML
