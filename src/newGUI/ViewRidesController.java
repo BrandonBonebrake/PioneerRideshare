@@ -14,8 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import ride.Ride;
-import socketCommunication.Client;
-import socketCommunication.Packet;
+import socketCommunication.NewClient;
 
 import java.io.IOException;
 import java.net.URL;
@@ -112,8 +111,7 @@ public class ViewRidesController implements Initializable
 	{
 		if (selectedIndex >= 0)
 		{
-			Client client = new Client(new Packet<>("Ride: " + HeldData.currentRides.get(selectedIndex).getRideIdentificationNumber() + " "
-					+ HeldData.student.getEmail()));
+			NewClient<?, ?> client = new NewClient<>("JOIN " + HeldData.currentRides.get(selectedIndex).getRideIdentificationNumber(), HeldData.student);
 			Object objReceived = client.receiveObject().getObject();
 			
 			this.removeRide((Ride) objReceived);
@@ -129,7 +127,7 @@ public class ViewRidesController implements Initializable
 		{
 			if (ride.getRideIdentificationNumber().equals(HeldData.currentRides.get(i).getRideIdentificationNumber()))
 			{
-				new Client(new Packet<>("Remove: " + ride.getRideIdentificationNumber()));
+				new NewClient<>("REMOVE ride FROM currentRides", ride);
 				HeldData.currentRides.remove(i);
 				break;
 			}
@@ -140,6 +138,6 @@ public class ViewRidesController implements Initializable
 	private void populateTableFromServer()
 	{
 		HeldData.currentRides.remove(0, HeldData.currentRides.size());
-		HeldData.currentRides.addAll((ArrayList<Ride>) (new Client(new Packet<>("currentRides")).receiveObject().getObject()));
+		HeldData.currentRides.addAll((ArrayList<Ride>) (new NewClient<>("GET currentRides", null)).receiveObject().getObject());
 	}
 }

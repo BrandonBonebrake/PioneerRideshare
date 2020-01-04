@@ -8,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import socketCommunication.Client;
-import socketCommunication.Packet;
-import student.InvalidStudentException;
+import socketCommunication.NewClient;
 import student.Student;
 
 import java.io.IOException;
@@ -28,13 +26,13 @@ public class LoginController
 	{
 		try
 		{
-			Client client = new Client(new Packet<>(new Student( "First", "Last", txtfieldEmail.getText(), txtfieldPassword.getText())));
+			NewClient<String, Object> client = new NewClient<>("GET student " + txtfieldEmail.getText() + " " + txtfieldPassword.getText(), null);
 			txtfieldEmail.setStyle(VALID_FIELD);
 			txtfieldPassword.setStyle(VALID_FIELD);
 			HeldData.student = (Student) client.receiveObject().getObject();
 			this.buttonBackClicked(actionEvent);
 		}
-		catch (InvalidStudentException | IOException e)
+		catch (IOException e)
 		{
 			if (e.getMessage().contains("Invalid Email:"))
 			{

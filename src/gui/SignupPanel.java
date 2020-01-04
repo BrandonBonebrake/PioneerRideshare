@@ -173,7 +173,7 @@ final class SignupPanel extends DefaultView
 			this.passwordTextbox2.setStyle(VALID_FIELD);
 			
 			// Open communication with server
-			client = new Client(new Packet<String>("New User: " + this.emailTextbox.getText().trim() + " "
+			client = new Client(new Packet<>("New User: " + this.emailTextbox.getText().trim() + " "
 					+ this.passwordTextbox.getText().trim() + " " + this.firstNameTextbox.getText() + " "
 					+ this.lastNameTextbox.getText()));
 			student = (Student) client.receiveObject().getObject();

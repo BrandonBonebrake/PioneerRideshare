@@ -32,6 +32,8 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 	private String rideIdentificationNumber;    // Identification Number for Ride
 	private Student student;                    // Student that submitted Ride
 	
+	private static final long serialVersionUID = 5100109116675057516L;
+	
 	/**
 	 *    Constructor for the Ride class. Holds all pertinent ride information.
 	 *

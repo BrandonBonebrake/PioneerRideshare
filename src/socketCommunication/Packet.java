@@ -2,6 +2,7 @@ package socketCommunication;
 
 import java.io.Serializable;
 
+@Deprecated
 public class Packet<T> implements Serializable
 {
 	private T object;

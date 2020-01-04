@@ -2,8 +2,7 @@ package newGUI;
 
 import javafx.event.ActionEvent;
 import ride.RideOffer;
-import socketCommunication.Client;
-import socketCommunication.Packet;
+import socketCommunication.NewClient;
 
 import java.io.IOException;
 
@@ -15,7 +14,7 @@ public class RequestRideController extends OfferRequestRideController
 		RideOffer ride = (RideOffer) createRideObject(false);
 		if(ride != null)
 		{
-			new Client(new Packet<>(ride));
+			new NewClient<>("PUT ride TO currentRides", ride);
 			super.buttonBackClicked(actionEvent);
 		}
 	}

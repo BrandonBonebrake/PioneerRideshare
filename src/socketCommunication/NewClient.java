@@ -6,22 +6,22 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-@Deprecated
-public class Client
+public class NewClient<String, T>
 {
 	Socket client;
 	
 	ObjectOutputStream objOutStream;
 	ObjectInputStream objInStream;
 	
-	public Client(Packet<?> obj)
+	public NewClient(String string, T object)
 	{
 		super();
 		
 		try
 		{
+			NewPacket<String, ?> packet = new NewPacket<>(string, object);
 			client = new Socket(InetAddress.getLocalHost(), 63341);
-			this.sendObject(obj);
+			this.sendObject(packet);
 		}
 		catch (IOException e)
 		{
@@ -29,7 +29,7 @@ public class Client
 		}
 	}
 	
-	public void sendObject(Packet<?> packet)
+	public void sendObject(NewPacket<String, ?> packet)
 	{
 		try
 		{
@@ -41,12 +41,12 @@ public class Client
 			objOutStream.flush();
 		}
 		catch (IOException ignored)
-		{ }
+		{}
 	}
 	
-	public Packet<?> receiveObject()
+	public NewPacket<?, ?> receiveObject()
 	{
-		Packet<?> objReceive = null;
+		NewPacket<?, ?> objReceive = null;
 		
 		try
 		{
@@ -56,10 +56,10 @@ public class Client
 				{
 					objInStream = new ObjectInputStream(client.getInputStream());
 				}
-				objReceive = new Packet<>(objInStream.readObject());
+				objReceive = (NewPacket<?, ?>) objInStream.readObject();
 			}
 		}
-		catch (IOException | ClassNotFoundException ignored)
+		catch (IOException | ClassNotFoundException | ClassCastException ignored)
 		{}
 		return objReceive;
 	}
