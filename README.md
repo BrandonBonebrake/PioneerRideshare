@@ -5,6 +5,8 @@ This is a semester project at the University of Wisconsin.
 
 Compiling/Running the program
 -----------------------------------------------------------------------------------------------------------------------------------
+A release version of the application is on GitHub. Feel free to download and test the program.
+
 Compile the server, located in PioneerRideshare/src/socketCommunication/server.java
 into a jar file. The server needs folders in the format that are located in files/.
 
