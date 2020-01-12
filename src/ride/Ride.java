@@ -316,7 +316,13 @@ public abstract class Ride implements Comparable<Ride>, Comparator<Ride>, Serial
 	 */
 	public String getStudentEmail()
 	{
-		return student.getEmail();
+		String email = "";
+		
+		if (this.getStudent() != null)
+		{
+			email = this.getStudent().getEmail();
+		}
+		return email;
 	}
 	
 	/**

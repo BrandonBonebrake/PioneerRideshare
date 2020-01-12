@@ -17,6 +17,7 @@ import javafx.stage.Stage;
  *
  * @author Brandon Bonebrake
  */
+@Deprecated
 abstract class DefaultView
 {
 	// Global Variables

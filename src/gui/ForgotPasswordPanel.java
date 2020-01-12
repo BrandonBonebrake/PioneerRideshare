@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+@Deprecated
 final class ForgotPasswordPanel extends DefaultView
 {
 	private final int DEFAULT_X_COMP = 300;

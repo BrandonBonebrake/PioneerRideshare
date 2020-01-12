@@ -36,8 +36,7 @@ public class ViewRidesController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		// TODO Implement student login
-		//if (HeldData.student != null)
+		if (HeldData.student != null)
 		{
 			this.populateTableFromServer();
 			this.createTableItems();
@@ -62,7 +61,7 @@ public class ViewRidesController implements Initializable
 		tblColDestinationLocation.setCellValueFactory(new PropertyValueFactory<>("returnLocation"));
 		tblDepartDateTime.setCellValueFactory(new PropertyValueFactory<>("leaveDateTime"));
 		tblReturnDateTime.setCellValueFactory(new PropertyValueFactory<>("returnDateTime"));
-		tblColEmail.setCellValueFactory(new PropertyValueFactory<>("student"));
+		tblColEmail.setCellValueFactory(new PropertyValueFactory<>("studentEmail"));
 		tblColJoinDrive.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 		
 		// Allow the TableColumn to have a button on the view

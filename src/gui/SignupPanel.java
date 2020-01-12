@@ -11,6 +11,7 @@ import socketCommunication.Client;
 import socketCommunication.Packet;
 import student.Student;
 
+@Deprecated
 final class SignupPanel extends DefaultView
 {
 	private TextField emailTextbox;

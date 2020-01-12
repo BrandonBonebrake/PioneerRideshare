@@ -17,6 +17,9 @@ import java.util.ResourceBundle;
 
 public class SplashScreenController extends Application implements Initializable
 {
+	@FXML private Button btnOfferRide;
+	@FXML private Button btnRequestRide;
+	@FXML private Button btnViewRides;
 	@FXML private Button btnLoginSignup;
 	
 	@Override
@@ -40,6 +43,16 @@ public class SplashScreenController extends Application implements Initializable
 		if(HeldData.student != null)
 		{
 			btnLoginSignup.setText("Sign out");
+			
+			btnOfferRide.setDisable(false);
+			btnRequestRide.setDisable(false);
+			btnViewRides.setDisable(false);
+		}
+		else
+		{
+			btnOfferRide.setDisable(true);
+			btnRequestRide.setDisable(true);
+			btnViewRides.setDisable(true);
 		}
 	}
 	
@@ -78,6 +91,10 @@ public class SplashScreenController extends Application implements Initializable
 		{
 			HeldData.student = null;
 			btnLoginSignup.setText("Login/Signup");
+			
+			btnOfferRide.setDisable(true);
+			btnRequestRide.setDisable(true);
+			btnViewRides.setDisable(true);
 		}
 	}
 }

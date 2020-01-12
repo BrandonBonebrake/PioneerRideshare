@@ -12,6 +12,7 @@ import socketCommunication.Packet;
 import student.InvalidStudentException;
 import student.Student;
 
+@Deprecated
 final class LoginPanel extends DefaultView
 {
 	// Global Variables

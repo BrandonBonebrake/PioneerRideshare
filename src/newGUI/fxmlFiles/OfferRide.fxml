@@ -68,7 +68,7 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </TextField>
-   <Button alignment="CENTER" layoutX="577.0" layoutY="514.0" mnemonicParsing="false" onAction="#buttonSubmitClicked" prefHeight="75.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;" text="Submit">
+   <Button fx:id="btnSubmit" alignment="CENTER" layoutX="577.0" layoutY="514.0" mnemonicParsing="false" onAction="#buttonSubmitClicked" prefHeight="75.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(blue, black),linear-gradient(blue, darkBlue), linear-gradient(orange, #ffc266); -fx-text-fill: blue;" text="Submit">
       <font>
          <Font name="System Bold" size="30.0" />
       </font>

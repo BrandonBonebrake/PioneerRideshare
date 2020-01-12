@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -28,14 +29,15 @@ import java.util.ResourceBundle;
 public abstract class OfferRequestRideController implements Initializable
 {
 	// Global Variables Created In FXML
-	@FXML DatePicker datePickerLeave;
-	@FXML DatePicker datePickerReturn;
-	@FXML TextField txtfieldLeaveTime;
-	@FXML TextField txtfieldReturnTime;
-	@FXML TextField txtfieldDepartureCity;
-	@FXML TextField txtfieldDestinationCity;
-	@FXML ChoiceBox<String> choiceboxDepartureState;
-	@FXML ChoiceBox<String> choiceboxDestinationState;
+	@FXML private DatePicker datePickerLeave;
+	@FXML private DatePicker datePickerReturn;
+	@FXML private TextField txtfieldLeaveTime;
+	@FXML private TextField txtfieldReturnTime;
+	@FXML private TextField txtfieldDepartureCity;
+	@FXML private TextField txtfieldDestinationCity;
+	@FXML private ChoiceBox<String> choiceboxDepartureState;
+	@FXML private ChoiceBox<String> choiceboxDestinationState;
+	@FXML private Button btnSubmit;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -47,6 +49,11 @@ public abstract class OfferRequestRideController implements Initializable
 		
 		choiceboxDestinationState.setValue(states.get(48));
 		choiceboxDepartureState.setValue(states.get(48));
+		
+		if (HeldData.student == null)
+		{
+			btnSubmit.setDisable(true);
+		}
 	}
 	
 	@FXML
@@ -147,11 +154,11 @@ public abstract class OfferRequestRideController implements Initializable
 		{
 			if(isOffer)
 			{
-				ride = new RideOffer(leaveLocation, destinationLocation, dateLeaving, dateReturning, timeLeaving, timeReturning, null);
+				ride = new RideOffer(leaveLocation, destinationLocation, dateLeaving, dateReturning, timeLeaving, timeReturning, HeldData.student);
 			}
 			else
 			{
-				ride = new RideRequest(leaveLocation, destinationLocation, dateLeaving, dateReturning, timeLeaving, timeReturning, null);
+				ride = new RideRequest(leaveLocation, destinationLocation, dateLeaving, dateReturning, timeLeaving, timeReturning, HeldData.student);
 			}
 		}
 		return ride;

@@ -1,6 +1,7 @@
 package newGUI;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import ride.Ride;
 import ride.RideOffer;
 import socketCommunication.NewClient;
@@ -9,6 +10,8 @@ import java.io.IOException;
 
 public class OfferRideController extends OfferRequestRideController
 {
+	
+	
 	@Override
 	void buttonSubmitClicked(ActionEvent actionEvent) throws IOException
 	{

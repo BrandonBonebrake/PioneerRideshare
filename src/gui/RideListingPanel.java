@@ -113,7 +113,7 @@ final class RideListingPanel extends DefaultView
 	private void createTable()
 	{
 		double CELL_WIDTH = super.getWidth() / 9.0;
-		TableView table = new TableView();
+		TableView table = new TableView<>();
 		table.setEditable(false);
 		
 		// Create all the columns that will represent the different data points we will display to the user

@@ -1,5 +1,6 @@
 package socketCommunication;
 
+import database.EmailHandler;
 import database.FileHandler;
 import date.PioneerDate;
 import ride.MatchRide;
@@ -16,7 +17,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class NewServer
+public final class NewServer
 {
 	private ServerSocket sSocket;
 	private ObjectOutputStream objOutStream;
@@ -88,19 +89,24 @@ public class NewServer
 	{
 		String[] strArr = ((String) packetReceived.getString()).split(" ");
 		
+		// Echoed header that displays the system time and client IP address
 		this.lineHeader();
 		
-		if (strArr[0].equals("PUT"))
+		// Handle the String that is passed from the client determining what action to take based on keywords. (Similar to a database query)
+		switch (strArr[0])
 		{
-			this.put(strArr, packetReceived.getObject());
-		}
-		else if (strArr[0].equals("GET"))
-		{
-			this.get(strArr);
-		}
-		else
-		{
-			System.out.println("Unknown Command Received");
+			case "PUT":
+				this.put(strArr, packetReceived.getObject());
+				break;
+			case "GET":
+				this.get(strArr);
+				break;
+			case "JOIN":
+				this.join(strArr, packetReceived.getObject());
+				break;
+			default:
+				System.out.println("Unknown Command Received");
+				break;
 		}
 	}
 	
@@ -113,6 +119,7 @@ public class NewServer
 				System.out.print("Creating New Ride          | ");
 				Ride ride = compareRides((Ride) object);
 				
+				// Ride will be null when there are no rides that are similar to each other
 				if (ride == null)
 				{
 					currentRides.add((Ride) object);
@@ -171,6 +178,16 @@ public class NewServer
 		}
 	}
 	
+	private void join(String[] strArr, Object object)
+	{
+		Ride ride = findRide(strArr[1]);
+		
+		if (ride != null)
+		{
+			EmailHandler.rideFilled(ride, ride.getStudent(), (Student) object);
+		}
+	}
+	
 	private Student getStudent(String email, String password)
 	{
 		Student student = null;
@@ -221,6 +238,21 @@ public class NewServer
 			}
 		}
 		return ride1;
+	}
+	
+	private Ride findRide(String rideID)
+	{
+		Ride ride = null;
+		
+		for (Ride currentRide : currentRides)
+		{
+			if (rideID.equals(currentRide.getRideIdentificationNumber()))
+			{
+				ride = currentRide;
+				break;
+			}
+		}
+		return ride;
 	}
 	
 	private void updateRideList()

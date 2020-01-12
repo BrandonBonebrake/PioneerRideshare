@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+@Deprecated
 public class PopUpPanel
 {
 	public static void display(String title)

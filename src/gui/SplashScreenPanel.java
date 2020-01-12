@@ -11,6 +11,7 @@ import javafx.stage.Stage;
  *
  * @author Brandon Bonebrake
  */
+@Deprecated
 final class SplashScreenPanel extends DefaultView
 {
 	static Button loginSignupButton;
